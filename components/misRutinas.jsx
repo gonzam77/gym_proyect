@@ -5,10 +5,6 @@ import FormRutina from "./formRutina";
 const MisRutinas = ({rutinas, setRutinas}) => {
 
   const [modalVisible, setModalVisible] = useState(false);
-  const [rutina, setRutina] = useState({
-    nombre:'',
-    ejercicios:[]
-  });
   const[id, setId] = useState();
  
   const EntrenamientoItem = ({ dia, nombre, id }) => (
@@ -30,7 +26,7 @@ const MisRutinas = ({rutinas, setRutinas}) => {
       <Text style={styles.titulo}>Mis Rutinas</Text>
 
       {
-        rutina.length?
+        rutinas.length?
         <View style={styles.leyenda}>
           <Text style={styles.leyendaTexto}>Seleccione la rutina de hoy</Text>
         </View>
@@ -66,6 +62,7 @@ const MisRutinas = ({rutinas, setRutinas}) => {
             modalVisible={modalVisible}
             setModalVisible={setModalVisible}
             id={id}
+            setId={setId}
           />
         </Modal>
         : null

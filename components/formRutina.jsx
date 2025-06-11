@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Pressable, Text, TextInput, View, StyleSheet, Modal } from "react-native";
 import FormEjercicio from "./formEjercicio";
 
-const FormRutina = ({rutinas, setRutinas, setModalVisible, id}) => {
+const FormRutina = ({rutinas, setRutinas, setModalVisible, id, setId}) => {
     const [modalFormEjercicio, setModalFormEjercicio] = useState(false);
     const [nuevaRutina, setNuevaRutina] = useState({
         id: '',
@@ -14,11 +14,10 @@ const FormRutina = ({rutinas, setRutinas, setModalVisible, id}) => {
         if (id) {
             const selectedRutina = rutinas.find(e => e.id === id);
             if (selectedRutina) {
-            setNuevaRutina(selectedRutina);
+                setNuevaRutina(selectedRutina);
             }
         }
     }, [id]);
-
 
     const handleChange =(campo, valor) =>{
         setNuevaRutina({
@@ -46,6 +45,7 @@ const FormRutina = ({rutinas, setRutinas, setModalVisible, id}) => {
                 nombre:'',
                 ejercicios:[]
         });
+        setId(null)
         setModalVisible(false);
     };
 
@@ -56,19 +56,33 @@ const FormRutina = ({rutinas, setRutinas, setModalVisible, id}) => {
                 {id ? 'Editar Rutina' : 'Nueva Rutina'}
             </Text>
 
-            <Pressable 
-                style={styles.btnCancelar}
-                onPress={()=>{
-                    setNuevaRutina({
-                    id: '',
-                    nombre:'',
-                    ejercicios:[]
-                });
-                    setModalVisible(false)
-                }}
-            >
+            <View style={styles.botonera}>
+                <Pressable 
+                    style={styles.btnCancelar}
+                    onPress={()=>{
+                        setNuevaRutina({
+                            id: '',
+                            nombre:'',
+                            ejercicios:[]
+                        });
+                        setId(null);
+                        setModalVisible(false)
+                    }}
+                >
                     <Text style={styles.btnTexto}>X Cancelar</Text>
-            </Pressable>
+                </Pressable>
+                <Pressable 
+                    style={styles.btn}
+                    onPress={()=>{
+                        handleGuardar()
+                    }}
+                >
+                    <Text style={styles.btnTexto}>Guardar Rutina</Text>
+                </Pressable>
+
+
+            </View>
+            
             
             <View style={styles.form}>
                 <Text style={styles.label}>Nombre de la rutina</Text>
@@ -100,17 +114,6 @@ const FormRutina = ({rutinas, setRutinas, setModalVisible, id}) => {
             >
                     <Text style={styles.btnTexto}>+ Agregar Ejercicio</Text>
             </Pressable>
-            
-            <Pressable 
-                style={styles.btn}
-                onPress={()=>{
-                    handleGuardar()
-                }}
-            >
-                    <Text style={styles.btnTexto}>Guardar Rutina</Text>
-            </Pressable>
-            
-
             {
                 
                 modalFormEjercicio?
@@ -136,6 +139,10 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "black",
     padding: 20,
+  },
+  botonera:{
+    flexDirection:'row',
+    justifyContent:'space-around'
   },
   titulo: {
     fontSize: 32,
@@ -166,16 +173,16 @@ const styles = StyleSheet.create({
     backgroundColor: "#43d112",
     borderRadius: 30,
     marginVertical:15,
-    paddingVertical: 12,
-    paddingHorizontal: 20,
+    paddingVertical: 5,
+    paddingHorizontal: 15,
     alignSelf: "center",
     elevation: 3,
   },
   btnCancelar: {
     backgroundColor: "#eefa07",
     borderRadius: 30,
-    paddingVertical: 12,
-    paddingHorizontal: 20,
+    paddingVertical: 5,
+    paddingHorizontal: 15,
     alignSelf: "center",
     elevation: 3,
   },
