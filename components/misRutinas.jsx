@@ -2,14 +2,6 @@ import { useState } from "react";
 import { View, Text, StyleSheet, Pressable, ScrollView, Modal } from "react-native";
 import FormRutina from "./formRutina";
 
-const EntrenamientoItem = ({ dia, nombre }) => (
-  <Pressable style={styles.entrenamiento}>
-    <Text style={styles.dia}>
-      {dia}: <Text style={styles.nombre}>{nombre}</Text>
-    </Text>
-  </Pressable>
-);
-
 const MisRutinas = ({rutinas, setRutinas}) => {
 
   const [modalVisible, setModalVisible] = useState(false);
@@ -17,6 +9,19 @@ const MisRutinas = ({rutinas, setRutinas}) => {
     nombre:'',
     ejercicios:[]
   });
+  const[id, setId] = useState();
+ 
+  const EntrenamientoItem = ({ dia, nombre, id }) => (
+    <Pressable onLongPress={()=>{
+        setId(id);
+        setModalVisible(true)
+      }} style={styles.entrenamiento}>
+      <Text style={styles.dia}>
+        {dia}: <Text style={styles.nombre}>{nombre}</Text>
+      </Text>
+    </Pressable>
+  );
+  
 
   let contador = 0;
   
@@ -39,7 +44,7 @@ const MisRutinas = ({rutinas, setRutinas}) => {
         rutinas?.map(e=>{
           contador += 1;
           return(
-              <EntrenamientoItem dia={`DIA ${contador}`} nombre={e.nombre} />
+              <EntrenamientoItem dia={`DIA ${contador}`} nombre={e.nombre} id={e.id} />
           )
         })
       }
@@ -58,10 +63,9 @@ const MisRutinas = ({rutinas, setRutinas}) => {
           <FormRutina 
             rutinas={rutinas} 
             setRutinas={setRutinas}
-            rutina={rutina} 
-            setRutina={setRutina}
             modalVisible={modalVisible}
             setModalVisible={setModalVisible}
+            id={id}
           />
         </Modal>
         : null

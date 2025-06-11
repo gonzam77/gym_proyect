@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Pressable, Text, TextInput, View, StyleSheet, Modal } from "react-native";
 import FormEjercicio from "./formEjercicio";
 
-const FormRutina = ({rutina, setRutina, rutinas, setRutinas, setModalVisible}) => {
+const FormRutina = ({rutinas, setRutinas, setModalVisible, id}) => {
     const [modalFormEjercicio, setModalFormEjercicio] = useState(false);
     const [nuevaRutina, setNuevaRutina] = useState({
         id: Date.now(),
@@ -10,9 +10,15 @@ const FormRutina = ({rutina, setRutina, rutinas, setRutinas, setModalVisible}) =
         ejercicios:[]
     })
     
-    useEffect(()=>{
-        console.log('Rutina a guardar', nuevaRutina);
-    },[nuevaRutina])
+    useEffect(() => {
+        if (id) {
+            const selectedRutina = rutinas.find(e => e.id === id);
+            if (selectedRutina) {
+            setNuevaRutina(selectedRutina);
+            }
+        }
+    }, [id]);
+
 
     const handleChange =(campo, valor) =>{
         setNuevaRutina({
@@ -21,80 +27,94 @@ const FormRutina = ({rutina, setRutina, rutinas, setRutinas, setModalVisible}) =
         });
     };
 
-    const handleGuardar = ()=>{
-        
-        setRutinas([
+    const handleGuardar = () => {
+        if (id) {
+            // Editar rutina existente
+            const rutinasActualizadas = rutinas.map(rutina => 
+            rutina.id === id ? nuevaRutina : rutina
+            );
+            setRutinas(rutinasActualizadas);
+        } else {
+            // Crear nueva rutina con id único
+            setRutinas([
             ...rutinas,
-            nuevaRutina
-        ]);
+            { ...nuevaRutina, id: Date.now() } // aseguramos nuevo id
+            ]);
+        }
+
         setModalVisible(false);
-    }
+    };
+
   
     return (
         <View style={styles.container}>
-        <Text style={styles.titulo}>Nueva Rutina</Text>
+            <Text style={styles.titulo}>
+                {id ? 'Editar Rutina' : 'Nueva Rutina'}
+            </Text>
 
-        <View style={styles.form}>
-            <Text style={styles.label}>Nombre de la rutina</Text>
-            <TextInput
-            style={styles.input}
-            value={nuevaRutina.nombre}
-            onChangeText={(valor)=>{handleChange('nombre',valor)}}
-            placeholder="Ej: Día de pecho"
-            placeholderTextColor="#888"
-            />
-
-            <View style={styles.listaEjercicios}>
-                {
-                    nuevaRutina?.ejercicios?.map((e, index) => (
-                    <Pressable key={e.id} style={styles.ejercicioItem}>
-                        <Text style={styles.ejercicioNombre}>Ejercicio {index + 1}: {e.nombre}</Text>
-                        <Text style={styles.ejercicioDetalle}>{e.series} series x {e.repeticiones} reps</Text>
-                    </Pressable>
-                    ))
-                }
-            </View>
-        </View>
-
-        <Pressable 
-            style={styles.btn}
-            onPress={()=>{
-                setModalFormEjercicio(!modalFormEjercicio)
-            }}
-        >
-                <Text style={styles.btnTexto}>+ Agregar Ejercicio</Text>
-        </Pressable>
-        
-        <Pressable 
-            style={styles.btn}
-            onPress={()=>{
-                handleGuardar()
-            }}
-        >
-                <Text style={styles.btnTexto}>Guardar Rutina</Text>
-        </Pressable>
-        <Pressable 
-            style={styles.btnCancelar}
-            onPress={()=>{
-                setModalVisible(false)
-            }}
-        >
-                <Text style={styles.btnTexto}>X Cancelar</Text>
-        </Pressable>
-
-        {
+            <Pressable 
+                style={styles.btnCancelar}
+                onPress={()=>{
+                    setModalVisible(false)
+                }}
+            >
+                    <Text style={styles.btnTexto}>X Cancelar</Text>
+            </Pressable>
             
-            modalFormEjercicio?
-            <Modal>
-                <FormEjercicio 
-                    nuevaRutina={nuevaRutina}
-                    setNuevaRutina={setNuevaRutina}
-                    modalFormEjercicio={modalFormEjercicio}
-                    setModalFormEjercicio={setModalFormEjercicio}
-                /> 
-            </Modal>
-            : null
-        }
+            <View style={styles.form}>
+                <Text style={styles.label}>Nombre de la rutina</Text>
+                <TextInput
+                style={styles.input}
+                value={nuevaRutina.nombre}
+                onChangeText={(valor)=>{handleChange('nombre',valor)}}
+                placeholder="Ej: Día de pecho"
+                placeholderTextColor="#888"
+                />
+
+                <View style={styles.listaEjercicios}>
+                    {
+                        nuevaRutina?.ejercicios?.map((e, index) => (
+                        <Pressable key={e.id} style={styles.ejercicioItem}>
+                            <Text style={styles.ejercicioNombre}>Ejercicio {index + 1}: {e.nombre}</Text>
+                            <Text style={styles.ejercicioDetalle}>{e.series} series x {e.repeticiones} reps</Text>
+                        </Pressable>
+                        ))
+                    }
+                </View>
+            </View>
+
+            <Pressable 
+                style={styles.btn}
+                onPress={()=>{
+                    setModalFormEjercicio(!modalFormEjercicio)
+                }}
+            >
+                    <Text style={styles.btnTexto}>+ Agregar Ejercicio</Text>
+            </Pressable>
+            
+            <Pressable 
+                style={styles.btn}
+                onPress={()=>{
+                    handleGuardar()
+                }}
+            >
+                    <Text style={styles.btnTexto}>Guardar Rutina</Text>
+            </Pressable>
+            
+
+            {
+                
+                modalFormEjercicio?
+                <Modal>
+                    <FormEjercicio 
+                        nuevaRutina={nuevaRutina}
+                        setNuevaRutina={setNuevaRutina}
+                        modalFormEjercicio={modalFormEjercicio}
+                        setModalFormEjercicio={setModalFormEjercicio}
+                    /> 
+                </Modal>
+                : null
+            }
         </View>
     );
 };
@@ -116,7 +136,7 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   form: {
-    marginBottom: 30,
+    marginVertical: 30,
   },
   label: {
     color: "#eefa07",
@@ -145,7 +165,6 @@ const styles = StyleSheet.create({
   btnCancelar: {
     backgroundColor: "#eefa07",
     borderRadius: 30,
-    marginVertical:15,
     paddingVertical: 12,
     paddingHorizontal: 20,
     alignSelf: "center",

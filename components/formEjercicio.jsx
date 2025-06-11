@@ -75,10 +75,8 @@ const FormEjercicio = ({nuevaRutina, setNuevaRutina, setModalFormEjercicio}) => 
 
 
   const handleGuardar = () => {
-    console.log('Ejercicio a guardar en Rutina', ejercicio);
-    
     if (validarFormulario()) {
-        alert("Ejercicio guardado con éxito");
+        //alert("Ejercicio guardado con éxito");
         setNuevaRutina({
             ...nuevaRutina,
             ejercicios: [...nuevaRutina.ejercicios, ejercicio],
@@ -188,12 +186,14 @@ const FormEjercicio = ({nuevaRutina, setNuevaRutina, setModalFormEjercicio}) => 
 
       {errores !== "" && <Text style={styles.error}>{errores}</Text>}
 
+       <Pressable style={styles.btn} onPress={handleGuardar}>
+        <Text style={styles.btnTexto}>Guardar Ejercicio</Text>
+      </Pressable>
+      
       <Pressable style={styles.btnCancelar} onPress={()=>setModalFormEjercicio(false)}>
         <Text style={styles.btnTexto}>Cancelar</Text>
       </Pressable>
-      <Pressable style={styles.btn} onPress={handleGuardar}>
-        <Text style={styles.btnTexto}>Guardar Ejercicio</Text>
-      </Pressable>
+     
     </View>
   );
 };
