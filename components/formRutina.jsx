@@ -65,7 +65,7 @@ const FormRutina = ({rutinas, setRutinas, setModalVisible, id, setId}) => {
                             nombre:'',
                             ejercicios:[]
                         });
-                        setId(null);
+                        //setId(null);
                         setModalVisible(false)
                     }}
                 >
