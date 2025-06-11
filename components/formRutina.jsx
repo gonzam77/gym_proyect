@@ -59,6 +59,11 @@ const FormRutina = ({rutinas, setRutinas, setModalVisible, id}) => {
             <Pressable 
                 style={styles.btnCancelar}
                 onPress={()=>{
+                    setNuevaRutina({
+                    id: '',
+                    nombre:'',
+                    ejercicios:[]
+                });
                     setModalVisible(false)
                 }}
             >
