@@ -1,16 +1,19 @@
 import { useState } from "react";
 import { View, Text, StyleSheet, Pressable, ScrollView, Modal } from "react-native";
 import FormRutina from "./formRutina";
+import DetalleRutina from "./detalleRutina";
 
 const MisRutinas = ({rutinas, setRutinas}) => {
 
   const [modalVisible, setModalVisible] = useState(false);
+  const [modalDetalle, setModalDetalle] = useState(false);
+  
   const[id, setId] = useState();
  
   const EntrenamientoItem = ({ dia, nombre, id }) => (
     <Pressable onLongPress={()=>{
         setId(id);
-        setModalVisible(true)
+        setModalDetalle(true)
       }} style={styles.entrenamiento}>
       <Text style={styles.dia}>
         {dia}: <Text style={styles.nombre}>{nombre}</Text>
@@ -52,6 +55,21 @@ const MisRutinas = ({rutinas, setRutinas}) => {
       }}>
         <Text style={styles.btnTexto}>+ Agregar Rutina</Text>
       </Pressable>
+      {
+        modalDetalle ?
+        <Modal>
+          <DetalleRutina
+            id={id}
+            setId={setId}
+            rutinas={rutinas}
+            setRutinas={setRutinas}
+            setModalVisible={setModalVisible}
+            modalVisible={modalVisible}
+            setModalDetalle={setModalDetalle}
+          />
+        </Modal>
+          : null
+      }
 
       {
         modalVisible ?
@@ -59,7 +77,6 @@ const MisRutinas = ({rutinas, setRutinas}) => {
           <FormRutina 
             rutinas={rutinas} 
             setRutinas={setRutinas}
-            modalVisible={modalVisible}
             setModalVisible={setModalVisible}
             id={id}
             setId={setId}

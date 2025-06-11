@@ -3,7 +3,7 @@ import { Pressable, Text, TextInput, View, StyleSheet, Alert } from "react-nativ
 import ejercicios from "../helpers/ejercicios";
 import { Picker } from "@react-native-picker/picker";
 
-const FormEjercicio = ({nuevaRutina, setNuevaRutina, setModalFormEjercicio}) => {
+const FormEjercicio = ({nuevaRutina, setNuevaRutina, setModalFormEjercicio, id}) => {
   const [errores, setErrores] = useState("");
   const listadoEjercicios = ejercicios;
   const [ejerciciosFiltrados, setEjerciciosFiltrados] = useState([]);
@@ -31,7 +31,14 @@ const FormEjercicio = ({nuevaRutina, setNuevaRutina, setModalFormEjercicio}) => 
             ...prev,
             id: "",
         }));
-    }, [selectedCategory]);
+
+        if(id) {
+          const selectedEjercicio = nuevaRutina.ejercicios.find(e=>e.id === id)
+          if(selectedEjercicio){
+            setEjercicio(selectedEjercicio)
+          }
+        }
+    }, [selectedCategory, id]);
 
 
   const validarFormulario = () => {
@@ -189,7 +196,7 @@ const FormEjercicio = ({nuevaRutina, setNuevaRutina, setModalFormEjercicio}) => 
        <Pressable style={styles.btn} onPress={handleGuardar}>
         <Text style={styles.btnTexto}>Guardar Ejercicio</Text>
       </Pressable>
-      
+
       <Pressable style={styles.btnCancelar} onPress={()=>setModalFormEjercicio(false)}>
         <Text style={styles.btnTexto}>Cancelar</Text>
       </Pressable>
