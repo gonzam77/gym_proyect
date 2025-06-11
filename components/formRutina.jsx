@@ -5,7 +5,7 @@ import FormEjercicio from "./formEjercicio";
 const FormRutina = ({rutinas, setRutinas, setModalVisible, id}) => {
     const [modalFormEjercicio, setModalFormEjercicio] = useState(false);
     const [nuevaRutina, setNuevaRutina] = useState({
-        id: Date.now(),
+        id: '',
         nombre:'',
         ejercicios:[]
     })
@@ -31,17 +31,21 @@ const FormRutina = ({rutinas, setRutinas, setModalVisible, id}) => {
         if (id) {
             // Editar rutina existente
             const rutinasActualizadas = rutinas.map(rutina => 
-            rutina.id === id ? nuevaRutina : rutina
+                rutina.id === id ? nuevaRutina : rutina
             );
             setRutinas(rutinasActualizadas);
         } else {
             // Crear nueva rutina con id único
             setRutinas([
-            ...rutinas,
-            { ...nuevaRutina, id: Date.now() } // aseguramos nuevo id
+                ...rutinas,
+                { ...nuevaRutina, id: Date.now() } // aseguramos nuevo id
             ]);
         }
-
+        setNuevaRutina({
+                id: '',
+                nombre:'',
+                ejercicios:[]
+        });
         setModalVisible(false);
     };
 
