@@ -3,18 +3,17 @@ import { Pressable, Text, TextInput, View, StyleSheet, Alert } from "react-nativ
 import ejercicios from "../helpers/ejercicios";
 import { Picker } from "@react-native-picker/picker";
 
-const FormEjercicio = ({nuevaRutina, setNuevaRutina, modalFormEjercicio, setModalFormEjercicio}) => {
+const FormEjercicio = ({nuevaRutina, setNuevaRutina, setModalFormEjercicio}) => {
   const [errores, setErrores] = useState("");
   const listadoEjercicios = ejercicios;
   const [ejerciciosFiltrados, setEjerciciosFiltrados] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [ejercicio, setEjercicio] = useState({
-    ejercicio: "",
+    nombre: "",
     series: 0,
     repeticiones: 0,
     peso: 0,
     descanso: 0,
-    idEjercicio: 0,
   });
 
     useEffect(() => {
@@ -30,7 +29,7 @@ const FormEjercicio = ({nuevaRutina, setNuevaRutina, modalFormEjercicio, setModa
         // También reseteamos el ejercicio seleccionado cuando cambia la categoría
         setEjercicio((prev) => ({
             ...prev,
-            idEjercicio: "",
+            id: "",
         }));
     }, [selectedCategory]);
 
@@ -41,7 +40,7 @@ const FormEjercicio = ({nuevaRutina, setNuevaRutina, modalFormEjercicio, setModa
         return false;
     };
 
-    if (!ejercicio.idEjercicio) {
+    if (!ejercicio.id) {
         setErrores("Debe seleccionar un ejercicio.");
         return false;
     };
@@ -61,24 +60,33 @@ const FormEjercicio = ({nuevaRutina, setNuevaRutina, modalFormEjercicio, setModa
   };
 
     const handleChange = (campo, valor) => {
+      if(campo === 'nombre')  {
         setEjercicio(prev => ({
-            ...prev,
-            [campo]: valor === "" ? "" : Number(valor),
+              ...prev,
+              [campo]: valor
         }));
+      } else {
+        setEjercicio(prev => ({
+              ...prev,
+              [campo]: valor === "" ? "" : Number(valor),
+        }));
+      }
     };
 
 
   const handleGuardar = () => {
+    console.log('Ejercicio a guardar en Rutina', ejercicio);
+    
     if (validarFormulario()) {
-        console.log("Ejercicio guardado:", ejercicio);
         alert("Ejercicio guardado con éxito");
-        console.log('ejercicio a agregar a la rutina',ejercicio);
         setNuevaRutina({
             ...nuevaRutina,
             ejercicios: [...nuevaRutina.ejercicios, ejercicio],
         });
+        setModalFormEjercicio(false);
+    } else {
+      alert('Algo salio mal')
     }
-    setModalFormEjercicio(false);
   };
 
   return (
@@ -115,12 +123,23 @@ const FormEjercicio = ({nuevaRutina, setNuevaRutina, modalFormEjercicio, setModa
         <Text style={styles.label}>Ejercicio</Text>
         <View style={styles.pickerWrapper}>
           <Picker
-            selectedValue={ejercicio.idEjercicio}
+            selectedValue={ejercicio.nombre}
             dropdownIconColor="#fff"
             onValueChange={valor => {
-                handleChange("idEjercicio", valor);
-                const nombreEjercicio = ejerciciosFiltrados.find(e=> e.id = valor)
-                handleChange("ejercicio", nombreEjercicio.nombre);
+              const ejercicioSeleccionado = ejerciciosFiltrados.find(e => e.nombre === valor);
+              if (ejercicioSeleccionado) {
+                setEjercicio(prev => ({
+                  ...prev,
+                  id: ejercicioSeleccionado.id,
+                  nombre: ejercicioSeleccionado.nombre
+                }));
+              } else {
+                setEjercicio(prev => ({
+                  ...prev,
+                  id: "",
+                  nombre: ""
+                }));
+              }
             }}
             style={styles.picker}
           >
@@ -130,7 +149,7 @@ const FormEjercicio = ({nuevaRutina, setNuevaRutina, modalFormEjercicio, setModa
               ?.sort((a, b) => a.nombre.localeCompare(b.nombre))
               ?.map(ej => {
                 return(
-                <Picker.Item key={ej.id} label={ej.nombre} value={ej.id} />
+                <Picker.Item key={ej.id} label={ej.nombre} value={ej.nombre} />
                 )
             })}
           </Picker>

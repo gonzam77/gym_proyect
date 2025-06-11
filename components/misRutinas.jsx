@@ -19,8 +19,6 @@ const MisRutinas = ({rutinas, setRutinas}) => {
   });
 
   let contador = 0;
-
-  console.log('rutinas',rutinas);
   
   return (
     <ScrollView contentContainerStyle={styles.container}>

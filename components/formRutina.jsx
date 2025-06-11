@@ -10,11 +10,8 @@ const FormRutina = ({rutina, setRutina, rutinas, setRutinas, setModalVisible}) =
         ejercicios:[]
     })
     
-    console.log('nuevaRutina', nuevaRutina);
-    
     useEffect(()=>{
-        console.log(nuevaRutina);
-
+        console.log('Rutina a guardar', nuevaRutina);
     },[nuevaRutina])
 
     const handleChange =(campo, valor) =>{
@@ -25,6 +22,7 @@ const FormRutina = ({rutina, setRutina, rutinas, setRutinas, setModalVisible}) =
     };
 
     const handleGuardar = ()=>{
+        
         setRutinas([
             ...rutinas,
             nuevaRutina
@@ -46,16 +44,16 @@ const FormRutina = ({rutina, setRutina, rutinas, setRutinas, setModalVisible}) =
             placeholderTextColor="#888"
             />
 
-            {
-                nuevaRutina?.ejercicios?.map(e=>{
-                    console.log('Nuevo ejercicio', e);
-                    
-                    return(
-                        <Text key={e.id} style={styles.label}>{e.nombre}</Text>
-                    )
-                })
-            }
-
+            <View style={styles.listaEjercicios}>
+                {
+                    nuevaRutina?.ejercicios?.map((e, index) => (
+                    <Pressable key={e.id} style={styles.ejercicioItem}>
+                        <Text style={styles.ejercicioNombre}>Ejercicio {index + 1}: {e.nombre}</Text>
+                        <Text style={styles.ejercicioDetalle}>{e.series} series x {e.repeticiones} reps</Text>
+                    </Pressable>
+                    ))
+                }
+            </View>
         </View>
 
         <Pressable 
@@ -159,4 +157,27 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
   },
+    listaEjercicios: {
+        marginTop: 20,
+        marginBottom: 20,
+    },
+    ejercicioItem: {
+        backgroundColor: "#1a1a1a",
+        borderRadius: 10,
+        padding: 15,
+        marginBottom: 15,
+        elevation: 2,
+    },
+    ejercicioNombre: {
+        color: "#43d112",
+        fontSize: 18,
+        fontWeight: "700",
+        marginBottom: 5,
+    },
+    ejercicioDetalle: {
+        color: "#eefa07",
+        fontSize: 16,
+        fontWeight: "600",
+    },
+
 });
