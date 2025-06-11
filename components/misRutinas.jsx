@@ -59,8 +59,7 @@ const MisRutinas = ({rutinas, setRutinas}) => {
         modalDetalle ?
         <Modal>
           <DetalleRutina
-            id={id}
-            setId={setId}
+            idDetalle={id}
             rutinas={rutinas}
             setRutinas={setRutinas}
             setModalVisible={setModalVisible}

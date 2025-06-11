@@ -1,13 +1,10 @@
 import { Modal, Pressable, StyleSheet, Text, View } from "react-native";
 import FormRutina from "./formRutina";
 
-const DetalleRutina = ({id, setId, rutinas, setRutinas, modalVisible, setModalVisible, setModalDetalle})=>{
+const DetalleRutina = ({id, setId, rutinas, setRutinas, modalVisible, setModalVisible, setModalDetalle, idDetalle})=>{
     
-    console.log('rutinas',rutinas);
+    const rutina = rutinas?.find(e=>e.id === idDetalle);
 
-    const rutina = rutinas?.find(e=>e.id === id);
-
-    console.log('rutina', rutina);
 
     const eliminarRutina =(id) =>{
     
@@ -55,7 +52,7 @@ const DetalleRutina = ({id, setId, rutinas, setRutinas, modalVisible, setModalVi
                 modalVisible?
                 <Modal>
                     <FormRutina 
-                        id={id}
+                        id={rutina.id}
                         setRutinas={setRutinas}
                         rutinas={rutinas}
                         setModalVisible={setModalVisible}
