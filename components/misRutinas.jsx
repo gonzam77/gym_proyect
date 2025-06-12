@@ -43,7 +43,7 @@ const MisRutinas = () => {
         rutinas?.map(e=>{
           contador += 1;
           return(
-              <EntrenamientoItem dia={`DIA ${contador}`} nombre={e.nombre} id={e.id} />
+              <EntrenamientoItem dia={`DIA ${contador}`} nombre={e.nombre} id={e.id} key={e.id} />
           )
         })
       }
