@@ -1,11 +1,27 @@
 import { Modal, Pressable, StyleSheet, Text, View } from "react-native";
 import FormRutina from "./formRutina";
+import { useEffect, useState } from "react";
 
-const DetalleRutina = ({rutinaSeleccionada, setRutinaSelecionada, rutinas, setRutinas, modalVisible, setModalVisible, setModalDetalle})=>{
+const DetalleRutina = (
+    {
+        rutinaSeleccionada, 
+        setRutinaSelecionada, 
+        rutinas, 
+        setRutinas,
+        modalFormRutina, 
+        setModalFormRutina, 
+        setModalDetalle
+    })=>{
 
-    const eliminarRutina =(id) =>{
-    
+
+    const eliminarRutina = (id)=>{
+        const rutinasFiltradas = rutinas.filter(e => e.id !== id);
+        setRutinas(rutinasFiltradas);
     }
+
+    useEffect(()=>{
+
+    },[rutinaSeleccionada])
     
     return (
         <View style={styles.container}>
@@ -16,15 +32,23 @@ const DetalleRutina = ({rutinaSeleccionada, setRutinaSelecionada, rutinas, setRu
                 }}>
                     <Text style={styles.btnTexto}>Volver</Text>
                 </Pressable>
-                <Pressable style={styles.btnCancelar}onPress={()=>{setModalVisible(true)}}>
+                <Pressable style={styles.btnCancelar}onPress={()=>{setModalFormRutina(true)}}>
                     <Text style={styles.btnTexto}>Editar</Text>
+                </Pressable>
+                <Pressable style={[styles.btnCancelar,styles.btnEliminar ]}onPress={()=>{
+                    eliminarRutina(rutinaSeleccionada.id);
+                    setRutinaSelecionada({})
+                    setModalDetalle(false)
+                }}>
+                    <Text style={styles.btnEliminarTexto}>Elimniar</Text>
                 </Pressable>
             </View>
             <Text>
                 {rutinaSeleccionada.nombre}
             </Text>
             <View style={styles.leyenda}>
-                <Text style={styles.titulo}>{rutinaSeleccionada.nombre}</Text>
+                <Text style={styles.titulo}>Detalle:</Text>
+                <Text style={styles.titulo}>Nombre: {rutinaSeleccionada.nombre}</Text>
                 <Text style={styles.leyendaTexto}>Seleccione el ejercicio a realizar</Text>
             </View>
             <View style={styles.form}>
@@ -40,7 +64,7 @@ const DetalleRutina = ({rutinaSeleccionada, setRutinaSelecionada, rutinas, setRu
                 </View>
             </View>
             <View>
-                <Pressable onPress={()=>{setModalVisible(true)}}>
+                <Pressable onPress={()=>{setModalFormRutina(true)}}>
                     <Text>Editar</Text>
                 </Pressable>
                 <Pressable>
@@ -49,15 +73,13 @@ const DetalleRutina = ({rutinaSeleccionada, setRutinaSelecionada, rutinas, setRu
             </View>
 
             <Modal
-                visible={modalVisible}
+                visible={modalFormRutina}
                 animationType="slide"
-                onRequestClose={() => setModalVisible(false)}
+                onRequestClose={() => setModalFormRutina(false)}
             >
                 <FormRutina 
                     rutinaSeleccionada={rutinaSeleccionada}
-                    rutinas={rutinas}
-                    setRutinas={setRutinas}
-                    setModalVisible={setModalVisible}
+                    setModalFormRutina={setModalFormRutina}
                 />
             </Modal>
         </View>
@@ -124,6 +146,15 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     alignSelf: "center",
     elevation: 3,
+  },
+  btnEliminar:{
+    backgroundColor:'#9b0404',
+},
+    btnEliminarTexto:{
+        fontSize: 18,
+        color:'#fff',
+        fontWeight: "bold",
+        textAlign: "center",
   },
   btnTexto: {
     fontSize: 18,

@@ -6,7 +6,7 @@ import DetalleRutina from "./detalleRutina";
 const MisRutinas = () => {
 
   const [rutinas,setRutinas] = useState([]);
-  const [modalVisible, setModalVisible] = useState(false);
+  const [modalFormRutina, setModalFormRutina] = useState(false);
   const [modalDetalle, setModalDetalle] = useState(false);
   const [rutinaSeleccionada, setRutinaSelecionada] = useState();
  
@@ -43,7 +43,7 @@ const MisRutinas = () => {
         rutinas?.map(e=>{
           contador += 1;
           return(
-              <EntrenamientoItem dia={`DIA ${contador}`} nombre={e.nombre} id={e.id} />
+              <EntrenamientoItem dia={`DIA ${contador}`} nombre={e.nombre} id={e.id} key={e.id} />
           )
         })
       }
@@ -51,7 +51,7 @@ const MisRutinas = () => {
       <Pressable 
         style={styles.btn} 
         onPress={()=>{
-        setModalVisible(true)
+        setModalFormRutina(true)
       }}>
         <Text style={styles.btnTexto}>+ Agregar Rutina</Text>
       </Pressable>
@@ -66,22 +66,23 @@ const MisRutinas = () => {
           setRutinaSelecionada={setRutinaSelecionada}
           rutinas={rutinas}
           setRutinas={setRutinas}
-          setModalVisible={setModalVisible}
-          modalVisible={modalVisible}
+          setModalFormRutina={setModalFormRutina}
+          modalFormRutina={modalFormRutina}
           setModalDetalle={setModalDetalle}
         />
       </Modal>
 
       <Modal
-        visible={modalVisible}
+        visible={modalFormRutina}
         animationType="slide"
-        onRequestClose={() => setModalVisible(false)}
+        onRequestClose={() => setModalFormRutina(false)}
       >
         <FormRutina 
           rutinas={rutinas} 
           setRutinas={setRutinas}
-          setModalVisible={setModalVisible}
+          setModalFormRutina={setModalFormRutina}
           rutinaSeleccionada={rutinaSeleccionada}
+          setRutinaSelecionada={setRutinaSelecionada}
         />
       </Modal>
     </ScrollView>
