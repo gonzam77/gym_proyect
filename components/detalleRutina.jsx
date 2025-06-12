@@ -48,18 +48,18 @@ const DetalleRutina = ({rutinaSeleccionada, setRutinaSelecionada, rutinas, setRu
                 </Pressable>
             </View>
 
-            {   
-                modalVisible?
-                <Modal>
-                    <FormRutina 
-                        rutinaSeleccionada={rutinaSeleccionada}
-                        rutinas={rutinas}
-                        setRutinas={setRutinas}
-                        setModalVisible={setModalVisible}
-                    />
-                </Modal>
-                :null
-            }
+            <Modal
+                visible={modalVisible}
+                animationType="slide"
+                onRequestClose={() => setModalVisible(false)}
+            >
+                <FormRutina 
+                    rutinaSeleccionada={rutinaSeleccionada}
+                    rutinas={rutinas}
+                    setRutinas={setRutinas}
+                    setModalVisible={setModalVisible}
+                />
+            </Modal>
         </View>
 
     )
