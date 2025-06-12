@@ -1,10 +1,7 @@
 import { Modal, Pressable, StyleSheet, Text, View } from "react-native";
 import FormRutina from "./formRutina";
 
-const DetalleRutina = ({id, setId, rutinas, setRutinas, modalVisible, setModalVisible, setModalDetalle, idDetalle})=>{
-    
-    const rutina = rutinas?.find(e=>e.id === idDetalle);
-
+const DetalleRutina = ({rutinaSeleccionada, setRutinaSelecionada, rutinas, setRutinas, modalVisible, setModalVisible, setModalDetalle})=>{
 
     const eliminarRutina =(id) =>{
     
@@ -13,7 +10,10 @@ const DetalleRutina = ({id, setId, rutinas, setRutinas, modalVisible, setModalVi
     return (
         <View style={styles.container}>
             <View style={styles.botonera}>
-                <Pressable style={styles.btnCancelar}onPress={()=>{setModalDetalle(false)}}>
+                <Pressable style={styles.btnCancelar}onPress={()=>{
+                    setRutinaSelecionada({});
+                    setModalDetalle(false);
+                }}>
                     <Text style={styles.btnTexto}>Volver</Text>
                 </Pressable>
                 <Pressable style={styles.btnCancelar}onPress={()=>{setModalVisible(true)}}>
@@ -21,16 +21,16 @@ const DetalleRutina = ({id, setId, rutinas, setRutinas, modalVisible, setModalVi
                 </Pressable>
             </View>
             <Text>
-                {rutina.nombre}
+                {rutinaSeleccionada.nombre}
             </Text>
             <View style={styles.leyenda}>
-                <Text style={styles.titulo}>{rutina.nombre}</Text>
+                <Text style={styles.titulo}>{rutinaSeleccionada.nombre}</Text>
                 <Text style={styles.leyendaTexto}>Seleccione el ejercicio a realizar</Text>
             </View>
             <View style={styles.form}>
                 <View style={styles.listaEjercicios}>
                     {
-                        rutina?.ejercicios?.map((e, index) => (
+                        rutinaSeleccionada?.ejercicios?.map((e, index) => (
                             <Pressable onLongPress={()=>{alert('empezar ejercicio')}} key={e.id} style={styles.ejercicioItem}>
                                 <Text style={styles.ejercicioNombre}>Ejercicio {index + 1}: {e.nombre}</Text>
                                 <Text style={styles.ejercicioDetalle}>{e.series} series x {e.repeticiones} reps</Text>
@@ -52,9 +52,9 @@ const DetalleRutina = ({id, setId, rutinas, setRutinas, modalVisible, setModalVi
                 modalVisible?
                 <Modal>
                     <FormRutina 
-                        id={rutina.id}
-                        setRutinas={setRutinas}
+                        rutinaSeleccionada={rutinaSeleccionada}
                         rutinas={rutinas}
+                        setRutinas={setRutinas}
                         setModalVisible={setModalVisible}
                     />
                 </Modal>

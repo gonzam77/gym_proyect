@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Pressable, Text, TextInput, View, StyleSheet, Modal } from "react-native";
 import FormEjercicio from "./formEjercicio";
 
-const FormRutina = ({rutinas, setRutinas, setModalVisible, id, setId}) => {
+const FormRutina = ({rutinas, setRutinas, setModalVisible, rutinaSeleccionada}) => {
     const [modalFormEjercicio, setModalFormEjercicio] = useState(false);
     const [nuevaRutina, setNuevaRutina] = useState({
         id: '',
@@ -11,13 +11,10 @@ const FormRutina = ({rutinas, setRutinas, setModalVisible, id, setId}) => {
     })
     
     useEffect(() => {
-        if (id) {
-            const selectedRutina = rutinas.find(e => e.id === id);
-            if (selectedRutina) {
-                setNuevaRutina(selectedRutina);
-            }
+        if (rutinaSeleccionada?.id) {
+            setNuevaRutina(rutinaSeleccionada);
         }
-    }, [id]);
+    }, [rutinaSeleccionada]);
 
     const handleChange =(campo, valor) =>{
         setNuevaRutina({
@@ -27,10 +24,10 @@ const FormRutina = ({rutinas, setRutinas, setModalVisible, id, setId}) => {
     };
 
     const handleGuardar = () => {
-        if (id) {
+        if (rutinaSeleccionada?.id) {
             // Editar rutina existente
             const rutinasActualizadas = rutinas.map(rutina => 
-                rutina.id === id ? nuevaRutina : rutina
+                rutina.id === rutinaSeleccionada?.id ? nuevaRutina : rutina
             );
             setRutinas(rutinasActualizadas);
         } else {
@@ -45,7 +42,6 @@ const FormRutina = ({rutinas, setRutinas, setModalVisible, id, setId}) => {
                 nombre:'',
                 ejercicios:[]
         });
-        //setId(null)
         setModalVisible(false);
     };
 
@@ -53,7 +49,7 @@ const FormRutina = ({rutinas, setRutinas, setModalVisible, id, setId}) => {
     return (
         <View style={styles.container}>
             <Text style={styles.titulo}>
-                {id ? 'Editar Rutina' : 'Nueva Rutina'}
+                {rutinaSeleccionada?.id ? 'Editar Rutina' : 'Nueva Rutina'}
             </Text>
 
             <View style={styles.botonera}>
@@ -65,7 +61,6 @@ const FormRutina = ({rutinas, setRutinas, setModalVisible, id, setId}) => {
                             nombre:'',
                             ejercicios:[]
                         });
-                        setId(null);
                         setModalVisible(false)
                     }}
                 >

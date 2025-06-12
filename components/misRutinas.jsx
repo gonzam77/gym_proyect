@@ -3,16 +3,17 @@ import { View, Text, StyleSheet, Pressable, ScrollView, Modal } from "react-nati
 import FormRutina from "./formRutina";
 import DetalleRutina from "./detalleRutina";
 
-const MisRutinas = ({rutinas, setRutinas}) => {
+const MisRutinas = () => {
 
+  const [rutinas,setRutinas] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [modalDetalle, setModalDetalle] = useState(false);
-  
-  const[id, setId] = useState();
+  const [rutinaSeleccionada, setRutinaSelecionada] = useState();
  
   const EntrenamientoItem = ({ dia, nombre, id }) => (
     <Pressable onLongPress={()=>{
-        setId(id);
+        const selectedRutina = rutinas.find(e=>e.id===id)
+        setRutinaSelecionada(selectedRutina)
         setModalDetalle(true)
       }} style={styles.entrenamiento}>
       <Text style={styles.dia}>
@@ -21,7 +22,6 @@ const MisRutinas = ({rutinas, setRutinas}) => {
     </Pressable>
   );
   
-
   let contador = 0;
   
   return (
@@ -59,7 +59,8 @@ const MisRutinas = ({rutinas, setRutinas}) => {
         modalDetalle ?
         <Modal>
           <DetalleRutina
-            idDetalle={id}
+            rutinaSeleccionada={rutinaSeleccionada}
+            setRutinaSelecionada={setRutinaSelecionada}
             rutinas={rutinas}
             setRutinas={setRutinas}
             setModalVisible={setModalVisible}
@@ -77,8 +78,7 @@ const MisRutinas = ({rutinas, setRutinas}) => {
             rutinas={rutinas} 
             setRutinas={setRutinas}
             setModalVisible={setModalVisible}
-            id={id}
-            setId={setId}
+            rutinaSeleccionada={rutinaSeleccionada}
           />
         </Modal>
         : null
