@@ -55,34 +55,36 @@ const MisRutinas = () => {
       }}>
         <Text style={styles.btnTexto}>+ Agregar Rutina</Text>
       </Pressable>
-      {
-        modalDetalle ?
-        <Modal>
-          <DetalleRutina
-            rutinaSeleccionada={rutinaSeleccionada}
-            setRutinaSelecionada={setRutinaSelecionada}
-            rutinas={rutinas}
-            setRutinas={setRutinas}
-            setModalVisible={setModalVisible}
-            modalVisible={modalVisible}
-            setModalDetalle={setModalDetalle}
-          />
-        </Modal>
-          : null
-      }
+      
+      <Modal
+        visible={modalDetalle}
+        animationType="slide"
+        onRequestClose={() => setModalDetalle(false)}
+      >
+        <DetalleRutina
+          rutinaSeleccionada={rutinaSeleccionada}
+          setRutinaSelecionada={setRutinaSelecionada}
+          rutinas={rutinas}
+          setRutinas={setRutinas}
+          setModalVisible={setModalVisible}
+          modalVisible={modalVisible}
+          setModalDetalle={setModalDetalle}
+        />
+      </Modal>
 
-      {
-        modalVisible ?
-        <Modal>
-          <FormRutina 
-            rutinas={rutinas} 
-            setRutinas={setRutinas}
-            setModalVisible={setModalVisible}
-            rutinaSeleccionada={rutinaSeleccionada}
-          />
-        </Modal>
-        : null
-      }
+      <Modal
+        visible={modalVisible}
+        animationType="slide"
+        onRequestClose={() => setModalVisible(false)}
+      >
+        <FormRutina 
+          rutinas={rutinas} 
+          setRutinas={setRutinas}
+          setModalVisible={setModalVisible}
+          rutinaSeleccionada={rutinaSeleccionada}
+        />
+      </Modal>
+
     </ScrollView>
   );
 };
