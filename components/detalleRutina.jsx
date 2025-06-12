@@ -2,10 +2,6 @@ import { Modal, Pressable, StyleSheet, Text, View } from "react-native";
 import FormRutina from "./formRutina";
 
 const DetalleRutina = ({rutinaSeleccionada, setRutinaSelecionada, rutinas, setRutinas, modalVisible, setModalVisible, setModalDetalle})=>{
-
-    const eliminarRutina =(id) =>{
-    
-    }
     
     return (
         <View style={styles.container}>
@@ -48,7 +44,7 @@ const DetalleRutina = ({rutinaSeleccionada, setRutinaSelecionada, rutinas, setRu
                 </Pressable>
             </View>
 
-            <Modal
+            {/* <Modal
                 visible={modalVisible}
                 animationType="slide"
                 onRequestClose={() => setModalVisible(false)}
@@ -59,7 +55,7 @@ const DetalleRutina = ({rutinaSeleccionada, setRutinaSelecionada, rutinas, setRu
                     setRutinas={setRutinas}
                     setModalVisible={setModalVisible}
                 />
-            </Modal>
+            </Modal> */}
 
         </View>
 

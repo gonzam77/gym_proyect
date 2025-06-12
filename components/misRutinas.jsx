@@ -1,20 +1,15 @@
-import { useState } from "react";
+// import { useState } from "react";
 import { View, Text, StyleSheet, Pressable, ScrollView, Modal } from "react-native";
-import FormRutina from "./formRutina";
-import DetalleRutina from "./detalleRutina";
+// import FormRutina from "./formRutina";
+// import DetalleRutina from "./detalleRutina";
 
-const MisRutinas = () => {
-
-  const [rutinas,setRutinas] = useState([]);
-  const [modalVisible, setModalVisible] = useState(false);
-  const [modalDetalle, setModalDetalle] = useState(false);
-  const [rutinaSeleccionada, setRutinaSelecionada] = useState();
+const MisRutinas = ({misRutinas, setModalFormRutinas, setRutinaSeleccionada, setModalDetalleRutinas}) => {
  
   const EntrenamientoItem = ({ dia, nombre, id }) => (
     <Pressable onLongPress={()=>{
-        const selectedRutina = rutinas.find(e=>e.id===id)
-        setRutinaSelecionada(selectedRutina)
-        setModalDetalle(true)
+        const selectedRutina = misRutinas.find(e=>e.id===id)
+        setRutinaSeleccionada(selectedRutina)
+        setModalDetalleRutinas(true)
       }} style={styles.entrenamiento}>
       <Text style={styles.dia}>
         {dia}: <Text style={styles.nombre}>{nombre}</Text>
@@ -29,7 +24,7 @@ const MisRutinas = () => {
       <Text style={styles.titulo}>Mis Rutinas</Text>
 
       {
-        rutinas.length?
+        misRutinas?.length?
         <View style={styles.leyenda}>
           <Text style={styles.leyendaTexto}>Seleccione la rutina de hoy</Text>
         </View>
@@ -40,7 +35,7 @@ const MisRutinas = () => {
       }
 
       {
-        rutinas?.map(e=>{
+        misRutinas?.map(e=>{
           contador += 1;
           return(
               <EntrenamientoItem dia={`DIA ${contador}`} nombre={e.nombre} id={e.id} key={e.id} />
@@ -51,12 +46,12 @@ const MisRutinas = () => {
       <Pressable 
         style={styles.btn} 
         onPress={()=>{
-        setModalVisible(true)
+        setModalFormRutinas(true)
       }}>
         <Text style={styles.btnTexto}>+ Agregar Rutina</Text>
       </Pressable>
-      
-      <Modal
+
+      {/* <Modal
         visible={modalDetalle}
         animationType="slide"
         onRequestClose={() => setModalDetalle(false)}
@@ -70,9 +65,9 @@ const MisRutinas = () => {
           modalVisible={modalVisible}
           setModalDetalle={setModalDetalle}
         />
-      </Modal>
+      </Modal> */}
 
-      <Modal
+      {/* <Modal
         visible={modalVisible}
         animationType="slide"
         onRequestClose={() => setModalVisible(false)}
@@ -83,7 +78,7 @@ const MisRutinas = () => {
           setModalVisible={setModalVisible}
           rutinaSeleccionada={rutinaSeleccionada}
         />
-      </Modal>
+      </Modal> */}
 
     </ScrollView>
   );

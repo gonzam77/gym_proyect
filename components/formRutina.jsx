@@ -110,7 +110,7 @@ const FormRutina = ({rutinas, setRutinas, setModalVisible, rutinaSeleccionada}) 
                     <Text style={styles.btnTexto}>+ Agregar Ejercicio</Text>
             </Pressable>
 
-            <Modal
+            {/* <Modal
                 visible={modalFormEjercicio}
                 animationType="slide"
                 onRequestClose={() => setModalFormEjercicio(false)}
@@ -121,7 +121,7 @@ const FormRutina = ({rutinas, setRutinas, setModalVisible, rutinaSeleccionada}) 
                     modalFormEjercicio={modalFormEjercicio}
                     setModalFormEjercicio={setModalFormEjercicio}
                 /> 
-            </Modal>
+            </Modal> */}
 
         </View>
     );
