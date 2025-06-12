@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Pressable, Text, TextInput, View, StyleSheet, Modal, ScrollView } from "react-native";
+import { Pressable, Text, TextInput, View, StyleSheet, Modal, ScrollView, Alert } from "react-native";
 import FormEjercicio from "./formEjercicio";
 
 const FormRutina = ({rutinas, setRutinas, setModalFormRutina, rutinaSeleccionada,setRutinaSelecionada}) => {
@@ -22,6 +22,14 @@ const FormRutina = ({rutinas, setRutinas, setModalFormRutina, rutinaSeleccionada
             [campo]:valor
         });
     };
+
+    const eliminarEjercicio = (id)=>{
+        const ejerciciosFiltrados = nuevaRutina.ejercicios.filter(e=>e.id !== id)
+        setNuevaRutina({
+            ...nuevaRutina,
+            ejercicios: ejerciciosFiltrados
+        })
+    }
 
     const handleGuardar = () => {
         if (rutinaSeleccionada?.id) {
@@ -106,7 +114,16 @@ const FormRutina = ({rutinas, setRutinas, setModalFormRutina, rutinaSeleccionada
                     <View style={styles.listaEjercicios}>
                         {
                             nuevaRutina?.ejercicios?.map((e, index) => (
-                            <Pressable key={e.id} style={styles.ejercicioItem}>
+                            <Pressable key={e.id} style={styles.ejercicioItem} onLongPress={()=>{
+                                Alert.alert(
+                                    'Eliminar',
+                                    'Seguro que desea eliminar el ejercicio?',
+                                    [
+                                       { text:'Cancelar'}, {text:'Ok, Eliminar', onPress:()=>{eliminarEjercicio(e.id)}}
+                                    ]
+                                )    
+                                
+                            }}>
                                 <Text style={styles.ejercicioNombre}>Ejercicio {index + 1}: {e.nombre}</Text>
                                 <Text style={styles.ejercicioDetalle}>{e.series} series x {e.repeticiones} reps</Text>
                             </Pressable>

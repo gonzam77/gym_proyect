@@ -2,11 +2,13 @@ import {
   Text,
   View,
   SafeAreaView,
-  StyleSheet
+  StyleSheet,
+  Modal
 } from 'react-native';
 
 import MisRutinas from './components/misRutinas';
 import { useState } from 'react';
+import Fuentes from './helpers/funtes';
 
 const App = ()=> {
   

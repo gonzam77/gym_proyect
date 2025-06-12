@@ -1,4 +1,4 @@
-import { Modal, Pressable, StyleSheet, Text, View } from "react-native";
+import { Modal, Pressable, StyleSheet, Text, View, Alert } from "react-native";
 import FormRutina from "./formRutina";
 import { useEffect, useState } from "react";
 
@@ -36,9 +36,18 @@ const DetalleRutina = (
                     <Text style={styles.btnTexto}>Editar</Text>
                 </Pressable>
                 <Pressable style={[styles.btnCancelar,styles.btnEliminar ]}onPress={()=>{
-                    eliminarRutina(rutinaSeleccionada.id);
-                    setRutinaSelecionada({})
-                    setModalDetalle(false)
+                    Alert.alert(
+                        'Eliminar',
+                        'Desea eliminar la rutina?',
+                        [
+                            {text:'Cancelar'}, 
+                            {text:'Ok, Eliminar', onPress:()=>{
+                                eliminarRutina(rutinaSeleccionada.id);
+                                setRutinaSelecionada({})
+                                setModalDetalle(false)
+                            }}
+                        ]
+                    )
                 }}>
                     <Text style={styles.btnEliminarTexto}>Elimniar</Text>
                 </Pressable>
@@ -47,8 +56,8 @@ const DetalleRutina = (
                 {rutinaSeleccionada.nombre}
             </Text>
             <View style={styles.leyenda}>
-                <Text style={styles.titulo}>Detalle:</Text>
-                <Text style={styles.titulo}>Nombre: {rutinaSeleccionada.nombre}</Text>
+                <Text style={styles.titulo}>RUTINA DE HOY</Text>
+                <Text style={styles.titulo}>{rutinaSeleccionada.nombre}</Text>
                 <Text style={styles.leyendaTexto}>Seleccione el ejercicio a realizar</Text>
             </View>
             <View style={styles.form}>

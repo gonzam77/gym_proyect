@@ -98,6 +98,7 @@ const styles = StyleSheet.create({
     paddingTop: 70,
   },
   titulo: {
+    fontFamily: 'Caprasimo-Regular',
     textAlign: 'center',
     color: '#43d112',
     fontSize: 40,
