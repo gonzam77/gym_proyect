@@ -1,6 +1,6 @@
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
-const Descanso = () => {
+const Descanso = ({setModalDescanso}) => {
   return (
     <View style={styles.container}>
       <Text style={styles.titulo}>DESCANSO</Text>
@@ -10,7 +10,7 @@ const Descanso = () => {
         <Text style={styles.tiempo}>1:30</Text>
       </View>
 
-      <Pressable style={styles.btn}>
+      <Pressable style={styles.btn} onPress={()=>{setModalDescanso(false)}}>
         <Text style={styles.btnTexto}>Saltar Descanso</Text>
       </Pressable>
     </View>

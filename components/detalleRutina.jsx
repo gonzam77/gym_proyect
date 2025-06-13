@@ -15,7 +15,7 @@ const DetalleRutina = (
     })=>{
 
     const [ejercicio, setEjercicio] = useState({});
-    const [modalEjercicio, setModdalEjercicio] = useState(false);
+    const [modalEjercicio, setModalEjercicio] = useState(false);
 
     const eliminarRutina = (id)=>{
         const rutinasFiltradas = rutinas.filter(e => e.id !== id);
@@ -71,9 +71,8 @@ const DetalleRutina = (
                             key={e.id} 
                             style={styles.ejercicioItem}
                             onLongPress={()=>{
-                                alert('empezar ejercicio')
                                 setEjercicio(e);
-
+                                setModalEjercicio(true)
                             }} 
                             >
                                 <Text style={styles.ejercicioNombre}>Ejercicio {index + 1}: {e.nombre}</Text>
@@ -100,7 +99,7 @@ const DetalleRutina = (
             <Modal
                 visible={modalEjercicio}
                 animationType="slide"
-                onRequestClose={()=>{setModdalEjercicio(false)}}
+                onRequestClose={()=>{setModalEjercicio(false)}}
             >
                 <DetalleEjercicio
                     ejercicio={ejercicio}
