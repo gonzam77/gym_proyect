@@ -12,9 +12,9 @@ const MisRutinas = () => {
  
   const EntrenamientoItem = ({ dia, nombre, id }) => (
     <Pressable onLongPress={()=>{
-        const selectedRutina = misRutinas.find(e=>e.id===id)
-        setRutinaSeleccionada(selectedRutina)
-        setModalDetalleRutinas(true)
+        const selectedRutina = rutinas.find(e=>e.id===id)
+        setRutinaSelecionada(selectedRutina)
+        setModalDetalle(true)
       }} style={styles.entrenamiento}>
       <Text style={styles.dia}>
         {dia}: <Text style={styles.nombre}>{nombre}</Text>
@@ -29,7 +29,7 @@ const MisRutinas = () => {
       <Text style={styles.titulo}>Mis Rutinas</Text>
 
       {
-        misRutinas?.length?
+        rutinas?.length?
         <View style={styles.leyenda}>
           <Text style={styles.leyendaTexto}>Seleccione la rutina de hoy</Text>
         </View>
@@ -40,7 +40,7 @@ const MisRutinas = () => {
       }
 
       {
-        misRutinas?.map(e=>{
+        rutinas?.map(e=>{
           contador += 1;
           return(
               <EntrenamientoItem dia={`DIA ${contador}`} nombre={e.nombre} id={e.id} key={e.id} />
