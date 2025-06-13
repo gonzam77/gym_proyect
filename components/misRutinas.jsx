@@ -1,7 +1,7 @@
-// import { useState } from "react";
+import { useState } from "react";
 import { View, Text, StyleSheet, Pressable, ScrollView, Modal } from "react-native";
-// import FormRutina from "./formRutina";
-// import DetalleRutina from "./detalleRutina";
+import FormRutina from "./formRutina";
+import DetalleRutina from "./detalleRutina";
 
 const MisRutinas = () => {
 
