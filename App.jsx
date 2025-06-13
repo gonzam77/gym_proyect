@@ -10,6 +10,7 @@ import DetalleRutina from './components/detalleRutina';
 import FormEjercicio from './components/formEjercicio';
 import FormRutina from './components/formRutina';
 import { useState } from 'react';
+import Fuentes from './helpers/funtes';
 
 const App = ()=> {
 

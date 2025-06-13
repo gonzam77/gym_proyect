@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { Pressable, Text, TextInput, View, StyleSheet, Modal } from "react-native";
+import { Pressable, Text, TextInput, View, StyleSheet, Modal, ScrollView, Alert } from "react-native";
 import FormEjercicio from "./formEjercicio";
 
-const FormRutina = ({rutinas, setRutinas, setModalVisible, rutinaSeleccionada}) => {
+const FormRutina = ({rutinas, setRutinas, setModalFormRutina, rutinaSeleccionada,setRutinaSelecionada}) => {
     const [modalFormEjercicio, setModalFormEjercicio] = useState(false);
     const [nuevaRutina, setNuevaRutina] = useState({
         id: '',
@@ -23,13 +23,23 @@ const FormRutina = ({rutinas, setRutinas, setModalVisible, rutinaSeleccionada}) 
         });
     };
 
+    const eliminarEjercicio = (id)=>{
+        const ejerciciosFiltrados = nuevaRutina.ejercicios.filter(e=>e.id !== id)
+        setNuevaRutina({
+            ...nuevaRutina,
+            ejercicios: ejerciciosFiltrados
+        })
+    }
+
     const handleGuardar = () => {
         if (rutinaSeleccionada?.id) {
             // Editar rutina existente
             const rutinasActualizadas = rutinas.map(rutina => 
                 rutina.id === rutinaSeleccionada?.id ? nuevaRutina : rutina
             );
+            setRutinaSelecionada(nuevaRutina);
             setRutinas(rutinasActualizadas);
+            // setRutina(nuevaRutina);
         } else {
             // Crear nueva rutina con id único
             setRutinas([
@@ -42,88 +52,101 @@ const FormRutina = ({rutinas, setRutinas, setModalVisible, rutinaSeleccionada}) 
                 nombre:'',
                 ejercicios:[]
         });
-        setModalVisible(false);
+
+        setModalFormRutina(false);
     };
 
   
     return (
-        <View style={styles.container}>
-            <Text style={styles.titulo}>
-                {rutinaSeleccionada?.id ? 'Editar Rutina' : 'Nueva Rutina'}
-            </Text>
+        <ScrollView style={styles.container}>
 
-            <View style={styles.botonera}>
-                <Pressable 
-                    style={styles.btnCancelar}
-                    onPress={()=>{
-                        setNuevaRutina({
-                            id: '',
-                            nombre:'',
-                            ejercicios:[]
-                        });
-                        setModalVisible(false)
-                    }}
-                >
-                    <Text style={styles.btnTexto}>X Cancelar</Text>
-                </Pressable>
-                <Pressable 
-                    style={styles.btn}
-                    onPress={()=>{
-                        handleGuardar()
-                    }}
-                >
-                    <Text style={styles.btnTexto}>Guardar Rutina</Text>
-                </Pressable>
+            <View >
+                <Text style={styles.titulo}>
+                    {rutinaSeleccionada?.id ? 'Editar Rutina' : 'Nueva Rutina'}
+                </Text>
+
+                <View style={styles.botonera}>
+                    <Pressable 
+                        style={styles.btnCancelar}
+                        onPress={()=>{
+                            setNuevaRutina({
+                                id: '',
+                                nombre:'',
+                                ejercicios:[]
+                            });
+                            setModalFormRutina(false)
+                        }}
+                    >
+                        <Text style={styles.btnTexto}>X Cancelar</Text>
+                    </Pressable>
+                    <Pressable 
+                        style={styles.btn}
+                        onPress={()=>{
+                            handleGuardar()
+                        }}
+                    >
+                        <Text style={styles.btnTexto}>Guardar Rutina</Text>
+                    </Pressable>
 
 
-            </View>
-            
-            
-            <View style={styles.form}>
-                <Text style={styles.label}>Nombre de la rutina</Text>
-                <TextInput
-                style={styles.input}
-                value={nuevaRutina.nombre}
-                onChangeText={(valor)=>{handleChange('nombre',valor)}}
-                placeholder="Ej: Día de pecho"
-                placeholderTextColor="#888"
-                />
-
-                <View style={styles.listaEjercicios}>
-                    {
-                        nuevaRutina?.ejercicios?.map((e, index) => (
-                        <Pressable key={e.id} style={styles.ejercicioItem}>
-                            <Text style={styles.ejercicioNombre}>Ejercicio {index + 1}: {e.nombre}</Text>
-                            <Text style={styles.ejercicioDetalle}>{e.series} series x {e.repeticiones} reps</Text>
-                        </Pressable>
-                        ))
-                    }
                 </View>
+                
+                
+                <View style={styles.form}>
+                    <Text style={styles.label}>Nombre de la rutina</Text>
+                    <TextInput
+                    style={styles.input}
+                    value={nuevaRutina.nombre}
+                    onChangeText={(valor)=>{handleChange('nombre',valor)}}
+                    placeholder="Ej: Día de pecho"
+                    placeholderTextColor="#888"
+                    />
+
+                    <Pressable 
+                        style={styles.btn}
+                        onPress={()=>{
+                            setModalFormEjercicio(!modalFormEjercicio)
+                        }}
+                    >
+                            <Text style={styles.btnTexto}>+ Agregar Ejercicio</Text>
+                    </Pressable>
+
+                    <View style={styles.listaEjercicios}>
+                        {
+                            nuevaRutina?.ejercicios?.map((e, index) => (
+                            <Pressable key={e.id} style={styles.ejercicioItem} onLongPress={()=>{
+                                Alert.alert(
+                                    'Eliminar',
+                                    'Seguro que desea eliminar el ejercicio?',
+                                    [
+                                       { text:'Cancelar'}, {text:'Ok, Eliminar', onPress:()=>{eliminarEjercicio(e.id)}}
+                                    ]
+                                )    
+                                
+                            }}>
+                                <Text style={styles.ejercicioNombre}>Ejercicio {index + 1}: {e.nombre}</Text>
+                                <Text style={styles.ejercicioDetalle}>{e.series} series x {e.repeticiones} reps</Text>
+                            </Pressable>
+                            ))
+                        }
+                    </View>
+                </View>
+
+                
+                <Modal
+                    visible={modalFormEjercicio}
+                    animationType="slide"
+                    onRequestClose={() => setModalFormEjercicio(false)}
+                >
+                    <FormEjercicio 
+                        nuevaRutina={nuevaRutina}
+                        setNuevaRutina={setNuevaRutina}
+                        modalFormEjercicio={modalFormEjercicio}
+                        setModalFormEjercicio={setModalFormEjercicio}
+                    /> 
+                </Modal>
             </View>
-
-            <Pressable 
-                style={styles.btn}
-                onPress={()=>{
-                    setModalFormEjercicio(!modalFormEjercicio)
-                }}
-            >
-                    <Text style={styles.btnTexto}>+ Agregar Ejercicio</Text>
-            </Pressable>
-
-            {/* <Modal
-                visible={modalFormEjercicio}
-                animationType="slide"
-                onRequestClose={() => setModalFormEjercicio(false)}
-            >
-                <FormEjercicio 
-                    nuevaRutina={nuevaRutina}
-                    setNuevaRutina={setNuevaRutina}
-                    modalFormEjercicio={modalFormEjercicio}
-                    setModalFormEjercicio={setModalFormEjercicio}
-                /> 
-            </Modal> */}
-
-        </View>
+        </ScrollView>
     );
 };
 

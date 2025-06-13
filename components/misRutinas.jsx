@@ -3,7 +3,12 @@ import { View, Text, StyleSheet, Pressable, ScrollView, Modal } from "react-nati
 // import FormRutina from "./formRutina";
 // import DetalleRutina from "./detalleRutina";
 
-const MisRutinas = ({misRutinas, setModalFormRutinas, setRutinaSeleccionada, setModalDetalleRutinas}) => {
+const MisRutinas = () => {
+
+  const [rutinas,setRutinas] = useState([]);
+  const [modalFormRutina, setModalFormRutina] = useState(false);
+  const [modalDetalle, setModalDetalle] = useState(false);
+  const [rutinaSeleccionada, setRutinaSelecionada] = useState();
  
   const EntrenamientoItem = ({ dia, nombre, id }) => (
     <Pressable onLongPress={()=>{
@@ -46,12 +51,12 @@ const MisRutinas = ({misRutinas, setModalFormRutinas, setRutinaSeleccionada, set
       <Pressable 
         style={styles.btn} 
         onPress={()=>{
-        setModalFormRutinas(true)
+        setModalFormRutina(true)
       }}>
         <Text style={styles.btnTexto}>+ Agregar Rutina</Text>
       </Pressable>
-
-      {/* <Modal
+      
+      <Modal
         visible={modalDetalle}
         animationType="slide"
         onRequestClose={() => setModalDetalle(false)}
@@ -61,25 +66,25 @@ const MisRutinas = ({misRutinas, setModalFormRutinas, setRutinaSeleccionada, set
           setRutinaSelecionada={setRutinaSelecionada}
           rutinas={rutinas}
           setRutinas={setRutinas}
-          setModalVisible={setModalVisible}
-          modalVisible={modalVisible}
+          setModalFormRutina={setModalFormRutina}
+          modalFormRutina={modalFormRutina}
           setModalDetalle={setModalDetalle}
         />
-      </Modal> */}
+      </Modal>
 
-      {/* <Modal
-        visible={modalVisible}
+      <Modal
+        visible={modalFormRutina}
         animationType="slide"
-        onRequestClose={() => setModalVisible(false)}
+        onRequestClose={() => setModalFormRutina(false)}
       >
         <FormRutina 
           rutinas={rutinas} 
           setRutinas={setRutinas}
-          setModalVisible={setModalVisible}
+          setModalFormRutina={setModalFormRutina}
           rutinaSeleccionada={rutinaSeleccionada}
+          setRutinaSelecionada={setRutinaSelecionada}
         />
-      </Modal> */}
-
+      </Modal>
     </ScrollView>
   );
 };
@@ -93,6 +98,7 @@ const styles = StyleSheet.create({
     paddingTop: 70,
   },
   titulo: {
+    fontFamily: 'Caprasimo-Regular',
     textAlign: 'center',
     color: '#43d112',
     fontSize: 40,
