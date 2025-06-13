@@ -1,6 +1,7 @@
 import { Modal, Pressable, StyleSheet, Text, View, Alert } from "react-native";
-import FormRutina from "./formRutina";
 import { useEffect, useState } from "react";
+import FormRutina from "./formRutina";
+import DetalleEjercicio from "./detalleEjercicio";
 
 const DetalleRutina = (
     {
@@ -13,6 +14,8 @@ const DetalleRutina = (
         setModalDetalle
     })=>{
 
+    const [ejercicio, setEjercicio] = useState({});
+    const [modalEjercicio, setModdalEjercicio] = useState(false);
 
     const eliminarRutina = (id)=>{
         const rutinasFiltradas = rutinas.filter(e => e.id !== id);
@@ -49,7 +52,7 @@ const DetalleRutina = (
                         ]
                     )
                 }}>
-                    <Text style={styles.btnEliminarTexto}>Elimniar</Text>
+                    <Text style={styles.btnEliminarTexto}>Eliminar</Text>
                 </Pressable>
             </View>
             <Text>
@@ -64,7 +67,15 @@ const DetalleRutina = (
                 <View style={styles.listaEjercicios}>
                     {
                         rutinaSeleccionada?.ejercicios?.map((e, index) => (
-                            <Pressable onLongPress={()=>{alert('empezar ejercicio')}} key={e.id} style={styles.ejercicioItem}>
+                            <Pressable 
+                            key={e.id} 
+                            style={styles.ejercicioItem}
+                            onLongPress={()=>{
+                                alert('empezar ejercicio')
+                                setEjercicio(e);
+
+                            }} 
+                            >
                                 <Text style={styles.ejercicioNombre}>Ejercicio {index + 1}: {e.nombre}</Text>
                                 <Text style={styles.ejercicioDetalle}>{e.series} series x {e.repeticiones} reps</Text>
                             </Pressable>
@@ -73,12 +84,6 @@ const DetalleRutina = (
                 </View>
             </View>
             <View>
-                <Pressable onPress={()=>{setModalFormRutina(true)}}>
-                    <Text>Editar</Text>
-                </Pressable>
-                <Pressable>
-                    <Text>Eliminar</Text>
-                </Pressable>
             </View>
 
             <Modal
@@ -89,6 +94,16 @@ const DetalleRutina = (
                 <FormRutina 
                     rutinaSeleccionada={rutinaSeleccionada}
                     setModalFormRutina={setModalFormRutina}
+                />
+            </Modal>
+
+            <Modal
+                visible={modalEjercicio}
+                animationType="slide"
+                onRequestClose={()=>{setModdalEjercicio(false)}}
+            >
+                <DetalleEjercicio
+                    ejercicio={ejercicio}
                 />
             </Modal>
         </View>
