@@ -6,7 +6,7 @@ import DetalleEjercicio from "./detalleEjercicio";
 const DetalleRutina = (
     {
         rutinaSeleccionada, 
-        setRutinaSelecionada, 
+        setRutinaSeleccionada, 
         rutinas, 
         setRutinas,
         modalFormRutina, 
@@ -30,7 +30,7 @@ const DetalleRutina = (
         <View style={styles.container}>
             <View style={styles.botonera}>
                 <Pressable style={styles.btnCancelar}onPress={()=>{
-                    setRutinaSelecionada({});
+                    setRutinaSeleccionada({});
                     setModalDetalle(false);
                 }}>
                     <Text style={styles.btnTexto}>Volver</Text>
@@ -46,7 +46,7 @@ const DetalleRutina = (
                             {text:'Cancelar'}, 
                             {text:'Ok, Eliminar', onPress:()=>{
                                 eliminarRutina(rutinaSeleccionada.id);
-                                setRutinaSelecionada({})
+                                setRutinaSeleccionada({})
                                 setModalDetalle(false)
                             }}
                         ]
@@ -70,7 +70,7 @@ const DetalleRutina = (
                             <Pressable 
                             key={e.id} 
                             style={styles.ejercicioItem}
-                            onLongPress={()=>{
+                            onPress={()=>{
                                 setEjercicio(e);
                                 setModalEjercicio(true)
                             }} 

@@ -1,8 +1,9 @@
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View, Image } from "react-native";
 
 const Descanso = ({setModalDescanso}) => {
   return (
     <View style={styles.container}>
+      <Image style={styles.image} source={require('../assets/img/Logo.png')}></Image>
       <Text style={styles.titulo}>DESCANSO</Text>
 
       <View style={styles.tiempoContainer}>
@@ -24,7 +25,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "black",
-    justifyContent: "center",
     alignItems: "center",
     padding: 20,
   },
@@ -63,4 +63,9 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
   },
+  image:{
+    alignSelf:'center',
+    height:200,
+    width:200,
+  }
 });

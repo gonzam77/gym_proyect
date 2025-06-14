@@ -1,19 +1,52 @@
-import { useState } from "react";
-import { View, Text, StyleSheet, Pressable, ScrollView, Modal } from "react-native";
+import { useEffect, useState } from "react";
+import { View, Text, StyleSheet, Pressable, ScrollView, Modal, Image } from "react-native";
 import FormRutina from "./formRutina";
 import DetalleRutina from "./detalleRutina";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const MisRutinas = () => {
 
   const [rutinas,setRutinas] = useState([]);
   const [modalFormRutina, setModalFormRutina] = useState(false);
   const [modalDetalle, setModalDetalle] = useState(false);
-  const [rutinaSeleccionada, setRutinaSelecionada] = useState();
+  const [rutinaSeleccionada, setRutinaSeleccionada] = useState();
+
+  useEffect(()=>{
+    
+    const obtenerRutinas = async ()=>{
+        
+      try {
+        const rutinasStorage = await AsyncStorage.getItem('gym_rutinas');
+        if(rutinasStorage){
+          setRutinas(JSON.parse(rutinasStorage))
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    obtenerRutinas();
+    
+  },[])
+
+
+  useEffect(()=>{
+    const guardarRutina= async ()=>{
+      if(rutinas){
+        try {
+          const guardarRutina = await AsyncStorage.setItem('gym_rutinas', JSON.stringify(rutinas))
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    }
+    guardarRutina();        
+  },[rutinas])
  
   const EntrenamientoItem = ({ dia, nombre, id }) => (
-    <Pressable onLongPress={()=>{
+    <Pressable onPress={()=>{
         const selectedRutina = rutinas.find(e=>e.id===id)
-        setRutinaSelecionada(selectedRutina)
+        setRutinaSeleccionada(selectedRutina)
         setModalDetalle(true)
       }} style={styles.entrenamiento}>
       <Text style={styles.dia}>
@@ -26,6 +59,7 @@ const MisRutinas = () => {
   
   return (
     <ScrollView contentContainerStyle={styles.container}>
+      <Image style={styles.image} source={require('../assets/img/Logo.png')}/>
       <Text style={styles.titulo}>Mis Rutinas</Text>
 
       {
@@ -63,7 +97,7 @@ const MisRutinas = () => {
       >
         <DetalleRutina
           rutinaSeleccionada={rutinaSeleccionada}
-          setRutinaSelecionada={setRutinaSelecionada}
+          setRutinaSeleccionada={setRutinaSeleccionada}
           rutinas={rutinas}
           setRutinas={setRutinas}
           setModalFormRutina={setModalFormRutina}
@@ -82,7 +116,7 @@ const MisRutinas = () => {
           setRutinas={setRutinas}
           setModalFormRutina={setModalFormRutina}
           rutinaSeleccionada={rutinaSeleccionada}
-          setRutinaSelecionada={setRutinaSelecionada}
+          setRutinaSeleccionada={setRutinaSeleccionada}
         />
       </Modal>
     </ScrollView>
@@ -94,8 +128,8 @@ export default MisRutinas;
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#000',
-    paddingBottom: 40,
-    paddingTop: 70,
+    paddingBottom: 20,
+    paddingTop: 30,
   },
   titulo: {
     fontFamily: 'Caprasimo-Regular',
@@ -148,5 +182,10 @@ const styles = StyleSheet.create({
     color: '#000',
     fontWeight: 'bold',
   },
+  image:{
+    alignSelf:'center',
+    height:150,
+    width:150,
+  }
 });
  

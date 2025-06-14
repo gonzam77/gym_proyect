@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Pressable, Text, TextInput, View, StyleSheet, Modal, ScrollView, Alert } from "react-native";
 import FormEjercicio from "./formEjercicio";
 
-const FormRutina = ({rutinas, setRutinas, setModalFormRutina, rutinaSeleccionada,setRutinaSelecionada}) => {
+const FormRutina = ({rutinas, setRutinas, setModalFormRutina, rutinaSeleccionada,setRutinaSeleccionada}) => {
     const [modalFormEjercicio, setModalFormEjercicio] = useState(false);
     const [nuevaRutina, setNuevaRutina] = useState({
         id: '',
@@ -36,7 +36,7 @@ const FormRutina = ({rutinas, setRutinas, setModalFormRutina, rutinaSeleccionada
             const rutinasActualizadas = rutinas.map(rutina => 
                 rutina.id === rutinaSeleccionada?.id ? nuevaRutina : rutina
             );
-            setRutinaSelecionada(nuevaRutina);
+            setRutinaSeleccionada(nuevaRutina);
             setRutinas(rutinasActualizadas);
         } else {
             setRutinas([
@@ -111,7 +111,7 @@ const FormRutina = ({rutinas, setRutinas, setModalFormRutina, rutinaSeleccionada
                     <View style={styles.listaEjercicios}>
                         {
                             nuevaRutina?.ejercicios?.map((e, index) => (
-                            <Pressable key={e.id} style={styles.ejercicioItem} onLongPress={()=>{
+                            <Pressable key={e.id} style={styles.ejercicioItem} onPress={()=>{
                                 console.log(e);
                                 
                                 Alert.alert(
