@@ -117,10 +117,14 @@ const styles = StyleSheet.create({
   entrenamiento: {
     marginHorizontal: 15,
     marginBottom: 25,
-    backgroundColor: '#1a1a1a',
+    backgroundColor: '#373737',
     borderRadius: 12,
     padding: 15,
-    elevation: 2,
+    elevation: 10,
+    borderBottomWidth: 2,
+    borderBottomColor: '#43d112',
+    borderRightWidth: 2,
+    borderRightColor: '#43d112',
   },
   dia: {
     color: '#43d112',

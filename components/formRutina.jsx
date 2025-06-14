@@ -33,18 +33,15 @@ const FormRutina = ({rutinas, setRutinas, setModalFormRutina, rutinaSeleccionada
 
     const handleGuardar = () => {
         if (rutinaSeleccionada?.id) {
-            // Editar rutina existente
             const rutinasActualizadas = rutinas.map(rutina => 
                 rutina.id === rutinaSeleccionada?.id ? nuevaRutina : rutina
             );
             setRutinaSelecionada(nuevaRutina);
             setRutinas(rutinasActualizadas);
-            // setRutina(nuevaRutina);
         } else {
-            // Crear nueva rutina con id único
             setRutinas([
                 ...rutinas,
-                { ...nuevaRutina, id: Date.now() } // aseguramos nuevo id
+                { ...nuevaRutina, id: Date.now() } 
             ]);
         }
         setNuevaRutina({
@@ -115,11 +112,14 @@ const FormRutina = ({rutinas, setRutinas, setModalFormRutina, rutinaSeleccionada
                         {
                             nuevaRutina?.ejercicios?.map((e, index) => (
                             <Pressable key={e.id} style={styles.ejercicioItem} onLongPress={()=>{
+                                console.log(e);
+                                
                                 Alert.alert(
-                                    'Eliminar',
-                                    'Seguro que desea eliminar el ejercicio?',
+                                    'Atencion',
+                                    'Desea eliminar el ejericio?',
                                     [
-                                       { text:'Cancelar'}, {text:'Ok, Eliminar', onPress:()=>{eliminarEjercicio(e.id)}}
+                                       {text:'Cancelar'},
+                                       {text:'Eliminar', onPress:()=>{eliminarEjercicio(e.id)}}
                                     ]
                                 )    
                                 
@@ -132,7 +132,6 @@ const FormRutina = ({rutinas, setRutinas, setModalFormRutina, rutinaSeleccionada
                     </View>
                 </View>
 
-                
                 <Modal
                     visible={modalFormEjercicio}
                     animationType="slide"
@@ -152,75 +151,78 @@ const FormRutina = ({rutinas, setRutinas, setModalFormRutina, rutinaSeleccionada
 
 export default FormRutina;
 
-
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "black",
-    padding: 20,
-  },
-  botonera:{
-    flexDirection:'row',
-    justifyContent:'space-around'
-  },
-  titulo: {
-    fontSize: 32,
-    fontWeight: "900",
-    color: "#43d112",
-    textAlign: "center",
-    marginBottom: 30,
-  },
-  form: {
-    marginVertical: 30,
-  },
-  label: {
-    color: "#eefa07",
-    fontSize: 18,
-    fontWeight: "700",
-    marginBottom: 5,
-  },
-  input: {
-    backgroundColor: "#fff",
-    color: "#000",
-    borderRadius: 10,
-    paddingVertical: 10,
-    paddingHorizontal: 15,
-    marginBottom: 20,
-    fontSize: 16,
-  },
-  btn: {
-    backgroundColor: "#43d112",
-    borderRadius: 30,
-    marginVertical:15,
-    paddingVertical: 5,
-    paddingHorizontal: 15,
-    alignSelf: "center",
-    elevation: 3,
-  },
-  btnCancelar: {
-    backgroundColor: "#eefa07",
-    borderRadius: 30,
-    paddingVertical: 5,
-    paddingHorizontal: 15,
-    alignSelf: "center",
-    elevation: 3,
-  },
-  btnTexto: {
-    fontSize: 18,
-    color: "#000",
-    fontWeight: "bold",
-    textAlign: "center",
-  },
+    container: {
+        flex: 1,
+        backgroundColor: "black",
+        padding: 20,
+    },
+        botonera:{
+        flexDirection:'row',
+        justifyContent:'space-around'
+    },
+    titulo: {
+        fontSize: 32,
+        fontWeight: "900",
+        color: "#43d112",
+        textAlign: "center",
+        marginBottom: 30,
+    },
+    form: {
+        marginVertical: 30,
+    },
+    label: {
+        color: "#eefa07",
+        fontSize: 18,
+        fontWeight: "700",
+        marginBottom: 5,
+    },
+    input: {
+        backgroundColor: "#fff",
+        color: "#000",
+        borderRadius: 10,
+        paddingVertical: 10,
+        paddingHorizontal: 15,
+        marginBottom: 20,
+        fontSize: 16,
+    },
+    btn: {
+        backgroundColor: "#43d112",
+        borderRadius: 30,
+        marginVertical:15,
+        paddingVertical: 5,
+        paddingHorizontal: 15,
+        alignSelf: "center",
+        elevation: 3,
+    },
+    btnCancelar: {
+        backgroundColor: "#eefa07",
+        borderRadius: 30,
+        paddingVertical: 5,
+        paddingHorizontal: 15,
+        alignSelf: "center",
+        elevation: 3,
+    },
+    btnTexto: {
+        fontSize: 18,
+        color: "#000",
+        fontWeight: "bold",
+        textAlign: "center",
+    },
     listaEjercicios: {
         marginTop: 20,
         marginBottom: 20,
     },
     ejercicioItem: {
-        backgroundColor: "#1a1a1a",
+        backgroundColor: "#373737",
         borderRadius: 10,
         padding: 15,
         marginBottom: 15,
-        elevation: 2,
+        elevation: 10,
+        borderBottomWidth: 2,
+        borderBottomColor: '#43d112',
+        borderRightWidth: 2,
+        borderRightColor: '#43d112',
     },
     ejercicioNombre: {
         color: "#43d112",

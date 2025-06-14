@@ -240,7 +240,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   pickerWrapper: {
-    backgroundColor: "#1a1a1a",
+    backgroundColor: "#373737",
     borderRadius: 10,
     marginBottom: 15,
   },

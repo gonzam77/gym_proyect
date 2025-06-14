@@ -103,6 +103,7 @@ const DetalleRutina = (
             >
                 <DetalleEjercicio
                     ejercicio={ejercicio}
+                    setModalEjercicio={setModalEjercicio}
                 />
             </Modal>
         </View>
@@ -189,13 +190,17 @@ const styles = StyleSheet.create({
         marginTop: 20,
         marginBottom: 20,
     },
-    ejercicioItem: {
-        backgroundColor: "#1a1a1a",
-        borderRadius: 10,
-        padding: 15,
-        marginBottom: 15,
-        elevation: 2,
-    },
+ejercicioItem: {
+    backgroundColor: "#373737",
+    borderRadius: 10,
+    padding: 15,
+    marginBottom: 15,
+    elevation: 10,
+    borderBottomWidth: 2,
+    borderBottomColor: '#43d112',
+    borderRightWidth: 2,
+    borderRightColor: '#43d112',
+},
     ejercicioNombre: {
         color: "#43d112",
         fontSize: 18,

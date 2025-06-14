@@ -12,7 +12,9 @@
   "dependencies": {
     "@react-native-picker/picker": "^2.11.0",
     "react": "19.0.0",
-    "react-native": "0.79.3"
+    "react-native": "0.79.3",
+    "react-native-date-picker": "^5.0.13",
+    "react-native-timer-picker": "^2.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
