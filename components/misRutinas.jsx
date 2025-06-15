@@ -58,78 +58,79 @@ const MisRutinas = () => {
   let contador = 0;
   
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <Image style={styles.image} source={require('../assets/img/Logo.png')}/>
-      <Text style={styles.titulo}>Mis Rutinas</Text>
+  <ScrollView contentContainerStyle={styles.container}>
+    <Image style={styles.image} source={require('../assets/img/Logo.png')} />
 
-      {
-        rutinas?.length?
-        <View style={styles.leyenda}>
-          <Text style={styles.leyendaTexto}>Seleccione la rutina de hoy</Text>
-        </View>
-        :
+    <Pressable
+      style={styles.btnCircular}
+      onPress={() => {
+        setModalFormRutina(true);
+      }}
+    >
+      <Text style={styles.btnTextoCircular}>+</Text>
+    </Pressable>
+
+    {
+      rutinas?.length ? null : (
         <View style={styles.leyenda}>
           <Text style={styles.leyendaTexto}>Aun no ha programado rutinas</Text>
         </View>
-      }
+      )
+    }
 
-      {
-        rutinas?.map(e=>{
-          contador += 1;
-          return(
-              <EntrenamientoItem dia={`DIA ${contador}`} nombre={e.nombre} id={e.id} key={e.id} />
-          )
-        })
-      }
-
-      <Pressable 
-        style={styles.btn} 
-        onPress={()=>{
-        setModalFormRutina(true)
-      }}>
-        <Text style={styles.btnTexto}>+ Agregar Rutina</Text>
-      </Pressable>
-      
-      <Modal
-        visible={modalDetalle}
-        animationType="slide"
-        onRequestClose={() => setModalDetalle(false)}
-      >
-        <DetalleRutina
-          rutinaSeleccionada={rutinaSeleccionada}
-          setRutinaSeleccionada={setRutinaSeleccionada}
-          rutinas={rutinas}
-          setRutinas={setRutinas}
-          setModalFormRutina={setModalFormRutina}
-          modalFormRutina={modalFormRutina}
-          setModalDetalle={setModalDetalle}
+    {
+      rutinas?.map((e, index) => (
+        <EntrenamientoItem
+          dia={`DIA ${index + 1}`}
+          nombre={e.nombre}
+          id={e.id}
+          key={e.id}
         />
-      </Modal>
+      ))
+    }
 
-      <Modal
-        visible={modalFormRutina}
-        animationType="slide"
-        onRequestClose={() => setModalFormRutina(false)}
-      >
-        <FormRutina 
-          rutinas={rutinas} 
-          setRutinas={setRutinas}
-          setModalFormRutina={setModalFormRutina}
-          rutinaSeleccionada={rutinaSeleccionada}
-          setRutinaSeleccionada={setRutinaSeleccionada}
-        />
-      </Modal>
-    </ScrollView>
-  );
+    {/* Modales */}
+    <Modal
+      visible={modalDetalle}
+      animationType="slide"
+      onRequestClose={() => setModalDetalle(false)}
+    >
+      <DetalleRutina
+        rutinaSeleccionada={rutinaSeleccionada}
+        setRutinaSeleccionada={setRutinaSeleccionada}
+        rutinas={rutinas}
+        setRutinas={setRutinas}
+        setModalFormRutina={setModalFormRutina}
+        modalFormRutina={modalFormRutina}
+        setModalDetalle={setModalDetalle}
+      />
+    </Modal>
+
+    <Modal
+      visible={modalFormRutina}
+      animationType="slide"
+      onRequestClose={() => setModalFormRutina(false)}
+    >
+      <FormRutina
+        rutinas={rutinas}
+        setRutinas={setRutinas}
+        setModalFormRutina={setModalFormRutina}
+        rutinaSeleccionada={rutinaSeleccionada}
+        setRutinaSeleccionada={setRutinaSeleccionada}
+      />
+    </Modal>
+  </ScrollView>
+);
+
 };
 
 export default MisRutinas;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#000',
+    backgroundColor: 'transparent', // importante para que se vea el fondo
     paddingBottom: 20,
-    paddingTop: 30,
+    paddingTop: 70,
   },
   titulo: {
     fontFamily: 'Caprasimo-Regular',
@@ -150,7 +151,7 @@ const styles = StyleSheet.create({
   },
   entrenamiento: {
     marginHorizontal: 15,
-    marginBottom: 25,
+    marginVertical: 20,
     backgroundColor: '#373737',
     borderRadius: 12,
     padding: 15,
@@ -186,6 +187,25 @@ const styles = StyleSheet.create({
     alignSelf:'center',
     height:150,
     width:150,
-  }
+    marginBottom:50
+  },
+  btnCircular: {
+    backgroundColor: '#43d112',
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'flex-end',
+    marginBottom: 30,
+    marginRight: 30,
+    elevation: 6,
+  },
+  btnTextoCircular: {
+    color: '#000',
+    fontSize: 30,
+    fontWeight: 'bold',
+  },
+
 });
  

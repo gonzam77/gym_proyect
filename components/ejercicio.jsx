@@ -32,7 +32,7 @@ export default Ejercicio;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "black",
+    backgroundColor: '#000',
     paddingVertical: 40,
     paddingHorizontal: 20,
     flexGrow: 1,

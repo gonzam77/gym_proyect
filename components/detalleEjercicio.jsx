@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import { Modal, Pressable, Text, View, StyleSheet, ScrollView } from "react-native";
 import Descanso from "./descanso";
+import Icon from 'react-native-vector-icons/Ionicons'; // o MaterialIcons si preferís
+import IconPlay from 'react-native-vector-icons/MaterialIcons';// o MaterialIcons si preferís
+
 
 const DetalleEjercicio = ({ ejercicio, setModalEjercicio }) => {
   const [modalDescanso, setModalDescanso] = useState(false);
@@ -16,11 +19,11 @@ const DetalleEjercicio = ({ ejercicio, setModalEjercicio }) => {
       <ScrollView >
         {
           serie < ejercicio.series ?
-          <View style={styles.volver}>
-            <Pressable style={styles.btnVolver} onPress={()=>{
+          <View style={styles.botonera}>
+            <Pressable style={styles.iconButton} onPress={()=>{
               setModalEjercicio(false);
             }}>
-              <Text style={styles.btnTexto}>X</Text>
+              <Icon name="arrow-back-circle" size={40} color="#eefa07" />
             </Pressable>
           </View>
             : null
@@ -75,7 +78,7 @@ const DetalleEjercicio = ({ ejercicio, setModalEjercicio }) => {
               style={styles.btn}
               onPress={() => setEstado(true)}
             >
-              <Text style={styles.btnTexto}>Comenzar Serie</Text>
+              <IconPlay name="play-circle-outline" size={40} color="#000" />
             </Pressable>
           )
         }
@@ -83,7 +86,7 @@ const DetalleEjercicio = ({ ejercicio, setModalEjercicio }) => {
         <Modal visible={modalDescanso} animationType="slide">
           <Descanso
             descanso={ejercicio.descanso}
-            serie={serie}
+            ejercicio={ejercicio}
             setModalDescanso={setModalDescanso}
           />
         </Modal>
@@ -97,7 +100,7 @@ export default DetalleEjercicio;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#000",
+    backgroundColor: '#000',
     padding: 20,
     justifyContent: "start",
   },
@@ -176,9 +179,18 @@ const styles = StyleSheet.create({
     fontSize:23,
     fontWeight:'800'
   },
-  volver:{
-    flex:1,
-    flexDirection:'row',
-    justifyContent:'flex-end'
+  iconButton: {
+    marginHorizontal: 10,
+    backgroundColor: "#1a1a1a",
+    borderRadius: 50,
+    padding: 10,
+    elevation: 5,
   },
+  botonera: {
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+    alignItems: "center",
+    marginVertical: 20,
+  },
+
 });

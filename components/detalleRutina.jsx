@@ -2,6 +2,8 @@ import { Modal, Pressable, StyleSheet, Text, View, Alert } from "react-native";
 import { useEffect, useState } from "react";
 import FormRutina from "./formRutina";
 import DetalleEjercicio from "./detalleEjercicio";
+import Icon from 'react-native-vector-icons/Ionicons'; // o MaterialIcons si preferís
+
 
 const DetalleRutina = (
     {
@@ -29,39 +31,55 @@ const DetalleRutina = (
     return (
         <View style={styles.container}>
             <View style={styles.botonera}>
-                <Pressable style={styles.btnCancelar}onPress={()=>{
+                <Pressable
+                    style={styles.iconButton}
+                    onPress={() => {
                     setRutinaSeleccionada({});
                     setModalDetalle(false);
-                }}>
-                    <Text style={styles.btnTexto}>Volver</Text>
+                    }}
+                >
+                    <Icon name="arrow-back-circle" size={40} color="#eefa07" />
                 </Pressable>
-                <Pressable style={styles.btnCancelar}onPress={()=>{setModalFormRutina(true)}}>
-                    <Text style={styles.btnTexto}>Editar</Text>
+
+                <Pressable
+                    style={styles.iconButton}
+                    onPress={() => {
+                    setModalFormRutina(true);
+                    }}
+                >
+                    <Icon name="create" size={40} color="#43d112" />
                 </Pressable>
-                <Pressable style={[styles.btnCancelar,styles.btnEliminar ]}onPress={()=>{
-                    Alert.alert(
-                        'Eliminar',
-                        'Desea eliminar la rutina?',
-                        [
-                            {text:'Cancelar'}, 
-                            {text:'Ok, Eliminar', onPress:()=>{
-                                eliminarRutina(rutinaSeleccionada.id);
-                                setRutinaSeleccionada({})
-                                setModalDetalle(false)
-                            }}
-                        ]
-                    )
-                }}>
-                    <Text style={styles.btnEliminarTexto}>Eliminar</Text>
+
+                <Pressable
+                    style={styles.iconButton}
+                    onPress={() => {
+                    Alert.alert("Eliminar", "Desea eliminar la rutina?", [
+                        { text: "Cancelar" },
+                        {
+                        text: "Ok, Eliminar",
+                        onPress: () => {
+                            eliminarRutina(rutinaSeleccionada.id);
+                            setRutinaSeleccionada({});
+                            setModalDetalle(false);
+                        },
+                        },
+                    ]);
+                    }}
+                >
+                    <Icon name="trash" size={40} color="#ff4c4c" />
                 </Pressable>
             </View>
+
             <Text>
                 {rutinaSeleccionada.nombre}
             </Text>
             <View style={styles.leyenda}>
                 <Text style={styles.titulo}>RUTINA DE HOY</Text>
                 <Text style={styles.titulo}>{rutinaSeleccionada.nombre}</Text>
-                <Text style={styles.leyendaTexto}>Seleccione el ejercicio a realizar</Text>
+                {/* { rutinaSeleccionada?.ejercicio?.length?
+                    <Text style={styles.leyendaTexto}>Seleccione el ejercicio a realizar</Text>
+                    :null
+                } */}
             </View>
             <View style={styles.form}>
                 <View style={styles.listaEjercicios}>
@@ -116,8 +134,9 @@ export default DetalleRutina;
 const styles = StyleSheet.create({
     container: {
     flex: 1,
-    backgroundColor: "black",
-    padding: 20,
+    backgroundColor:'#000',
+    paddingHorizontal: 20,
+    paddingTop:30
   },
   leyendaTexto: {
     textAlign: 'center',
@@ -127,7 +146,8 @@ const styles = StyleSheet.create({
   },
   botonera:{
     flexDirection:'row',
-    justifyContent:'space-around'
+    justifyContent:'space-around',
+    marginBottom:30
   },
   titulo: {
     fontSize: 32,
@@ -211,5 +231,19 @@ ejercicioItem: {
         color: "#eefa07",
         fontSize: 16,
         fontWeight: "600",
-    },
+    },  
+    iconButton: {
+    marginHorizontal: 10,
+    backgroundColor: "#1a1a1a",
+    borderRadius: 50,
+    padding: 10,
+    elevation: 5,
+  },
+  botonera: {
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+    alignItems: "center",
+    marginVertical: 20,
+  },
+
 })

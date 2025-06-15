@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { Pressable, Text, TextInput, View, StyleSheet, Modal, ScrollView, Alert } from "react-native";
 import FormEjercicio from "./formEjercicio";
+import Toast from "react-native-toast-message";
+import Icon from 'react-native-vector-icons/Ionicons';
 
 const FormRutina = ({rutinas, setRutinas, setModalFormRutina, rutinaSeleccionada,setRutinaSeleccionada}) => {
     const [modalFormEjercicio, setModalFormEjercicio] = useState(false);
@@ -64,7 +66,7 @@ const FormRutina = ({rutinas, setRutinas, setModalFormRutina, rutinaSeleccionada
 
                 <View style={styles.botonera}>
                     <Pressable 
-                        style={styles.btnCancelar}
+                    style={styles.iconButton}
                         onPress={()=>{
                             setNuevaRutina({
                                 id: '',
@@ -74,15 +76,22 @@ const FormRutina = ({rutinas, setRutinas, setModalFormRutina, rutinaSeleccionada
                             setModalFormRutina(false)
                         }}
                     >
-                        <Text style={styles.btnTexto}>X Cancelar</Text>
+                        <Icon name="arrow-back-circle" size={40} color="#eefa07" />
                     </Pressable>
                     <Pressable 
-                        style={styles.btn}
+                        style={styles.iconButton}
                         onPress={()=>{
-                            handleGuardar()
+                            Toast.show({
+                                type: 'success',
+                                text1: '¡Guardado con éxito!',
+                                text2: 'Tu rutina fue guardada correctamente.',
+                            });
+                            setTimeout(() => {
+                                handleGuardar();
+                            }, "2000");
                         }}
                     >
-                        <Text style={styles.btnTexto}>Guardar Rutina</Text>
+                        <Icon name="save-sharp" size={40} color="#43d112" />
                     </Pressable>
 
 
@@ -98,15 +107,25 @@ const FormRutina = ({rutinas, setRutinas, setModalFormRutina, rutinaSeleccionada
                     placeholder="Ej: Día de pecho"
                     placeholderTextColor="#888"
                     />
+                    <View style={styles.botonera}>
+                        <Pressable 
+                            style={[styles.iconButton, {
+                                borderColor:'#43d112',
+                                borderWidth:4,
+                                flexDirection:'row',
+                            }]}
+                            onPress={()=>{
+                                setModalFormEjercicio(!modalFormEjercicio)
+                            }}
+                        >
+                            <Icon name="barbell-sharp" size={40} color="#43d112" />
+                        </Pressable>
+                    </View>
 
-                    <Pressable 
-                        style={styles.btn}
-                        onPress={()=>{
-                            setModalFormEjercicio(!modalFormEjercicio)
-                        }}
-                    >
-                            <Text style={styles.btnTexto}>+ Agregar Ejercicio</Text>
-                    </Pressable>
+                    {
+                        nuevaRutina.ejercicios.length ?
+                        <Text style={styles.label}>Seleccione para eliminar</Text>: null
+                    }
 
                     <View style={styles.listaEjercicios}>
                         {
@@ -145,6 +164,7 @@ const FormRutina = ({rutinas, setRutinas, setModalFormRutina, rutinaSeleccionada
                     /> 
                 </Modal>
             </View>
+            <Toast />
         </ScrollView>
     );
 };
@@ -154,12 +174,8 @@ export default FormRutina;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "black",
+        backgroundColor: '#000',
         padding: 20,
-    },
-        botonera:{
-        flexDirection:'row',
-        justifyContent:'space-around'
     },
     titulo: {
         fontSize: 32,
@@ -186,29 +202,6 @@ const styles = StyleSheet.create({
         marginBottom: 20,
         fontSize: 16,
     },
-    btn: {
-        backgroundColor: "#43d112",
-        borderRadius: 30,
-        marginVertical:15,
-        paddingVertical: 5,
-        paddingHorizontal: 15,
-        alignSelf: "center",
-        elevation: 3,
-    },
-    btnCancelar: {
-        backgroundColor: "#eefa07",
-        borderRadius: 30,
-        paddingVertical: 5,
-        paddingHorizontal: 15,
-        alignSelf: "center",
-        elevation: 3,
-    },
-    btnTexto: {
-        fontSize: 18,
-        color: "#000",
-        fontWeight: "bold",
-        textAlign: "center",
-    },
     listaEjercicios: {
         marginTop: 20,
         marginBottom: 20,
@@ -234,6 +227,19 @@ const styles = StyleSheet.create({
         color: "#eefa07",
         fontSize: 16,
         fontWeight: "600",
+    },
+    iconButton: {
+        marginHorizontal: 10,
+        backgroundColor: "#1a1a1a",
+        borderRadius: 50,
+        padding: 10,
+        elevation: 5,
+    },
+    botonera: {
+        flexDirection: "row",
+        justifyContent: "space-evenly",
+        alignItems: "center",
+        marginVertical: 20,
     },
 
 });

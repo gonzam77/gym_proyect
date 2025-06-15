@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { Pressable, Text, TextInput, View, StyleSheet, Alert } from "react-native";
 import ejercicios from "../helpers/ejercicios";
 import { Picker } from "@react-native-picker/picker";
+import Icon from 'react-native-vector-icons/Ionicons'; // o MaterialIcons si preferís
+ 
 
 const FormEjercicio = ({nuevaRutina, setNuevaRutina, setModalFormEjercicio, id}) => {
   const [errores, setErrores] = useState("");
@@ -96,7 +98,16 @@ const FormEjercicio = ({nuevaRutina, setNuevaRutina, setModalFormEjercicio, id})
 
   return (
     <View style={styles.container}>
-      <Text style={styles.titulo}>Formulario Ejercicio</Text>
+      <Text style={styles.titulo}>Personalizar Ejercicio</Text>
+
+      <View style={styles.botonera}>
+        <Pressable style={styles.iconButton} onPress={()=>setModalFormEjercicio(false)}>
+          <Icon name="arrow-back-circle" size={40} color="#eefa07" />
+        </Pressable>
+        <Pressable style={styles.iconButton} onPress={handleGuardar}>
+          <Icon name="save-sharp" size={40} color="#43d112" />
+        </Pressable>
+      </View>
 
       <View style={styles.seccion}>
         <Text style={styles.label}>Categoría</Text>
@@ -176,30 +187,45 @@ const FormEjercicio = ({nuevaRutina, setNuevaRutina, setModalFormEjercicio, id})
           onChangeText={v => handleChange("repeticiones", v)}
         />
 
-        <Text style={styles.label}>Peso Estimado</Text>
+        <Text style={styles.label}>Peso Estimado (Kgs)</Text>
         <TextInput
           style={styles.input}
           keyboardType="numeric"
           onChangeText={v => handleChange("peso", v)}
         />
-
-        <Text style={styles.label}>Descanso (minutos)</Text>
+        <Text style={styles.label}>Descanso</Text>
+        <View style={styles.pickerWrapper}>
+          <Picker
+            style={styles.picker}
+            selectedValue={ejercicio.descanso}
+            dropdownIconColor="#fff"
+            onValueChange={v => handleChange("descanso", v)}
+          >
+            <Picker.Item label="--Minutos de descanso--" value=''></Picker.Item>
+            <Picker.Item label="1 Min" value='1'></Picker.Item>
+            <Picker.Item label="2 Min" value='2'></Picker.Item>
+            <Picker.Item label="3 Min" value='3'></Picker.Item>
+            <Picker.Item label="4 Min" value='4'></Picker.Item>
+            <Picker.Item label="5 Min" value='5'></Picker.Item>
+            <Picker.Item label="6 Min" value='6'></Picker.Item>
+            <Picker.Item label="7 Min" value='7'></Picker.Item>
+            <Picker.Item label="8 Min" value='8'></Picker.Item>
+            <Picker.Item label="9 Min" value='9'></Picker.Item>
+            <Picker.Item label="10 Min" value='10'></Picker.Item>
+          </Picker>
+        </View>
+  
+        {/* <Text style={styles.label}>Descanso (minutos)</Text>
         <TextInput
           style={styles.input}
           keyboardType="numeric"
           onChangeText={v => handleChange("descanso", v)}
-        />
+        /> */}
       </View>
 
       {errores !== "" && <Text style={styles.error}>{errores}</Text>}
 
-       <Pressable style={styles.btn} onPress={handleGuardar}>
-        <Text style={styles.btnTexto}>Guardar Ejercicio</Text>
-      </Pressable>
-
-      <Pressable style={styles.btnCancelar} onPress={()=>setModalFormEjercicio(false)}>
-        <Text style={styles.btnTexto}>Cancelar</Text>
-      </Pressable>
+       
      
     </View>
   );
@@ -211,7 +237,7 @@ export default FormEjercicio;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "black",
+    backgroundColor: '#000',
     padding: 20,
   },
   titulo: {
@@ -272,5 +298,18 @@ const styles = StyleSheet.create({
     color: "red",
     marginBottom: 10,
     textAlign: "center",
+  },
+  iconButton: {
+    marginHorizontal: 10,
+    backgroundColor: "#1a1a1a",
+    borderRadius: 50,
+    padding: 10,
+    elevation: 5,
+  },
+  botonera: {
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+    alignItems: "center",
+    marginVertical: 20,
   },
 });
