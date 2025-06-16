@@ -1,35 +1,51 @@
 import { Pressable, StyleSheet, Text, View, Image } from "react-native";
 import { useState, useRef, useEffect } from "react";
+import BackgroundTimer from 'react-native-background-timer';
 
-const Descanso = ({setModalDescanso, ejercicio}) => {
-
-  console.log('ejercicio.descanso',ejercicio.descanso); // me devuelve 2
-  
-
+const Descanso = ({ setModalDescanso, ejercicio }) => {
   const segundosTotales = ejercicio.descanso * 60;
 
   const [segundos, setSegundos] = useState(segundosTotales);
   const [activo, setActivo] = useState(true);
   const intervaloRef = useRef(null);
 
-
   useEffect(() => {
-    if (activo && segundos > 0) {
-      intervaloRef.current = setInterval(() => {
-        setSegundos((prev) => prev - 1);
-      }, 1000);
-    } else {
-      clearInterval(intervaloRef.current);
+    // Limpiamos intervalo anterior si existía
+    if (intervaloRef.current !== null) {
+      BackgroundTimer.clearInterval(intervaloRef.current);
+      intervaloRef.current = null;
     }
 
-    return () => clearInterval(intervaloRef.current); // Limpieza
-  }, [activo, segundos, segundosTotales]);
+    if (activo && segundos > 0) {
+      intervaloRef.current = BackgroundTimer.setInterval(() => {
+        setSegundos(prev => {
+          if (prev <= 1) {
+            BackgroundTimer.clearInterval(intervaloRef.current);
+            intervaloRef.current = null;
+            return 0;
+          }
+          return prev - 1;
+        });
+      }, 1000);
+    }
+
+    return () => {
+      if (intervaloRef.current !== null) {
+        BackgroundTimer.clearInterval(intervaloRef.current);
+        intervaloRef.current = null;
+      }
+    };
+  }, [activo]);
 
   const reiniciar = () => {
-    // setActivo(false);
+    if (intervaloRef.current !== null) {
+      BackgroundTimer.clearInterval(intervaloRef.current);
+      intervaloRef.current = null;
+    }
     setSegundos(segundosTotales);
+    setActivo(true);
   };
-  
+
   const formatoTiempo = (s) => {
     const m = Math.floor(s / 60);
     const seg = s % 60;
@@ -38,7 +54,7 @@ const Descanso = ({setModalDescanso, ejercicio}) => {
 
   return (
     <View style={styles.container}>
-      <Image style={styles.image} source={require('../assets/img/Logo.png')}></Image>
+      <Image style={styles.image} source={require('../assets/img/Logo.png')} />
       <Text style={styles.titulo}>DESCANSO</Text>
 
       <View style={styles.contenedor}>
@@ -59,12 +75,7 @@ const Descanso = ({setModalDescanso, ejercicio}) => {
         </View>
       </View>
 
-      {/* <View style={styles.tiempoContainer}>
-        <Text style={styles.tiempoTexto}>Tiempo Restante:</Text>
-        <Text style={styles.tiempo}>1:30</Text>
-      </View> */}
-
-      <Pressable style={styles.btn} onPress={()=>{setModalDescanso(false)}}>
+      <Pressable style={styles.btn} onPress={() => setModalDescanso(false)}>
         <Text style={styles.btnTexto}>Saltar Descanso</Text>
       </Pressable>
     </View>
@@ -72,7 +83,6 @@ const Descanso = ({setModalDescanso, ejercicio}) => {
 };
 
 export default Descanso;
-
 
 const styles = StyleSheet.create({
   container: {
