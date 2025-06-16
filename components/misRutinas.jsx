@@ -59,7 +59,7 @@ const MisRutinas = () => {
   
   return (
   <ScrollView contentContainerStyle={styles.container}>
-    <Image style={styles.image} source={require('../assets/img/Logo.png')} />
+    {/* <Image style={styles.image} source={require('../assets/img/Logo.png')} /> */}
 
     <Pressable
       style={styles.btnCircular}

@@ -66,7 +66,7 @@ const FormRutina = ({rutinas, setRutinas, setModalFormRutina, rutinaSeleccionada
 
                 <View style={styles.botonera}>
                     <Pressable 
-                    style={styles.iconButton}
+                    style={[styles.iconButton,{alignItems:'center'}]}
                         onPress={()=>{
                             setNuevaRutina({
                                 id: '',
@@ -76,10 +76,12 @@ const FormRutina = ({rutinas, setRutinas, setModalFormRutina, rutinaSeleccionada
                             setModalFormRutina(false)
                         }}
                     >
-                        <Icon name="arrow-back-circle" size={40} color="#eefa07" />
+                        <Icon name="arrow-back-circle" size={50} color="#eefa07">
+                        </Icon>
+                            <Text style={{color:'#fff',textAlign:'center'}}>Salir</Text>
                     </Pressable>
                     <Pressable 
-                        style={styles.iconButton}
+                        style={[styles.iconButton,{alignItems:'center'}]}
                         onPress={()=>{
                             Toast.show({
                                 type: 'success',
@@ -91,7 +93,9 @@ const FormRutina = ({rutinas, setRutinas, setModalFormRutina, rutinaSeleccionada
                             }, "2000");
                         }}
                     >
-                        <Icon name="save-sharp" size={40} color="#43d112" />
+                        <Icon name="save-sharp" size={40} color="#43d112" >
+                        </Icon>
+                            <Text style={{color:'#fff',textAlign:'center'}}>Guardar</Text>
                     </Pressable>
 
 

@@ -32,26 +32,28 @@ const DetalleRutina = (
         <View style={styles.container}>
             <View style={styles.botonera}>
                 <Pressable
-                    style={styles.iconButton}
+                    style={[styles.iconButton,{alignItems:'center'}]}
                     onPress={() => {
                     setRutinaSeleccionada({});
                     setModalDetalle(false);
                     }}
                 >
                     <Icon name="arrow-back-circle" size={40} color="#eefa07" />
+                    <Text style={{color:'#fff',textAlign:'center'}}>Volver</Text>
                 </Pressable>
 
                 <Pressable
-                    style={styles.iconButton}
+                   style={[styles.iconButton,{alignItems:'center'}]}
                     onPress={() => {
                     setModalFormRutina(true);
                     }}
                 >
                     <Icon name="create" size={40} color="#43d112" />
+                    <Text style={{color:'#fff',textAlign:'center'}}>Editar</Text>
                 </Pressable>
 
                 <Pressable
-                    style={styles.iconButton}
+                    style={[styles.iconButton,{alignItems:'center'}]}
                     onPress={() => {
                     Alert.alert("Eliminar", "Desea eliminar la rutina?", [
                         { text: "Cancelar" },
@@ -66,7 +68,9 @@ const DetalleRutina = (
                     ]);
                     }}
                 >
-                    <Icon name="trash" size={40} color="#ff4c4c" />
+                    <Icon name="trash" size={35} color="#ff4c4c" />
+                    <Text style={{color:'#fff',textAlign:'center'}}>Eliminar</Text>
+
                 </Pressable>
             </View>
 
