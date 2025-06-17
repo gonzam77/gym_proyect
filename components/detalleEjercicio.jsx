@@ -24,6 +24,8 @@ const DetalleEjercicio = ({ ejercicio, setModalEjercicio }) => {
               setModalEjercicio(false);
             }}>
               <Icon name="arrow-back-circle" size={40} color="#eefa07" />
+              <Text style={{color:'#fff',textAlign:'center'}}>Salir</Text>
+
             </Pressable>
           </View>
             : null
@@ -67,19 +69,25 @@ const DetalleEjercicio = ({ ejercicio, setModalEjercicio }) => {
           ) : serie===ejercicio.series ? ( 
             <View>
               <Text style={styles.titulo}>Felicitaciones, has terminado el ejercicio!</Text>  
-              <Pressable style={styles.btnVolver} onPress={()=>{
-                setModalEjercicio(false);
-              }}>
-                <Text style={styles.btnTexto}>Salir</Text>
-              </Pressable>
+              <View style={styles.botonera}>
+                <Pressable style={styles.iconButton} onPress={()=>{
+                  setModalEjercicio(false);
+                }}>
+                  <Icon name="arrow-back-circle" size={35} color="#eefa07" />
+                  <Text style={{color:'#fff', textAlign:'center'}}>Salir</Text>
+                </Pressable>
+              </View>
             </View>
           ):(
-            <Pressable
-              style={styles.btn}
-              onPress={() => setEstado(true)}
-            >
-              <IconPlay name="play-circle-outline" size={40} color="#000" />
-            </Pressable>
+            <View style={styles.botonera}>
+              <Pressable
+                style={[styles.iconButton,{alignItems:'center'}]}
+                onPress={() => setEstado(true)}
+              >
+                <IconPlay name="play-circle-outline" size={35} color="#43d112" />
+                <Text style={{color:'#fff',textAlign:'center'}}>Comenzar</Text>
+              </Pressable>
+            </View>
           )
         }
 
@@ -170,7 +178,7 @@ const styles = StyleSheet.create({
     marginBottom:20
   },
   btnTexto: {
-    fontSize: 18,
+    fontSize:18,
     color: "#000",
     fontWeight: "bold",
     textAlign: "center",

@@ -101,11 +101,14 @@ const FormEjercicio = ({nuevaRutina, setNuevaRutina, setModalFormEjercicio, id})
       <Text style={styles.titulo}>Personalizar Ejercicio</Text>
 
       <View style={styles.botonera}>
-        <Pressable style={styles.iconButton} onPress={()=>setModalFormEjercicio(false)}>
+        <Pressable style={[styles.iconButton,{alignItems:'center'}]} onPress={()=>setModalFormEjercicio(false)}>
           <Icon name="arrow-back-circle" size={40} color="#eefa07" />
+          <Text style={{color:'#fff',textAlign:'center'}}>Salir</Text>
+
         </Pressable>
-        <Pressable style={styles.iconButton} onPress={handleGuardar}>
+        <Pressable style={[styles.iconButton,{alignItems:'center'}]} onPress={handleGuardar}>
           <Icon name="save-sharp" size={40} color="#43d112" />
+          <Text style={{color:'#fff',textAlign:'center'}}>Guardar</Text>
         </Pressable>
       </View>
 

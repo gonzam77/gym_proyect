@@ -147,8 +147,15 @@ const FormRutina = ({rutinas, setRutinas, setModalFormRutina, rutinaSeleccionada
                                 )    
                                 
                             }}>
-                                <Text style={styles.ejercicioNombre}>Ejercicio {index + 1}: {e.nombre}</Text>
-                                <Text style={styles.ejercicioDetalle}>{e.series} series x {e.repeticiones} reps</Text>
+                                <View>
+                                    <View>
+                                        <Text style={styles.ejercicioNombre}>Ejercicio {index + 1}: {e.nombre}</Text>
+                                        <Text style={styles.ejercicioDetalle}>{e.series} series x {e.repeticiones} reps</Text>
+                                    </View>
+                                    <View style={{alignSelf:'flex-end'}}>
+                                        <Icon  name="trash" size={25} color="#ff4c4c" />
+                                    </View>
+                                </View>    
                             </Pressable>
                             ))
                         }

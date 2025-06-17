@@ -98,7 +98,7 @@ const DetalleRutina = (
                             }} 
                             >
                                 <Text style={styles.ejercicioNombre}>Ejercicio {index + 1}: {e.nombre}</Text>
-                                <Text style={styles.ejercicioDetalle}>{e.series} series x {e.repeticiones} reps</Text>
+                                <Text style={styles.ejercicioDetalle}>{e.series} series x {e.repeticiones} reps</Text>        
                             </Pressable>
                         ))
                     }
