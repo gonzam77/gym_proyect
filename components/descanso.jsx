@@ -1,16 +1,20 @@
 import { Pressable, StyleSheet, Text, View, Image } from "react-native";
 import { useState, useRef, useEffect } from "react";
 import BackgroundTimer from 'react-native-background-timer';
+import Sound from 'react-native-sound';
+
+// Habilitar reproducción en Android (opcional, pero recomendado)
+Sound.setCategory('Playback');
+
 
 const Descanso = ({ setModalDescanso, ejercicio }) => {
   const segundosTotales = ejercicio.descanso * 60;
 
-  const [segundos, setSegundos] = useState(segundosTotales);
+  const [segundos, setSegundos] = useState(5);
   const [activo, setActivo] = useState(true);
   const intervaloRef = useRef(null);
 
   useEffect(() => {
-    // Limpiamos intervalo anterior si existía
     if (intervaloRef.current !== null) {
       BackgroundTimer.clearInterval(intervaloRef.current);
       intervaloRef.current = null;
@@ -22,8 +26,24 @@ const Descanso = ({ setModalDescanso, ejercicio }) => {
           if (prev <= 1) {
             BackgroundTimer.clearInterval(intervaloRef.current);
             intervaloRef.current = null;
+
+            // Reproducir sonido de alarma
+            const alarma = new Sound(require('../assets/sounds/beep.mp3'), (error) => {
+              if (error) {
+                console.log('Error al cargar el sonido:', error);
+                return;
+              }
+              alarma.play((success) => {
+                if (!success) {
+                  console.log('Error al reproducir el sonido');
+                }
+                alarma.release(); // liberar recursos
+              });
+            });
+
             return 0;
           }
+
           return prev - 1;
         });
       }, 1000);
