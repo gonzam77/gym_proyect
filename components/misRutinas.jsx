@@ -58,68 +58,68 @@ const MisRutinas = () => {
   let contador = 0;
   
   return (
-  <ScrollView contentContainerStyle={styles.container}>
-    {/* <Image style={styles.image} source={require('../assets/img/Logo.png')} /> */}
+    <ScrollView contentContainerStyle={styles.container}>
+      <Image style={styles.image} source={require('../assets/img/Logo.png')} />
 
-    <Pressable
-      style={styles.btnCircular}
-      onPress={() => {
-        setModalFormRutina(true);
-      }}
-    >
-      <Text style={styles.btnTextoCircular}>+</Text>
-    </Pressable>
+      <Pressable
+        style={styles.btnCircular}
+        onPress={() => {
+          setModalFormRutina(true);
+        }}
+      >
+        <Text style={styles.btnTextoCircular}>+</Text>
+      </Pressable>
 
-    {
-      rutinas?.length ? null : (
-        <View style={styles.leyenda}>
-          <Text style={styles.leyendaTexto}>Aun no ha programado rutinas</Text>
-        </View>
-      )
-    }
+      {
+        rutinas?.length ? null : (
+          <View style={styles.leyenda}>
+            <Text style={styles.leyendaTexto}>Aun no ha programado rutinas</Text>
+          </View>
+        )
+      }
 
-    {
-      rutinas?.map((e, index) => (
-        <EntrenamientoItem
-          dia={`DIA ${index + 1}`}
-          nombre={e.nombre}
-          id={e.id}
-          key={e.id}
+      {
+        rutinas?.map((e, index) => (
+          <EntrenamientoItem
+            dia={`DIA ${index + 1}`}
+            nombre={e.nombre}
+            id={e.id}
+            key={e.id}
+          />
+        ))
+      }
+
+      {/* Modales */}
+      <Modal
+        visible={modalDetalle}
+        animationType="slide"
+        onRequestClose={() => setModalDetalle(false)}
+      >
+        <DetalleRutina
+          rutinaSeleccionada={rutinaSeleccionada}
+          setRutinaSeleccionada={setRutinaSeleccionada}
+          rutinas={rutinas}
+          setRutinas={setRutinas}
+          setModalFormRutina={setModalFormRutina}
+          modalFormRutina={modalFormRutina}
+          setModalDetalle={setModalDetalle}
         />
-      ))
-    }
+      </Modal>
 
-    {/* Modales */}
-    <Modal
-      visible={modalDetalle}
-      animationType="slide"
-      onRequestClose={() => setModalDetalle(false)}
-    >
-      <DetalleRutina
-        rutinaSeleccionada={rutinaSeleccionada}
-        setRutinaSeleccionada={setRutinaSeleccionada}
-        rutinas={rutinas}
-        setRutinas={setRutinas}
-        setModalFormRutina={setModalFormRutina}
-        modalFormRutina={modalFormRutina}
-        setModalDetalle={setModalDetalle}
-      />
-    </Modal>
-
-    <Modal
-      visible={modalFormRutina}
-      animationType="slide"
-      onRequestClose={() => setModalFormRutina(false)}
-    >
-      <FormRutina
-        rutinas={rutinas}
-        setRutinas={setRutinas}
-        setModalFormRutina={setModalFormRutina}
-        rutinaSeleccionada={rutinaSeleccionada}
-        setRutinaSeleccionada={setRutinaSeleccionada}
-      />
-    </Modal>
-  </ScrollView>
+      <Modal
+        visible={modalFormRutina}
+        animationType="slide"
+        onRequestClose={() => setModalFormRutina(false)}
+      >
+        <FormRutina
+          rutinas={rutinas}
+          setRutinas={setRutinas}
+          setModalFormRutina={setModalFormRutina}
+          rutinaSeleccionada={rutinaSeleccionada}
+          setRutinaSeleccionada={setRutinaSeleccionada}
+        />
+      </Modal>
+    </ScrollView>
 );
 
 };
@@ -151,7 +151,7 @@ const styles = StyleSheet.create({
   },
   entrenamiento: {
     marginHorizontal: 15,
-    marginVertical: 20,
+    marginVertical: 12,
     backgroundColor: '#373737',
     borderRadius: 12,
     padding: 15,
@@ -185,9 +185,9 @@ const styles = StyleSheet.create({
   },
   image:{
     alignSelf:'center',
-    height:150,
-    width:150,
-    marginBottom:50
+    height:100,
+    width:100,
+    marginBottom:30
   },
   btnCircular: {
     backgroundColor: '#43d112',
@@ -197,7 +197,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     alignSelf: 'flex-end',
-    marginBottom: 30,
+    marginBottom:40,
     marginRight: 30,
     elevation: 6,
   },

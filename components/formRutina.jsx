@@ -9,7 +9,8 @@ const FormRutina = ({rutinas, setRutinas, setModalFormRutina, rutinaSeleccionada
     const [nuevaRutina, setNuevaRutina] = useState({
         id: '',
         nombre:'',
-        ejercicios:[]
+        ejercicios:[],
+        estado: 0
     })
     
     useEffect(() => {

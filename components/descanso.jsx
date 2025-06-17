@@ -9,7 +9,7 @@ Sound.setCategory('Playback');
 
 const Descanso = ({ setModalDescanso, ejercicio }) => {
   const segundosTotales = ejercicio.descanso * 60;
-
+  const alarmaRef = useRef(null);
   const [segundos, setSegundos] = useState(segundosTotales);
   const [activo, setActivo] = useState(true);
   const intervaloRef = useRef(null);
@@ -28,18 +28,7 @@ const Descanso = ({ setModalDescanso, ejercicio }) => {
             intervaloRef.current = null;
 
             // Reproducir sonido de alarma
-            const alarma = new Sound(require('../assets/sounds/alarm.mp3'), (error) => {
-              if (error) {
-                console.log('Error al cargar el sonido:', error);
-                return;
-              }
-              alarma.play((success) => {
-                if (!success) {
-                  console.log('Error al reproducir el sonido');
-                }
-                alarma.release(); // liberar recursos
-              });
-            });
+            reproducirAlarma();
 
             return 0;
           }
@@ -47,7 +36,25 @@ const Descanso = ({ setModalDescanso, ejercicio }) => {
           return prev - 1;
         });
       }, 1000);
-    }
+    };
+
+    const reproducirAlarma = () => {
+      const alarma = new Sound(require('../assets/sounds/alarm.mp3'), (error) => {
+        if (error) {
+          console.log('Error al cargar el sonido:', error);
+          return;
+        }
+
+      alarma.setNumberOfLoops(-1); // Repetir infinitamente
+      alarma.play((success) => {
+        if (!success) {
+          console.log('Error al reproducir el sonido');
+        }
+      });
+
+      alarmaRef.current = alarma; // Guardar referencia para poder detenerla
+    });
+  };
 
     return () => {
       if (intervaloRef.current !== null) {
@@ -94,10 +101,28 @@ const Descanso = ({ setModalDescanso, ejercicio }) => {
           </Pressable>
         </View>
       </View>
+      {
+        segundos > 0 ?
+        <Pressable style={styles.btn} onPress={() => setModalDescanso(false)}>
+          <Text style={styles.btnTexto}>Saltar Descanso</Text>
+        </Pressable> 
+        :        
+        <Pressable
+          style={styles.btn}
+          onPress={() => {
+            if (alarmaRef.current) {
+              alarmaRef.current.stop(() => {
+                alarmaRef.current.release();
+                alarmaRef.current = null;
+              });
+            }
+            setModalDescanso(false);
+          }}
+        >
+          <Text style={styles.btnTexto}>Detener</Text>
+        </Pressable>
 
-      <Pressable style={styles.btn} onPress={() => setModalDescanso(false)}>
-        <Text style={styles.btnTexto}>Saltar Descanso</Text>
-      </Pressable>
+      }
     </View>
   );
 };
