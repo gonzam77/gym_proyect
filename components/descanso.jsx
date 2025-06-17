@@ -10,7 +10,7 @@ Sound.setCategory('Playback');
 const Descanso = ({ setModalDescanso, ejercicio }) => {
   const segundosTotales = ejercicio.descanso * 60;
 
-  const [segundos, setSegundos] = useState(5);
+  const [segundos, setSegundos] = useState(segundosTotales);
   const [activo, setActivo] = useState(true);
   const intervaloRef = useRef(null);
 
@@ -28,7 +28,7 @@ const Descanso = ({ setModalDescanso, ejercicio }) => {
             intervaloRef.current = null;
 
             // Reproducir sonido de alarma
-            const alarma = new Sound(require('../assets/sounds/beep.mp3'), (error) => {
+            const alarma = new Sound(require('../assets/sounds/alarm.mp3'), (error) => {
               if (error) {
                 console.log('Error al cargar el sonido:', error);
                 return;
