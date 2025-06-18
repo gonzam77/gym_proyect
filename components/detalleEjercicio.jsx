@@ -33,7 +33,7 @@ const DetalleEjercicio = ({ ejercicio, setModalEjercicio }) => {
 
         <Text style={styles.titulo}>{ejercicio.nombre}</Text>
 
-        <Text style={[styles.label, styles.estadistica ]}>Series Realizadas: {serie} de {ejercicio.series}</Text>
+        <Text style={[styles.label, styles.estadistica ]}>Series Realizadas: {serie}</Text>
         <Text style={styles.label}>Series Restantes: {ejercicio.series - serie}</Text>
         <View style={styles.infoBox}>
           <Text style={styles.tituloDetalle}>Detalle</Text>
@@ -54,7 +54,7 @@ const DetalleEjercicio = ({ ejercicio, setModalEjercicio }) => {
         {
           estado ? (
             <View>
-              <Text style={styles.titulo}>Serie {serie + 1} de {ejercicio.series}</Text>
+              <Text style={styles.titulo}>Serie {serie + 1}</Text>
               <Pressable
                 style={styles.btnDescanso}
                 onPress={() => {
@@ -68,7 +68,7 @@ const DetalleEjercicio = ({ ejercicio, setModalEjercicio }) => {
             </View>
           ) : serie===ejercicio.series ? ( 
             <View>
-              <Text style={styles.titulo}>Felicitaciones, has terminado el ejercicio!</Text>  
+              <Text style={[styles.titulo, {color:'#32dcf4'}]}>Felicitaciones, has terminado el ejercicio!</Text>  
               <View style={styles.botonera}>
                 <Pressable style={styles.iconButton} onPress={()=>{
                   setModalEjercicio(false);
