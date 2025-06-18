@@ -81,7 +81,7 @@ const Descanso = ({ setModalDescanso, ejercicio }) => {
 
   return (
     <View style={styles.container}>
-      <Image style={styles.image} source={require('../assets/img/Logo.png')} />
+      <Image style={styles.image} source={require('../assets/img/logo.png')} />
       <Text style={styles.titulo}>DESCANSO</Text>
 
       <View style={styles.contenedor}>

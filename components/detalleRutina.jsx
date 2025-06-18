@@ -1,4 +1,4 @@
-import { Modal, Pressable, StyleSheet, Text, View, Alert } from "react-native";
+import { Modal, Pressable, StyleSheet, Text, View, Alert, ScrollView } from "react-native";
 import { useEffect, useState } from "react";
 import FormRutina from "./formRutina";
 import DetalleEjercicio from "./detalleEjercicio";
@@ -111,22 +111,22 @@ const DetalleRutina = (
                 visible={modalFormRutina}
                 animationType="slide"
                 onRequestClose={() => setModalFormRutina(false)}
-            >
+                >
                 <FormRutina 
                     rutinaSeleccionada={rutinaSeleccionada}
                     setModalFormRutina={setModalFormRutina}
-                />
+                    />
             </Modal>
 
             <Modal
                 visible={modalEjercicio}
                 animationType="slide"
                 onRequestClose={()=>{setModalEjercicio(false)}}
-            >
+                >
                 <DetalleEjercicio
                     ejercicio={ejercicio}
                     setModalEjercicio={setModalEjercicio}
-                />
+                    />
             </Modal>
         </View>
 

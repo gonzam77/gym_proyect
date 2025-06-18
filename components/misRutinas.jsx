@@ -3,6 +3,8 @@ import { View, Text, StyleSheet, Pressable, ScrollView, Modal, Image } from "rea
 import FormRutina from "./formRutina";
 import DetalleRutina from "./detalleRutina";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import Icon from 'react-native-vector-icons/Ionicons'; // o MaterialIcons si preferís
+
 
 const MisRutinas = () => {
 
@@ -49,9 +51,12 @@ const MisRutinas = () => {
         setRutinaSeleccionada(selectedRutina)
         setModalDetalle(true)
       }} style={styles.entrenamiento}>
-      <Text style={styles.dia}>
-        {dia}: <Text style={styles.nombre}>{nombre}</Text>
-      </Text>
+        <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
+        <Text style={styles.dia}>
+          {dia}: <Text style={styles.nombre}>{nombre}</Text>
+        </Text>
+          <Icon name="chevron-forward-outline" color={'#fff'} size={25}></Icon>
+        </View>
     </Pressable>
   );
   
@@ -59,7 +64,7 @@ const MisRutinas = () => {
   
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Image style={styles.image} source={require('../assets/img/Logo.png')} />
+      <Image style={styles.image} source={require('../assets/img/logo.png')} />
 
       <Pressable
         style={styles.btnCircular}
