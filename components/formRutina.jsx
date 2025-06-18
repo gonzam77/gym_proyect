@@ -127,10 +127,10 @@ const FormRutina = ({rutinas, setRutinas, setModalFormRutina, rutinaSeleccionada
                         </Pressable>
                     </View>
 
-                    {
+                    {/* {
                         nuevaRutina.ejercicios.length ?
                         <Text style={styles.label}>Seleccione para eliminar</Text>: null
-                    }
+                    } */}
 
                     <View style={styles.listaEjercicios}>
                         {
