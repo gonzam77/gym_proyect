@@ -78,7 +78,6 @@ const DetalleRutina = (
                 {rutinaSeleccionada.nombre}
             </Text>
             <View style={styles.leyenda}>
-                <Text style={styles.titulo}>RUTINA DE HOY</Text>
                 <Text style={styles.titulo}>{rutinaSeleccionada.nombre}</Text>
                 {/* { rutinaSeleccionada?.ejercicio?.length?
                     <Text style={styles.leyendaTexto}>Seleccione el ejercicio a realizar</Text>
@@ -97,8 +96,13 @@ const DetalleRutina = (
                                 setModalEjercicio(true)
                             }} 
                             >
-                                <Text style={styles.ejercicioNombre}>Ejercicio {index + 1}: {e.nombre}</Text>
-                                <Text style={styles.ejercicioDetalle}>{e.series} series x {e.repeticiones} reps</Text>        
+                            <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
+                                <View style={{maxWidth:280}}>
+                                    <Text style={styles.ejercicioNombre}>Ejercicio {index + 1}: {e.nombre}</Text>
+                                    <Text style={styles.ejercicioDetalle}>{e.series} series x {e.repeticiones} reps</Text>        
+                                </View>
+                                    <Icon name="chevron-forward-outline" color={'#fff'} size={25}></Icon>
+                            </View>  
                             </Pressable>
                         ))
                     }
@@ -158,7 +162,6 @@ const styles = StyleSheet.create({
     fontWeight: "900",
     color: "#43d112",
     textAlign: "center",
-    marginBottom: 30,
   },
   form: {
     marginVertical: 30,
