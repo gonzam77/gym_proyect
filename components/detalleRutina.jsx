@@ -29,7 +29,7 @@ const DetalleRutina = (
     },[rutinaSeleccionada])
     
     return (
-        <View style={styles.container}>
+        <ScrollView style={styles.container}>
             <View style={styles.botonera}>
                 <Pressable
                     style={[styles.iconButton,{alignItems:'center'}]}
@@ -90,7 +90,7 @@ const DetalleRutina = (
                     {
                         rutinaSeleccionada?.ejercicios?.map((e, index) => (
                             <Pressable 
-                            key={e.id} 
+                            key={Date.now()} 
                             style={styles.ejercicioItem}
                             onPress={()=>{
                                 setEjercicio(e);
@@ -128,7 +128,7 @@ const DetalleRutina = (
                     setModalEjercicio={setModalEjercicio}
                     />
             </Modal>
-        </View>
+        </ScrollView>
 
     )
 }

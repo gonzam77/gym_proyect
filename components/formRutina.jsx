@@ -135,7 +135,7 @@ const FormRutina = ({rutinas, setRutinas, setModalFormRutina, rutinaSeleccionada
                     <View style={styles.listaEjercicios}>
                         {
                             nuevaRutina?.ejercicios?.map((e, index) => (
-                            <Pressable key={e.id} style={styles.ejercicioItem} onPress={()=>{
+                            <Pressable key={Date.now()} style={styles.ejercicioItem} onPress={()=>{
                                 console.log(e);
                                 
                                 Alert.alert(
