@@ -68,7 +68,7 @@ const DetalleEjercicio = ({ ejercicio, setModalEjercicio }) => {
             </View>
           ) : serie===ejercicio.series ? ( 
             <View>
-              <Text style={[styles.titulo, {color:'#32dcf4'}]}>Felicitaciones, has terminado el ejercicio!</Text>  
+              <Text style={[styles.titulo, {color:'#fff'}]}>Felicitaciones, has terminado el ejercicio!</Text>  
               <View style={styles.botonera}>
                 <Pressable style={styles.iconButton} onPress={()=>{
                   setModalEjercicio(false);
@@ -91,7 +91,11 @@ const DetalleEjercicio = ({ ejercicio, setModalEjercicio }) => {
           )
         }
 
-        <Modal visible={modalDescanso} animationType="slide">
+        <Modal 
+          visible={modalDescanso} 
+          animationType="slide"
+          onRequestClose={() => setModalDescanso(false)}
+        >
           <Descanso
             descanso={ejercicio.descanso}
             ejercicio={ejercicio}

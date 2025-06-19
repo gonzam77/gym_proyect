@@ -62,7 +62,7 @@ const Descanso = ({ setModalDescanso, ejercicio }) => {
         intervaloRef.current = null;
       }
     };
-  }, [activo]);
+  }, [activo, segundos]);
 
   const reiniciar = () => {
     if (intervaloRef.current !== null) {
@@ -175,12 +175,12 @@ const styles = StyleSheet.create({
     alignSelf:'center',
     height:200,
     width:200,
+    padding:20,
   },
   contenedor: {
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#121212',
-    padding: 20,
     marginBottom:30
   },
   titulo2: {
