@@ -29,107 +29,105 @@ const DetalleRutina = (
     },[rutinaSeleccionada])
     
     return (
-        <View style={styles.container}>
+        <ScrollView contentContainerStyle={styles.container}> 
             <View style={styles.botonera}>
                 <Pressable
                     style={[styles.iconButton,{alignItems:'center'}]}
                     onPress={() => {
                     setRutinaSeleccionada({});
                     setModalDetalle(false);
-                    }}
+                }}
                 >
                     <Icon name="arrow-back-circle" size={40} color="#eefa07" />
                     <Text style={{color:'#fff',textAlign:'center'}}>Volver</Text>
                 </Pressable>
 
-                <Pressable
-                   style={[styles.iconButton,{alignItems:'center'}]}
-                    onPress={() => {
-                    setModalFormRutina(true);
-                    }}
-                >
-                    <Icon name="create" size={40} color="#43d112" />
-                    <Text style={{color:'#fff',textAlign:'center'}}>Editar</Text>
-                </Pressable>
+            <Pressable
+            style={[styles.iconButton,{alignItems:'center'}]}
+            onPress={() => {
+            setModalFormRutina(true);
+            }}
+            >
+            <Icon name="create" size={40} color="#43d112" />
+            <Text style={{color:'#fff',textAlign:'center'}}>Editar</Text>
+            </Pressable>
 
-                <Pressable
-                    style={[styles.iconButton,{alignItems:'center'}]}
-                    onPress={() => {
-                    Alert.alert("Eliminar", "Desea eliminar la rutina?", [
-                        { text: "Cancelar" },
-                        {
-                        text: "Ok, Eliminar",
-                        onPress: () => {
-                            eliminarRutina(rutinaSeleccionada.id);
-                            setRutinaSeleccionada({});
-                            setModalDetalle(false);
-                        },
-                        },
-                    ]);
-                    }}
-                >
-                    <Icon name="trash" size={35} color="#ff4c4c" />
-                    <Text style={{color:'#fff',textAlign:'center'}}>Eliminar</Text>
+            <Pressable
+            style={[styles.iconButton,{alignItems:'center'}]}
+            onPress={() => {
+            Alert.alert("Eliminar", "Desea eliminar la rutina?", [
+            { text: "Cancelar" },
+            {
+            text: "Ok, Eliminar",
+            onPress: () => {
+            eliminarRutina(rutinaSeleccionada.id);
+            setRutinaSeleccionada({});
+            setModalDetalle(false);
+            },
+            },
+            ]);
+            }}
+            >
+            <Icon name="trash" size={35} color="#ff4c4c" />
+            <Text style={{color:'#fff',textAlign:'center'}}>Eliminar</Text>
 
-                </Pressable>
-            </View>
-
-            <Text>
-                {rutinaSeleccionada.nombre}
-            </Text>
-            <View style={styles.leyenda}>
-                <Text style={styles.titulo}>RUTINA DE HOY</Text>
-                <Text style={styles.titulo}>{rutinaSeleccionada.nombre}</Text>
-                {/* { rutinaSeleccionada?.ejercicio?.length?
-                    <Text style={styles.leyendaTexto}>Seleccione el ejercicio a realizar</Text>
-                    :null
-                } */}
-            </View>
-            <View style={styles.form}>
-                <View style={styles.listaEjercicios}>
-                    {
-                        rutinaSeleccionada?.ejercicios?.map((e, index) => (
-                            <Pressable 
-                            key={e.id} 
-                            style={styles.ejercicioItem}
-                            onPress={()=>{
-                                setEjercicio(e);
-                                setModalEjercicio(true)
-                            }} 
-                            >
-                                <Text style={styles.ejercicioNombre}>Ejercicio {index + 1}: {e.nombre}</Text>
-                                <Text style={styles.ejercicioDetalle}>{e.series} series x {e.repeticiones} reps</Text>        
-                            </Pressable>
-                        ))
-                    }
-                </View>
+            </Pressable>
             </View>
             <View>
+            <Text>
+            {rutinaSeleccionada.nombre}
+            </Text>
+            <View style={styles.leyenda}>
+            <Text style={styles.titulo}>RUTINA DE HOY</Text>
+            <Text style={styles.titulo}>{rutinaSeleccionada.nombre}</Text>
+            {/* { rutinaSeleccionada?.ejercicio?.length?
+            <Text style={styles.leyendaTexto}>Seleccione el ejercicio a realizar</Text>
+            :null
+            } */}
             </View>
+            <View style={styles.form}>
+            <View style={styles.listaEjercicios}>
+            {
+            rutinaSeleccionada?.ejercicios?.map((e, index) => (
+            <Pressable 
+            key={e.id} 
+            style={styles.ejercicioItem}
+            onPress={()=>{
+                setEjercicio(e);
+                setModalEjercicio(true)
+            }} 
+            >
+                <Text style={styles.ejercicioNombre}>Ejercicio {index + 1}: {e.nombre}</Text>
+                <Text style={styles.ejercicioDetalle}>{e.series} series x {e.repeticiones} reps</Text>        
+            </Pressable>
+            ))
+            }
+            </View>
+            </View>
+            </View>        
 
             <Modal
-                visible={modalFormRutina}
-                animationType="slide"
-                onRequestClose={() => setModalFormRutina(false)}
-                >
-                <FormRutina 
-                    rutinaSeleccionada={rutinaSeleccionada}
-                    setModalFormRutina={setModalFormRutina}
-                    />
+            visible={modalFormRutina}
+            animationType="slide"
+            onRequestClose={() => setModalFormRutina(false)}
+            >
+            <FormRutina 
+            rutinaSeleccionada={rutinaSeleccionada}
+            setModalFormRutina={setModalFormRutina}
+            />
             </Modal>
 
             <Modal
-                visible={modalEjercicio}
-                animationType="slide"
-                onRequestClose={()=>{setModalEjercicio(false)}}
-                >
-                <DetalleEjercicio
-                    ejercicio={ejercicio}
-                    setModalEjercicio={setModalEjercicio}
-                    />
+            visible={modalEjercicio}
+            animationType="slide"
+            onRequestClose={()=>{setModalEjercicio(false)}}
+            >
+            <DetalleEjercicio
+            ejercicio={ejercicio}
+            setModalEjercicio={setModalEjercicio}
+            />
             </Modal>
-        </View>
-
+        </ScrollView>
     )
 }
 
