@@ -52,9 +52,11 @@ const MisRutinas = () => {
         setModalDetalle(true)
       }} style={styles.entrenamiento}>
         <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
-        <Text style={styles.dia}>
-          {dia}: <Text style={styles.nombre}>{nombre}</Text>
-        </Text>
+          <View style={{maxWidth:280}}>
+            <Text style={styles.dia}>
+              {dia}: <Text style={styles.nombre}>{nombre}</Text>
+            </Text>
+          </View>
           <Icon name="chevron-forward-outline" color={'#fff'} size={25}></Icon>
         </View>
     </Pressable>
@@ -64,7 +66,7 @@ const MisRutinas = () => {
   
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Image style={styles.image} source={require('../assets/img/logo.png')} />
+      <Image style={styles.image} source={require('../assets/img/logo1.png')} />
 
       <Pressable
         style={styles.btnCircular}

@@ -29,7 +29,7 @@ const DetalleRutina = (
     },[rutinaSeleccionada])
     
     return (
-        <ScrollView contentContainerStyle={styles.container}> 
+        <ScrollView style={styles.container}>
             <View style={styles.botonera}>
                 <Pressable
                     style={[styles.iconButton,{alignItems:'center'}]}
@@ -78,31 +78,35 @@ const DetalleRutina = (
             {rutinaSeleccionada.nombre}
             </Text>
             <View style={styles.leyenda}>
-            <Text style={styles.titulo}>RUTINA DE HOY</Text>
-            <Text style={styles.titulo}>{rutinaSeleccionada.nombre}</Text>
-            {/* { rutinaSeleccionada?.ejercicio?.length?
-            <Text style={styles.leyendaTexto}>Seleccione el ejercicio a realizar</Text>
-            :null
-            } */}
+                <Text style={styles.titulo}>{rutinaSeleccionada.nombre}</Text>
+                {/* { rutinaSeleccionada?.ejercicio?.length?
+                    <Text style={styles.leyendaTexto}>Seleccione el ejercicio a realizar</Text>
+                    :null
+                } */}
             </View>
             <View style={styles.form}>
-            <View style={styles.listaEjercicios}>
-            {
-            rutinaSeleccionada?.ejercicios?.map((e, index) => (
-            <Pressable 
-            key={e.id} 
-            style={styles.ejercicioItem}
-            onPress={()=>{
-                setEjercicio(e);
-                setModalEjercicio(true)
-            }} 
-            >
-                <Text style={styles.ejercicioNombre}>Ejercicio {index + 1}: {e.nombre}</Text>
-                <Text style={styles.ejercicioDetalle}>{e.series} series x {e.repeticiones} reps</Text>        
-            </Pressable>
-            ))
-            }
-            </View>
+                <View style={styles.listaEjercicios}>
+                    {
+                        rutinaSeleccionada?.ejercicios?.map((e, index) => (
+                            <Pressable 
+                            key={Date.now()} 
+                            style={styles.ejercicioItem}
+                            onPress={()=>{
+                                setEjercicio(e);
+                                setModalEjercicio(true)
+                            }} 
+                            >
+                            <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
+                                <View style={{maxWidth:280}}>
+                                    <Text style={styles.ejercicioNombre}>Ejercicio {index + 1}: {e.nombre}</Text>
+                                    <Text style={styles.ejercicioDetalle}>{e.series} series x {e.repeticiones} reps</Text>        
+                                </View>
+                                    <Icon name="chevron-forward-outline" color={'#fff'} size={25}></Icon>
+                            </View>  
+                            </Pressable>
+                        ))
+                    }
+                </View>
             </View>
             </View>        
 
@@ -128,6 +132,7 @@ const DetalleRutina = (
             />
             </Modal>
         </ScrollView>
+
     )
 }
 
@@ -156,7 +161,6 @@ const styles = StyleSheet.create({
     fontWeight: "900",
     color: "#43d112",
     textAlign: "center",
-    marginBottom: 30,
   },
   form: {
     marginVertical: 30,

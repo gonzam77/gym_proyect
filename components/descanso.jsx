@@ -62,7 +62,7 @@ const Descanso = ({ setModalDescanso, ejercicio }) => {
         intervaloRef.current = null;
       }
     };
-  }, [activo]);
+  }, [activo, segundos]);
 
   const reiniciar = () => {
     if (intervaloRef.current !== null) {
@@ -81,7 +81,7 @@ const Descanso = ({ setModalDescanso, ejercicio }) => {
 
   return (
     <View style={styles.container}>
-      <Image style={styles.image} source={require('../assets/img/logo.png')} />
+      <Image style={styles.image} source={require('../assets/img/logo1.png')} />
       <Text style={styles.titulo}>DESCANSO</Text>
 
       <View style={styles.contenedor}>
@@ -175,12 +175,12 @@ const styles = StyleSheet.create({
     alignSelf:'center',
     height:200,
     width:200,
+    padding:20,
   },
   contenedor: {
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#121212',
-    padding: 20,
     marginBottom:30
   },
   titulo2: {
