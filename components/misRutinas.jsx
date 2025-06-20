@@ -42,7 +42,7 @@ const MisRutinas = () => {
           setModalFormRutina(true);
         }}
       >
-        <Text style={styles.btnTextoCircular}>+</Text>
+          <Icon name="add-circle-outline" color={'#43d112'} size={65}></Icon>
       </Pressable>
 
       {
@@ -162,21 +162,11 @@ const styles = StyleSheet.create({
     marginBottom:30
   },
   btnCircular: {
-    backgroundColor: '#43d112',
-    width: 60,
-    height: 60,
-    borderRadius: 30,
     justifyContent: 'center',
     alignItems: 'center',
     alignSelf: 'flex-end',
     marginBottom:40,
     marginRight: 30,
-    elevation: 6,
-  },
-  btnTextoCircular: {
-    color: '#000',
-    fontSize: 30,
-    fontWeight: 'bold',
   },
 });
  

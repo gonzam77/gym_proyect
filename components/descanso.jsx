@@ -2,6 +2,7 @@ import { Pressable, StyleSheet, Text, View, Image } from "react-native";
 import { useState, useRef, useEffect } from "react";
 import BackgroundTimer from 'react-native-background-timer';
 import Sound from 'react-native-sound';
+import Icon from 'react-native-vector-icons/Ionicons'; // o MaterialIcons si preferís
 
 // Habilitar reproducción en Android (opcional, pero recomendado)
 Sound.setCategory('Playback');
@@ -15,6 +16,7 @@ const Descanso = ({ setModalDescanso, ejercicio }) => {
   const intervaloRef = useRef(null);
 
   useEffect(() => {
+
     if (intervaloRef.current !== null) {
       BackgroundTimer.clearInterval(intervaloRef.current);
       intervaloRef.current = null;
@@ -90,14 +92,20 @@ const Descanso = ({ setModalDescanso, ejercicio }) => {
 
         <View style={styles.botones}>
           <Pressable
-            style={[styles.boton, activo ? styles.botonPausar : styles.botonIniciar]}
             onPress={() => setActivo(!activo)}
           >
-            <Text style={styles.textoBoton}>{activo ? 'Pausar' : 'Iniciar'}</Text>
+            {
+              activo ?
+                <Icon name="pause-circle-outline" size={60} color="#eefa07" />
+              :
+                <Icon name="play-circle-outline" size={60} color="#43d112" />
+              }
           </Pressable>
 
-          <Pressable style={[styles.boton, styles.botonReiniciar]} onPress={reiniciar}>
-            <Text style={styles.textoBoton}>Reiniciar</Text>
+          <Pressable 
+            onPress={reiniciar}
+          >
+              <Icon name="refresh-outline" size={55} color="#43d112" />
           </Pressable>
         </View>
       </View>
@@ -108,8 +116,8 @@ const Descanso = ({ setModalDescanso, ejercicio }) => {
         </Pressable> 
         :        
         <Pressable
-          style={styles.btn}
-          onPress={() => {
+          style={{backgroundColor:'#43d112'}}  
+          onPress={() => {  
             if (alarmaRef.current) {
               alarmaRef.current.stop(() => {
                 alarmaRef.current.release();
@@ -119,7 +127,7 @@ const Descanso = ({ setModalDescanso, ejercicio }) => {
             setModalDescanso(false);
           }}
         >
-          <Text style={styles.btnTexto}>Detener</Text>
+          <Icon name="stop-outline" size={55} color="#000" />
         </Pressable>
 
       }
@@ -180,8 +188,12 @@ const styles = StyleSheet.create({
   contenedor: {
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#121212',
-    marginBottom:30
+    backgroundColor: '#000000',
+    marginBottom:30,
+    borderRadius:10,
+    borderColor:'#43d112',
+    borderWidth:2,
+    padding:20
   },
   titulo2: {
     fontSize: 28,
@@ -196,7 +208,7 @@ const styles = StyleSheet.create({
   },
   botones: {
     flexDirection: 'row',
-    gap: 10,
+    gap: 40,
   },
   boton: {
     paddingVertical: 12,

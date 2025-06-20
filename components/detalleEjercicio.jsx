@@ -68,7 +68,10 @@ const DetalleEjercicio = ({ ejercicio, setModalEjercicio, rutinaSeleccionada }) 
         }
 
         <Text style={styles.titulo}>{ejercicioActualizado.nombre}</Text>
-
+        {
+            ejercicioActualizado.estado === 1 ?
+            <Text style={{color:'#fb7702', textAlign:'center', fontSize:24, fontWeight:'900'}}>FINALIZADO</Text>:null
+        }
         <Text style={[styles.label, styles.estadistica ]}>Series Realizadas: {serie}</Text>
         <Text style={styles.label}>Series Restantes: {ejercicioActualizado.series - serie}</Text>
         <View style={styles.infoBox}>
@@ -85,12 +88,7 @@ const DetalleEjercicio = ({ ejercicio, setModalEjercicio, rutinaSeleccionada }) 
           <Text style={styles.label}>
             Descanso: <Text style={styles.valor}>{ejercicioActualizado.descanso} Min</Text>
           </Text>
-          <Text style={styles.label}>
-            Estado: <Text 
-              style={styles.valor}>{ejercicioActualizado.estado === 1 ? 
-                <Text>FINALIZADO</Text> : 
-                <Text>EN PROCESO</Text>}</Text>
-          </Text>
+          
         </View>
 
         {
@@ -105,7 +103,7 @@ const DetalleEjercicio = ({ ejercicio, setModalEjercicio, rutinaSeleccionada }) 
                   setSerie(serie + 1);
                 }}
               >
-                <Text style={styles.btnTexto}>X Descanso</Text>
+                <Text style={styles.btnTexto}>Descanzar</Text>
               </Pressable>
             </View>
           ) : serie===ejercicioActualizado.series ? ( 
@@ -132,7 +130,7 @@ const DetalleEjercicio = ({ ejercicio, setModalEjercicio, rutinaSeleccionada }) 
                 style={[styles.iconButton,{alignItems:'center'}]}
                 onPress={() => setEstado(true)}
               >
-                <IconPlay name="play-circle-outline" size={35} color="#43d112" />
+                <IconPlay name="play-circle-outline" size={70} color="#43d112" />
                 <Text style={{color:'#fff',textAlign:'center'}}>Comenzar</Text>
               </Pressable>
             </View>
@@ -231,7 +229,7 @@ const styles = StyleSheet.create({
   btnTexto: {
     fontSize:18,
     color: "#000",
-    fontWeight: "bold",
+    fontWeight: "900",
     textAlign: "center",
   },
   estadistica:{

@@ -155,7 +155,7 @@ const FormRutina = ({setModalFormRutina, rutinaSeleccionada, setRutinaSelecciona
                                 setModalFormEjercicio(true)
                             }}
                         >
-                            <Icon name="barbell-sharp" size={40} color="#43d112" />
+                            <Icon name="barbell-sharp" size={30} color="#43d112" />
 
                         </Pressable>
                             <Text style={{color:'#fff',textAlign:'center', marginTop:10}}>Agregar</Text>
@@ -232,14 +232,14 @@ const styles = StyleSheet.create({
         padding: 20,
     },
     titulo: {
-        fontSize: 32,
+        fontSize: 30,
         fontWeight: "900",
         color: "#43d112",
         textAlign: "center",
         marginBottom: 30,
     },
     form: {
-        marginVertical: 30,
+        marginVertical: 10,
     },
     label: {
         color: "#eefa07",
@@ -257,8 +257,8 @@ const styles = StyleSheet.create({
         fontSize: 16,
     },
     listaEjercicios: {
-        marginTop: 20,
-        marginBottom: 20,
+        marginTop: 10,
+        marginBottom: 30,
     },
     ejercicioItem: {
         backgroundColor: "#373737",
@@ -293,7 +293,6 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-evenly",
         alignItems: "center",
-        marginVertical: 20,
     },
 
 });
