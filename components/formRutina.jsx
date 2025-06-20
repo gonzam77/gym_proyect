@@ -3,9 +3,16 @@ import { Pressable, Text, TextInput, View, StyleSheet, Modal, ScrollView, Alert 
 import FormEjercicio from "./formEjercicio";
 import Toast from "react-native-toast-message";
 import Icon from 'react-native-vector-icons/Ionicons';
+import { useDispatch, useSelector } from "react-redux";
+import { agregarRutina, modificarEjercicio, eliminarEjercicio, eliminarRutina } from '../store/rutinasSlice';
 
-const FormRutina = ({rutinas, setRutinas, setModalFormRutina, rutinaSeleccionada,setRutinaSeleccionada}) => {
+const FormRutina = ({setModalFormRutina, rutinaSeleccionada, setRutinaSeleccionada}) => {
+    
+    const rutinas = useSelector(state=> state.rutinas.rutinas);
+    const dispatch = useDispatch();
+    
     const [modalFormEjercicio, setModalFormEjercicio] = useState(false);
+    const [ejercicioSeleccionado, setEjercicioSeleccionado] = useState();
     const [nuevaRutina, setNuevaRutina] = useState({
         id: '',
         nombre:'',
@@ -13,9 +20,16 @@ const FormRutina = ({rutinas, setRutinas, setModalFormRutina, rutinaSeleccionada
         estado: 0
     })
     
-    useEffect(() => {
+     useEffect(() => {
         if (rutinaSeleccionada?.id) {
             setNuevaRutina(rutinaSeleccionada);
+        } else {
+            setNuevaRutina({
+                id: '',
+                nombre: '',
+                ejercicios: [],
+                estado: 0
+            });
         }
     }, [rutinaSeleccionada]);
 
@@ -27,33 +41,51 @@ const FormRutina = ({rutinas, setRutinas, setModalFormRutina, rutinaSeleccionada
     };
 
     const eliminarEjercicio = (id)=>{
-        const ejerciciosFiltrados = nuevaRutina.ejercicios.filter(e=>e.id !== id)
         setNuevaRutina({
             ...nuevaRutina,
-            ejercicios: ejerciciosFiltrados
+            ejercicios: nuevaRutina.ejercicios.filter(e => e.id !== id)
         })
+    };
+
+    const editarEjercicio = (id)=>{
+        setEjercicioSeleccionado(id);
+        setModalFormEjercicio(true);
     }
 
+
     const handleGuardar = () => {
-        if (rutinaSeleccionada?.id) {
-            const rutinasActualizadas = rutinas.map(rutina => 
-                rutina.id === rutinaSeleccionada?.id ? nuevaRutina : rutina
-            );
-            setRutinaSeleccionada(nuevaRutina);
-            setRutinas(rutinasActualizadas);
-        } else {
-            setRutinas([
-                ...rutinas,
-                { ...nuevaRutina, id: Date.now() } 
-            ]);
+        if (!nuevaRutina.nombre.trim()) {
+            Alert.alert('Error', 'El nombre de la rutina es obligatorio.');
+            return;
         }
+
+        if (rutinaSeleccionada?.id) {
+            // Actualizar rutina existente
+            dispatch({
+                type: 'rutinas/setRutinas',
+                payload: rutinas.map(rutina => 
+                    rutina.id === rutinaSeleccionada.id ? nuevaRutina : rutina
+                )
+            });
+            setRutinaSeleccionada(nuevaRutina);
+        } else {
+            // Agregar nueva rutina con id único
+            dispatch(agregarRutina({ ...nuevaRutina, id: Date.now() }));
+        }
+
         setNuevaRutina({
-                id: '',
-                nombre:'',
-                ejercicios:[]
+            id: '',
+            nombre: '',
+            ejercicios: [],
+            estado: 0
         });
 
         setModalFormRutina(false);
+        Toast.show({
+            type: 'success',
+            text1: '¡Guardado con éxito!',
+            text2: 'Tu rutina fue guardada correctamente.',
+        });
     };
 
   
@@ -112,52 +144,61 @@ const FormRutina = ({rutinas, setRutinas, setModalFormRutina, rutinaSeleccionada
                     placeholder="Ej: Día de pecho"
                     placeholderTextColor="#888"
                     />
-                    <View style={styles.botonera}>
+                    <View style={[styles.botonera,{flexDirection:'column'}]}>
                         <Pressable 
                             style={[styles.iconButton, {
                                 borderColor:'#43d112',
                                 borderWidth:4,
-                                flexDirection:'row',
+                                alignItems:'center'
                             }]}
                             onPress={()=>{
-                                setModalFormEjercicio(!modalFormEjercicio)
+                                setModalFormEjercicio(true)
                             }}
                         >
                             <Icon name="barbell-sharp" size={40} color="#43d112" />
-                        </Pressable>
-                    </View>
 
-                    {/* {
-                        nuevaRutina.ejercicios.length ?
-                        <Text style={styles.label}>Seleccione para eliminar</Text>: null
-                    } */}
+                        </Pressable>
+                            <Text style={{color:'#fff',textAlign:'center', marginTop:10}}>Agregar</Text>
+                    </View>
 
                     <View style={styles.listaEjercicios}>
                         {
                             nuevaRutina?.ejercicios?.map((e, index) => (
-                            <Pressable key={Date.now()} style={styles.ejercicioItem} onPress={()=>{
-                                console.log(e);
-                                
-                                Alert.alert(
-                                    'Atencion',
-                                    'Desea eliminar el ejericio?',
-                                    [
-                                       {text:'Cancelar'},
-                                       {text:'Eliminar', onPress:()=>{eliminarEjercicio(e.id)}}
-                                    ]
-                                )    
-                                
-                            }}>
-                                <View>
+                                <View
+                                    key={e.id} 
+                                    style={styles.ejercicioItem} 
+                                >
                                     <View>
                                         <Text style={styles.ejercicioNombre}>Ejercicio {index + 1}: {e.nombre}</Text>
                                         <Text style={styles.ejercicioDetalle}>{e.series} series x {e.repeticiones} reps</Text>
                                     </View>
-                                    <View style={{alignSelf:'flex-end'}}>
-                                        <Icon  name="trash" size={25} color="#ff4c4c" />
+                                    <View style={{flexDirection:'row', justifyContent:'space-between', marginTop:10}}>
+                                        <Pressable 
+                                            style={{alignItems:'center'}}
+                                            onPress={()=>{
+                                                editarEjercicio(e.id);
+                                            }}
+                                        >
+                                            <Icon  name="create" size={25} color="#eff306" />
+                                            <Text style={{color:'#fff',textAlign:'center'}}>Editar</Text>
+                                        </Pressable>
+                                        <Pressable
+                                            style={{alignItems:'center'}}
+                                            onPress={()=>{
+                                                Alert.alert(
+                                                    'Eliminar',
+                                                    'Desea eliminar el ejercicio?',
+                                                    [{text:'Cancelar'}, {text:'Ok, Eliminar', onPress:()=>{
+                                                        eliminarEjercicio(e.id);
+                                                    }}]
+                                                )
+                                            }}
+                                        >
+                                            <Icon  name="trash" size={23} color="#ff4c4c" />
+                                            <Text style={{color:'#fff',textAlign:'center'}}>Eliminar</Text>
+                                        </Pressable>
                                     </View>
                                 </View>    
-                            </Pressable>
                             ))
                         }
                     </View>
@@ -171,6 +212,7 @@ const FormRutina = ({rutinas, setRutinas, setModalFormRutina, rutinaSeleccionada
                     <FormEjercicio 
                         nuevaRutina={nuevaRutina}
                         setNuevaRutina={setNuevaRutina}
+                        ejercicioSeleccionado={ejercicioSeleccionado}
                         modalFormEjercicio={modalFormEjercicio}
                         setModalFormEjercicio={setModalFormEjercicio}
                     /> 

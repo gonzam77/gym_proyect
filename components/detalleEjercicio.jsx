@@ -3,22 +3,58 @@ import { Modal, Pressable, Text, View, StyleSheet, ScrollView } from "react-nati
 import Descanso from "./descanso";
 import Icon from 'react-native-vector-icons/Ionicons'; // o MaterialIcons si preferís
 import IconPlay from 'react-native-vector-icons/MaterialIcons';// o MaterialIcons si preferís
+import { useDispatch, useSelector } from "react-redux";
 
 
-const DetalleEjercicio = ({ ejercicio, setModalEjercicio }) => {
+const DetalleEjercicio = ({ ejercicio, setModalEjercicio, rutinaSeleccionada }) => {
+  
   const [modalDescanso, setModalDescanso] = useState(false);
   const [serie, setSerie] = useState(0);
   const [estado, setEstado] = useState(false);
 
-  useEffect(()=>{
+  const ejercicioActualizado = useSelector(state=> 
+    state.rutinas.rutinas.find(r=>
+      r.id===rutinaSeleccionada.id)).ejercicios.find(e=>
+        e.id===ejercicio.id); 
+  const dispatch = useDispatch();
 
-  },[serie, estado])
+  useEffect(()=>{
+    if(ejercicioActualizado.series === serie ){
+      dispatch({
+        type: 'rutinas/modificarEjercicio',
+        payload:{
+          idEjercicio: ejercicioActualizado.id,
+          idRutina: rutinaSeleccionada.id,
+          cambios:{estado:1}
+        }
+      });
+    }
+  },[serie, estado]);
+
+  useEffect(()=>{
+    if(ejercicioActualizado.estado === 1) {
+      setSerie(ejercicioActualizado.series);
+    }
+  },[rutinaSeleccionada])
+
+  const reiniciarEjercicio = ()=>{
+    setSerie(0);
+    setEstado(false);
+    dispatch({
+      type: 'rutinas/modificarEjercicio',
+      payload:{
+        idEjercicio: ejercicioActualizado.id,
+        idRutina: rutinaSeleccionada.id,
+        cambios:{estado:0}
+      }
+    });
+  } 
 
   return (
     <View style={styles.container}>
       <ScrollView >
         {
-          serie < ejercicio.series ?
+          serie < ejercicioActualizado.series ?
           <View style={styles.botonera}>
             <Pressable style={styles.iconButton} onPress={()=>{
               setModalEjercicio(false);
@@ -31,23 +67,29 @@ const DetalleEjercicio = ({ ejercicio, setModalEjercicio }) => {
             : null
         }
 
-        <Text style={styles.titulo}>{ejercicio.nombre}</Text>
+        <Text style={styles.titulo}>{ejercicioActualizado.nombre}</Text>
 
         <Text style={[styles.label, styles.estadistica ]}>Series Realizadas: {serie}</Text>
-        <Text style={styles.label}>Series Restantes: {ejercicio.series - serie}</Text>
+        <Text style={styles.label}>Series Restantes: {ejercicioActualizado.series - serie}</Text>
         <View style={styles.infoBox}>
           <Text style={styles.tituloDetalle}>Detalle</Text>
           <Text style={styles.label}>
-            Series: <Text style={styles.valor}>{ejercicio.series}</Text>
+            Series: <Text style={styles.valor}>{ejercicioActualizado.series}</Text>
           </Text>
           <Text style={styles.label}>
-            Repeticiones: <Text style={styles.valor}>{ejercicio.repeticiones}</Text>
+            Repeticiones: <Text style={styles.valor}>{ejercicioActualizado.repeticiones}</Text>
           </Text>
           <Text style={styles.label}>
-            Peso: <Text style={styles.valor}>{ejercicio.peso} kg</Text>
+            Peso: <Text style={styles.valor}>{ejercicioActualizado.peso} kg</Text>
           </Text>
           <Text style={styles.label}>
-            Descanso: <Text style={styles.valor}>{ejercicio.descanso} Min</Text>
+            Descanso: <Text style={styles.valor}>{ejercicioActualizado.descanso} Min</Text>
+          </Text>
+          <Text style={styles.label}>
+            Estado: <Text 
+              style={styles.valor}>{ejercicioActualizado.estado === 1 ? 
+                <Text>FINALIZADO</Text> : 
+                <Text>EN PROCESO</Text>}</Text>
           </Text>
         </View>
 
@@ -66,7 +108,7 @@ const DetalleEjercicio = ({ ejercicio, setModalEjercicio }) => {
                 <Text style={styles.btnTexto}>X Descanso</Text>
               </Pressable>
             </View>
-          ) : serie===ejercicio.series ? ( 
+          ) : serie===ejercicioActualizado.series ? ( 
             <View>
               <Text style={[styles.titulo, {color:'#fff'}]}>Felicitaciones, has terminado el ejercicio!</Text>  
               <View style={styles.botonera}>
@@ -75,6 +117,12 @@ const DetalleEjercicio = ({ ejercicio, setModalEjercicio }) => {
                 }}>
                   <Icon name="arrow-back-circle" size={35} color="#eefa07" />
                   <Text style={{color:'#fff', textAlign:'center'}}>Salir</Text>
+                </Pressable>
+                <Pressable style={[styles.iconButton,{alignItems:'center'}]} onPress={()=>{
+                  reiniciarEjercicio();
+                }}>
+                  <Icon name="arrow-back-circle" size={35} color="#43d112" />
+                  <Text style={{color:'#fff', textAlign:'center'}}>Reiniciar</Text>
                 </Pressable>
               </View>
             </View>
@@ -97,8 +145,7 @@ const DetalleEjercicio = ({ ejercicio, setModalEjercicio }) => {
           onRequestClose={() => setModalDescanso(false)}
         >
           <Descanso
-            descanso={ejercicio.descanso}
-            ejercicio={ejercicio}
+            ejercicio={ejercicioActualizado}
             setModalDescanso={setModalDescanso}
           />
         </Modal>

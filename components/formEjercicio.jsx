@@ -4,52 +4,59 @@ import ejercicios from "../helpers/ejercicios";
 import { Picker } from "@react-native-picker/picker";
 import Icon from 'react-native-vector-icons/Ionicons'; // o MaterialIcons si preferís
  
-
-const FormEjercicio = ({nuevaRutina, setNuevaRutina, setModalFormEjercicio, id}) => {
-  const [errores, setErrores] = useState("");
+const FormEjercicio = ({nuevaRutina, setNuevaRutina, setModalFormEjercicio, ejercicioSeleccionado}) => {
+  
   const listadoEjercicios = ejercicios;
+  
   const [ejerciciosFiltrados, setEjerciciosFiltrados] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
+  const [errores, setErrores] = useState("");
+  
   const [ejercicio, setEjercicio] = useState({
+    id: Date.now(),
     nombre: "",
     series: 0,
     repeticiones: 0,
     peso: 0,
     descanso: 0,
+    idEjercicio:0
   });
 
-    useEffect(() => {
-        if (selectedCategory) {
-            const filtrados = listadoEjercicios.filter(
-            (e) => e.categoria === selectedCategory
-            );
-            setEjerciciosFiltrados(filtrados);
-        } else {
-            setEjerciciosFiltrados([]);
+  useEffect(() => {
+    if (ejercicioSeleccionado) {
+      const seleccionado = nuevaRutina.ejercicios.find(e => e.id === ejercicioSeleccionado);
+      if (seleccionado) {
+        setEjercicio(seleccionado);
+
+        const categoria = listadoEjercicios.find(
+          e => e.idEjercicio === seleccionado.idEjercicio
+        )?.categoria;
+
+        if (categoria) {
+          setSelectedCategory(categoria);
         }
+      }
+    }
+  }, [ejercicioSeleccionado]);
 
-        // También reseteamos el ejercicio seleccionado cuando cambia la categoría
-        setEjercicio((prev) => ({
-            ...prev,
-            id: "",
-        }));
-
-        if(id) {
-          const selectedEjercicio = nuevaRutina.ejercicios.find(e=>e.id === id)
-          if(selectedEjercicio){
-            setEjercicio(selectedEjercicio)
-          }
-        }
-    }, [selectedCategory, id]);
-
+  useEffect(() => {
+    if (selectedCategory) {
+      setEjerciciosFiltrados(
+        listadoEjercicios.filter(e => e.categoria === selectedCategory)
+      );
+    } else {
+      setEjerciciosFiltrados([]);
+    }
+  }, [selectedCategory]);
 
   const validarFormulario = () => {
+    
     if (!selectedCategory) {
         setErrores("Debe seleccionar una categoría.");
         return false;
     };
 
-    if (!ejercicio.id) {
+    if (!ejercicio.idEjercicio) {
         setErrores("Debe seleccionar un ejercicio.");
         return false;
     };
@@ -65,35 +72,46 @@ const FormEjercicio = ({nuevaRutina, setNuevaRutina, setModalFormEjercicio, id})
     };
 
     setErrores("");
+    
     return true;
+
   };
 
-    const handleChange = (campo, valor) => {
-      if(campo === 'nombre')  {
-        setEjercicio(prev => ({
-              ...prev,
-              [campo]: valor
-        }));
-      } else {
-        setEjercicio(prev => ({
-              ...prev,
-              [campo]: valor === "" ? "" : Number(valor),
-        }));
-      }
-    };
-
+  const handleChange = (campo, valor) => {
+    
+    if(campo === 'nombre')  {
+      setEjercicio(prev => ({
+            ...prev,
+            [campo]: valor
+      }));
+    } else {
+      setEjercicio(prev => ({
+            ...prev,
+            [campo]: valor === "" ? "" : Number(valor),
+      }));
+    }
+  
+  };
 
   const handleGuardar = () => {
+  
     if (validarFormulario()) {
-        //alert("Ejercicio guardado con éxito");
+      if(ejercicioSeleccionado){
         setNuevaRutina({
-            ...nuevaRutina,
-            ejercicios: [...nuevaRutina.ejercicios, ejercicio],
-        });
-        setModalFormEjercicio(false);
+          ...nuevaRutina,
+          ejercicios: nuevaRutina.ejercicios.map(e => e.id !== ejercicioSeleccionado ? e : ejercicio)
+        })
+      } else {
+        setNuevaRutina({
+              ...nuevaRutina,
+              ejercicios: [...nuevaRutina.ejercicios, ejercicio],
+          });
+      }   
+      setModalFormEjercicio(false);
     } else {
-      alert('Algo salio mal')
+      alert(errores)
     }
+
   };
 
   return (
@@ -149,7 +167,7 @@ const FormEjercicio = ({nuevaRutina, setNuevaRutina, setModalFormEjercicio, id})
               if (ejercicioSeleccionado) {
                 setEjercicio(prev => ({
                   ...prev,
-                  id: ejercicioSeleccionado.id,
+                  idEjercicio: ejercicioSeleccionado.idEjercicio,
                   nombre: ejercicioSeleccionado.nombre
                 }));
               } else {
@@ -168,7 +186,7 @@ const FormEjercicio = ({nuevaRutina, setNuevaRutina, setModalFormEjercicio, id})
               ?.sort((a, b) => a.nombre.localeCompare(b.nombre))
               ?.map(ej => {
                 return(
-                <Picker.Item key={ej.id} label={ej.nombre} value={ej.nombre} />
+                <Picker.Item key={ej.idEjercicio} label={ej.nombre} value={ej.nombre} />
                 )
             })}
           </Picker>
@@ -178,29 +196,32 @@ const FormEjercicio = ({nuevaRutina, setNuevaRutina, setModalFormEjercicio, id})
       <View style={styles.seccion}>
         <Text style={styles.label}>Series</Text>
         <TextInput
+          value={ejercicio.series.toString()}
           style={styles.input}
           keyboardType="numeric"
           onChangeText={v => handleChange("series", v)}
-        />
+          />
 
         <Text style={styles.label}>Repeticiones</Text>
         <TextInput
+          value={ejercicio.repeticiones.toString()}
           style={styles.input}
           keyboardType="numeric"
           onChangeText={v => handleChange("repeticiones", v)}
-        />
+          />
 
         <Text style={styles.label}>Peso Estimado (Kgs)</Text>
         <TextInput
+          value={ejercicio.peso.toString()}
           style={styles.input}
           keyboardType="numeric"
           onChangeText={v => handleChange("peso", v)}
-        />
+          />
         <Text style={styles.label}>Descanso</Text>
         <View style={styles.pickerWrapper}>
           <Picker
             style={styles.picker}
-            selectedValue={ejercicio.descanso}
+            selectedValue={ejercicio.descanso.toString()}
             dropdownIconColor="#fff"
             onValueChange={v => handleChange("descanso", v)}
           >
@@ -217,25 +238,15 @@ const FormEjercicio = ({nuevaRutina, setNuevaRutina, setModalFormEjercicio, id})
             <Picker.Item label="10 Min" value='10'></Picker.Item>
           </Picker>
         </View>
-  
-        {/* <Text style={styles.label}>Descanso (minutos)</Text>
-        <TextInput
-          style={styles.input}
-          keyboardType="numeric"
-          onChangeText={v => handleChange("descanso", v)}
-        /> */}
       </View>
 
       {errores !== "" && <Text style={styles.error}>{errores}</Text>}
 
-       
-     
     </View>
   );
 };
 
 export default FormEjercicio;
-
 
 const styles = StyleSheet.create({
   container: {
