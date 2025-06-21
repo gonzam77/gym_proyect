@@ -7,7 +7,6 @@ import Icon from 'react-native-vector-icons/Ionicons'; // o MaterialIcons si pre
 // Habilitar reproducción en Android (opcional, pero recomendado)
 Sound.setCategory('Playback');
 
-
 const Descanso = ({ setModalDescanso, ejercicio }) => {
   const segundosTotales = ejercicio.descanso * 60;
   const alarmaRef = useRef(null);
@@ -15,37 +14,37 @@ const Descanso = ({ setModalDescanso, ejercicio }) => {
   const [activo, setActivo] = useState(true);
   const intervaloRef = useRef(null);
 
-  useEffect(() => {
+ useEffect(() => {
 
-    if (intervaloRef.current !== null) {
-      BackgroundTimer.clearInterval(intervaloRef.current);
-      intervaloRef.current = null;
-    }
+  if (intervaloRef.current !== null) {
+    BackgroundTimer.clearInterval(intervaloRef.current);
+    intervaloRef.current = null;
+  }
 
-    if (activo && segundos > 0) {
-      intervaloRef.current = BackgroundTimer.setInterval(() => {
-        setSegundos(prev => {
-          if (prev <= 1) {
-            BackgroundTimer.clearInterval(intervaloRef.current);
-            intervaloRef.current = null;
+  if (activo && segundos > 0) {
+    intervaloRef.current = BackgroundTimer.setInterval(() => {
+      setSegundos(prev => {
+        if (prev <= 1) {
+          BackgroundTimer.clearInterval(intervaloRef.current);
+          intervaloRef.current = null;
 
-            // Reproducir sonido de alarma
-            reproducirAlarma();
+          // Reproducir sonido de alarma
+          reproducirAlarma();
 
-            return 0;
-          }
-
-          return prev - 1;
-        });
-      }, 1000);
-    };
-
-    const reproducirAlarma = () => {
-      const alarma = new Sound(require('../assets/sounds/alarm.mp3'), (error) => {
-        if (error) {
-          console.log('Error al cargar el sonido:', error);
-          return;
+          return 0;
         }
+
+        return prev - 1;
+      });
+    }, 1000);
+  }
+
+  const reproducirAlarma = () => {
+    const alarma = new Sound(require('../assets/sounds/alarm2.mp3'), (error) => {
+      if (error) {
+        console.log('Error al cargar el sonido:', error);
+        return;
+      }
 
       alarma.setNumberOfLoops(-1); // Repetir infinitamente
       alarma.play((success) => {
@@ -54,17 +53,28 @@ const Descanso = ({ setModalDescanso, ejercicio }) => {
         }
       });
 
-      alarmaRef.current = alarma; // Guardar referencia para poder detenerla
+      alarmaRef.current = alarma;
     });
   };
 
-    return () => {
-      if (intervaloRef.current !== null) {
-        BackgroundTimer.clearInterval(intervaloRef.current);
-        intervaloRef.current = null;
-      }
-    };
-  }, [activo, segundos]);
+  return () => {
+    // 🧹 Detener intervalo
+    if (intervaloRef.current !== null) {
+      BackgroundTimer.clearInterval(intervaloRef.current);
+      intervaloRef.current = null;
+    }
+
+    // 🧹 Detener alarma si sigue sonando
+    if (alarmaRef.current) {
+      alarmaRef.current.stop(() => {
+        alarmaRef.current?.release?.();
+        alarmaRef.current = null;
+      });
+    }
+  };
+}, [activo, segundos]);
+
+
 
   const reiniciar = () => {
     if (intervaloRef.current !== null) {
@@ -151,16 +161,6 @@ const styles = StyleSheet.create({
     marginVertical: 40,
     textAlign: "center",
   },
-  tiempoContainer: {
-    alignItems: "center",
-    marginBottom: 50,
-  },
-  tiempoTexto: {
-    color: "#eefa07",
-    fontSize: 20,
-    fontWeight: "700",
-    marginBottom: 10,
-  },
   tiempo: {
     fontSize: 50,
     color: "#ffffff",
@@ -215,19 +215,5 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
     borderRadius: 8,
     marginHorizontal: 5,
-  },
-  botonIniciar: {
-    backgroundColor: '#43d112',
-  },
-  botonPausar: {
-    backgroundColor: '#d63031',
-  },
-  botonReiniciar: {
-    backgroundColor: '#eefa07',
-  },
-  textoBoton: {
-    color: '#000',
-    fontSize: 16,
-    fontWeight: '600',
   },
 });

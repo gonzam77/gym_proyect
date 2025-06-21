@@ -91,12 +91,7 @@ const FormRutina = ({setModalFormRutina, rutinaSeleccionada, setRutinaSelecciona
   
     return (
         <ScrollView style={styles.container}>
-
             <View >
-                <Text style={styles.titulo}>
-                    {rutinaSeleccionada?.id ? 'Editar Rutina' : 'Nueva Rutina'}
-                </Text>
-
                 <View style={styles.botonera}>
                     <Pressable 
                     style={[styles.iconButton,{alignItems:'center'}]}
@@ -109,9 +104,9 @@ const FormRutina = ({setModalFormRutina, rutinaSeleccionada, setRutinaSelecciona
                             setModalFormRutina(false)
                         }}
                     >
-                        <Icon name="arrow-back-circle" size={50} color="#eefa07">
+                        <Icon name="arrow-back-circle" size={40} color="#eefa07">
                         </Icon>
-                            <Text style={{color:'#fff',textAlign:'center'}}>Salir</Text>
+                            <Text style={{color:'#fff',textAlign:'center'}}>Cancelar</Text>
                     </Pressable>
                     <Pressable 
                         style={[styles.iconButton,{alignItems:'center'}]}
@@ -126,7 +121,7 @@ const FormRutina = ({setModalFormRutina, rutinaSeleccionada, setRutinaSelecciona
                             }, "2000");
                         }}
                     >
-                        <Icon name="save-sharp" size={40} color="#43d112" >
+                        <Icon name="save-sharp" size={35} color="#43d112" >
                         </Icon>
                             <Text style={{color:'#fff',textAlign:'center'}}>Guardar</Text>
                     </Pressable>
@@ -134,6 +129,9 @@ const FormRutina = ({setModalFormRutina, rutinaSeleccionada, setRutinaSelecciona
 
                 </View>
                 
+                <Text style={styles.titulo}>
+                    {rutinaSeleccionada?.id ? 'Editar Rutina' : 'Nueva Rutina'}
+                </Text>
                 
                 <View style={styles.form}>
                     <Text style={styles.label}>Nombre de la rutina</Text>
@@ -158,47 +156,21 @@ const FormRutina = ({setModalFormRutina, rutinaSeleccionada, setRutinaSelecciona
                             <Icon name="barbell-sharp" size={30} color="#43d112" />
 
                         </Pressable>
-                            <Text style={{color:'#fff',textAlign:'center', marginTop:10}}>Agregar</Text>
+                            <Text style={{color:'#fff',textAlign:'center', marginTop:5}}>Agregar</Text>
                     </View>
 
                     <View style={styles.listaEjercicios}>
                         {
                             nuevaRutina?.ejercicios?.map((e, index) => (
-                                <View
-                                    key={e.id} 
-                                    style={styles.ejercicioItem} 
-                                >
-                                    <View>
-                                        <Text style={styles.ejercicioNombre}>Ejercicio {index + 1}: {e.nombre}</Text>
-                                        <Text style={styles.ejercicioDetalle}>{e.series} series x {e.repeticiones} reps</Text>
-                                    </View>
-                                    <View style={{flexDirection:'row', justifyContent:'space-between', marginTop:10}}>
-                                        <Pressable 
-                                            style={{alignItems:'center'}}
-                                            onPress={()=>{
-                                                editarEjercicio(e.id);
-                                            }}
-                                        >
-                                            <Icon  name="create" size={25} color="#eff306" />
-                                            <Text style={{color:'#fff',textAlign:'center'}}>Editar</Text>
-                                        </Pressable>
-                                        <Pressable
-                                            style={{alignItems:'center'}}
-                                            onPress={()=>{
-                                                Alert.alert(
-                                                    'Eliminar',
-                                                    'Desea eliminar el ejercicio?',
-                                                    [{text:'Cancelar'}, {text:'Ok, Eliminar', onPress:()=>{
-                                                        eliminarEjercicio(e.id);
-                                                    }}]
-                                                )
-                                            }}
-                                        >
-                                            <Icon  name="trash" size={23} color="#ff4c4c" />
-                                            <Text style={{color:'#fff',textAlign:'center'}}>Eliminar</Text>
-                                        </Pressable>
-                                    </View>
-                                </View>    
+                                <Pressable key={e.id} style={styles.ejercicioItem} onPress={()=>{editarEjercicio(e.id)}}>
+                                        <View style={{maxWidth:300}}>
+                                            <Text style={styles.ejercicioNombre}>Ejercicio {index + 1}: {e.nombre}</Text>
+                                            <Text style={styles.ejercicioDetalle}>{e.series} series x {e.repeticiones} reps</Text>
+                                        </View>
+                                        <View>
+                                            <Icon  name="chevron-forward-outline" size={30} color="#fff" />
+                                        </View>
+                                </Pressable>
                             ))
                         }
                     </View>
@@ -236,7 +208,7 @@ const styles = StyleSheet.create({
         fontWeight: "900",
         color: "#43d112",
         textAlign: "center",
-        marginBottom: 30,
+        marginVertical: 15,
     },
     form: {
         marginVertical: 10,
@@ -261,10 +233,13 @@ const styles = StyleSheet.create({
         marginBottom: 30,
     },
     ejercicioItem: {
+        flexDirection:'row',
+        alignItems:'center',
+        justifyContent:'space-between',
         backgroundColor: "#373737",
         borderRadius: 10,
         padding: 15,
-        marginBottom: 15,
+        marginVertical: 15,
         elevation: 10,
         borderBottomWidth: 2,
         borderBottomColor: '#43d112',

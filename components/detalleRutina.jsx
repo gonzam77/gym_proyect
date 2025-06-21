@@ -138,7 +138,6 @@ const DetalleRutina = (
         />
       </Modal>
     </ScrollView>
-
   )
 }
 
@@ -151,17 +150,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingTop:30
   },
-  leyendaTexto: {
-    textAlign: 'center',
-    color: '#eefa07',
-    fontSize: 20,
-    fontWeight: '900',
-  },
-  botonera:{
-    flexDirection:'row',
-    justifyContent:'space-around',
-    marginBottom:30
-  },
   titulo: {
     fontSize: 32,
     fontWeight: "900",
@@ -171,54 +159,7 @@ const styles = StyleSheet.create({
   form: {
     marginVertical: 30,
   },
-  label: {
-    color: "#eefa07",
-    fontSize: 18,
-    fontWeight: "700",
-    marginBottom: 5,
-  },
-  input: {
-    backgroundColor: "#fff",
-    color: "#000",
-    borderRadius: 10,
-    paddingVertical: 10,
-    paddingHorizontal: 15,
-    marginBottom: 20,
-    fontSize: 16,
-  },
-  btn: {
-    backgroundColor: "#43d112",
-    borderRadius: 30,
-    marginVertical:15,
-    paddingVertical: 5,
-    paddingHorizontal: 15,
-    alignSelf: "center",
-    elevation: 3,
-  },
-  btnCancelar: {
-    backgroundColor: "#eefa07",
-    borderRadius: 30,
-    paddingVertical: 5,
-    paddingHorizontal: 15,
-    alignSelf: "center",
-    elevation: 3,
-  },
-  btnEliminar:{
-    backgroundColor:'#9b0404',
-  },
-  btnEliminarTexto:{
-    fontSize: 18,
-    color:'#fff',
-    fontWeight: "bold",
-    textAlign: "center",
-  },
-  btnTexto: {
-    fontSize: 18,
-    color: "#000",
-    fontWeight: "bold",
-    textAlign: "center",
-  },
-    listaEjercicios: {
+  listaEjercicios: {
     marginTop: 20,
     marginBottom: 20,
   },

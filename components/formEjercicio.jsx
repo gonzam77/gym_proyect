@@ -5,21 +5,18 @@ import { Picker } from "@react-native-picker/picker";
 import Icon from 'react-native-vector-icons/Ionicons'; // o MaterialIcons si preferís
  
 const FormEjercicio = ({nuevaRutina, setNuevaRutina, setModalFormEjercicio, ejercicioSeleccionado}) => {
-  
   const listadoEjercicios = ejercicios;
-  
   const [ejerciciosFiltrados, setEjerciciosFiltrados] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [errores, setErrores] = useState("");
-  
   const [ejercicio, setEjercicio] = useState({
     id: Date.now(),
     nombre: "",
-    series: 0,
-    repeticiones: 0,
-    peso: 0,
-    descanso: 0,
-    idEjercicio:0
+    series: "",
+    repeticiones: "",
+    peso: "",
+    descanso: "",
+    idEjercicio:""
   });
 
   useEffect(() => {
@@ -27,11 +24,9 @@ const FormEjercicio = ({nuevaRutina, setNuevaRutina, setModalFormEjercicio, ejer
       const seleccionado = nuevaRutina.ejercicios.find(e => e.id === ejercicioSeleccionado);
       if (seleccionado) {
         setEjercicio(seleccionado);
-
         const categoria = listadoEjercicios.find(
           e => e.idEjercicio === seleccionado.idEjercicio
         )?.categoria;
-
         if (categoria) {
           setSelectedCategory(categoria);
         }
@@ -49,18 +44,22 @@ const FormEjercicio = ({nuevaRutina, setNuevaRutina, setModalFormEjercicio, ejer
     }
   }, [selectedCategory]);
 
-  const validarFormulario = () => {
-    
+  const eliminarEjercicio = ()=>{
+        setNuevaRutina({
+            ...nuevaRutina,
+            ejercicios: nuevaRutina.ejercicios.filter(e => e.id !== ejercicio.id)
+        })
+  };
+
+  const validarFormulario = () => {   
     if (!selectedCategory) {
         setErrores("Debe seleccionar una categoría.");
         return false;
     };
-
     if (!ejercicio.idEjercicio) {
         setErrores("Debe seleccionar un ejercicio.");
         return false;
     };
-
     if (
         !ejercicio.series || ejercicio.series <= 0 ||
         !ejercicio.repeticiones || ejercicio.repeticiones <= 0 ||
@@ -70,15 +69,11 @@ const FormEjercicio = ({nuevaRutina, setNuevaRutina, setModalFormEjercicio, ejer
         setErrores("Todos los campos deben ser mayores a cero.");
         return false;
     };
-
     setErrores("");
-    
     return true;
-
   };
 
   const handleChange = (campo, valor) => {
-    
     if(campo === 'nombre')  {
       setEjercicio(prev => ({
             ...prev,
@@ -90,11 +85,9 @@ const FormEjercicio = ({nuevaRutina, setNuevaRutina, setModalFormEjercicio, ejer
             [campo]: valor === "" ? "" : Number(valor),
       }));
     }
-  
   };
 
   const handleGuardar = () => {
-  
     if (validarFormulario()) {
       if(ejercicioSeleccionado){
         setNuevaRutina({
@@ -111,25 +104,32 @@ const FormEjercicio = ({nuevaRutina, setNuevaRutina, setModalFormEjercicio, ejer
     } else {
       alert(errores)
     }
-
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.titulo}>Personalizar Ejercicio</Text>
-
       <View style={styles.botonera}>
         <Pressable style={[styles.iconButton,{alignItems:'center'}]} onPress={()=>setModalFormEjercicio(false)}>
           <Icon name="arrow-back-circle" size={40} color="#eefa07" />
-          <Text style={{color:'#fff',textAlign:'center'}}>Salir</Text>
-
+          <Text style={{color:'#fff',textAlign:'center'}}>Cancelar</Text>
         </Pressable>
+        {
+          ejercicioSeleccionado?
+            <Pressable style={[styles.iconButton,{alignItems:'center'}]} onPress={()=>{
+              eliminarEjercicio();
+              setModalFormEjercicio(false)
+              }}>
+              <Icon name="trash" size={35} color="#ff4c4c" />
+              <Text style={{color:'#fff',textAlign:'center'}}>Eliminar</Text>
+            </Pressable>
+          :null
+        }
         <Pressable style={[styles.iconButton,{alignItems:'center'}]} onPress={handleGuardar}>
-          <Icon name="save-sharp" size={40} color="#43d112" />
+          <Icon name="save-sharp" size={35} color="#43d112" />
           <Text style={{color:'#fff',textAlign:'center'}}>Guardar</Text>
         </Pressable>
       </View>
-
+      <Text style={styles.titulo}>Personalizar Ejercicio</Text>
       <View style={styles.seccion}>
         <Text style={styles.label}>Categoría</Text>
         <View style={styles.pickerWrapper}>
@@ -155,7 +155,6 @@ const FormEjercicio = ({nuevaRutina, setNuevaRutina, setModalFormEjercicio, ejer
           </Picker>
         </View>
       </View>
-
       <View style={styles.seccion}>
         <Text style={styles.label}>Ejercicio</Text>
         <View style={styles.pickerWrapper}>
@@ -192,7 +191,6 @@ const FormEjercicio = ({nuevaRutina, setNuevaRutina, setModalFormEjercicio, ejer
           </Picker>
         </View>
       </View>
-
       <View style={styles.seccion}>
         <Text style={styles.label}>Series</Text>
         <TextInput
@@ -201,7 +199,6 @@ const FormEjercicio = ({nuevaRutina, setNuevaRutina, setModalFormEjercicio, ejer
           keyboardType="numeric"
           onChangeText={v => handleChange("series", v)}
           />
-
         <Text style={styles.label}>Repeticiones</Text>
         <TextInput
           value={ejercicio.repeticiones.toString()}
@@ -209,7 +206,6 @@ const FormEjercicio = ({nuevaRutina, setNuevaRutina, setModalFormEjercicio, ejer
           keyboardType="numeric"
           onChangeText={v => handleChange("repeticiones", v)}
           />
-
         <Text style={styles.label}>Peso Estimado (Kgs)</Text>
         <TextInput
           value={ejercicio.peso.toString()}
@@ -239,9 +235,7 @@ const FormEjercicio = ({nuevaRutina, setNuevaRutina, setModalFormEjercicio, ejer
           </Picker>
         </View>
       </View>
-
       {errores !== "" && <Text style={styles.error}>{errores}</Text>}
-
     </View>
   );
 };
@@ -287,27 +281,6 @@ const styles = StyleSheet.create({
   picker: {
     color: "#fff",
   },
-  btn: {
-    backgroundColor: "#43d112",
-    paddingVertical: 12,
-    borderRadius: 30,
-    alignItems: "center",
-    marginTop: 10,
-    elevation: 3,
-  },
-  btnCancelar: {
-    backgroundColor: "#eefa07",
-    paddingVertical: 12,
-    borderRadius: 30,
-    alignItems: "center",
-    marginTop: 10,
-    elevation: 3,
-  },
-  btnTexto: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: "#000",
-  },
   error: {
     color: "red",
     marginBottom: 10,
@@ -324,6 +297,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-evenly",
     alignItems: "center",
-    marginVertical: 20,
+    marginBottom: 20,
   },
 });

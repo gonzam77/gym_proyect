@@ -60,7 +60,7 @@ const DetalleEjercicio = ({ ejercicio, setModalEjercicio, rutinaSeleccionada }) 
               setModalEjercicio(false);
             }}>
               <Icon name="arrow-back-circle" size={40} color="#eefa07" />
-              <Text style={{color:'#fff',textAlign:'center'}}>Salir</Text>
+              <Text style={{color:'#fff',textAlign:'center'}}>Volver</Text>
 
             </Pressable>
           </View>
@@ -72,8 +72,10 @@ const DetalleEjercicio = ({ ejercicio, setModalEjercicio, rutinaSeleccionada }) 
             ejercicioActualizado.estado === 1 ?
             <Text style={{color:'#fb7702', textAlign:'center', fontSize:24, fontWeight:'900'}}>FINALIZADO</Text>:null
         }
-        <Text style={[styles.label, styles.estadistica ]}>Series Realizadas: {serie}</Text>
-        <Text style={styles.label}>Series Restantes: {ejercicioActualizado.series - serie}</Text>
+        <View style={{flexDirection:'row', justifyContent:'space-between'}}>
+          <Text style={[styles.label, styles.estadistica ]}>Realizadas: {serie}</Text>
+          <Text style={[styles.label, styles.estadistica ]}>Restantes: {ejercicioActualizado.series - serie}</Text>
+        </View>
         <View style={styles.infoBox}>
           <Text style={styles.tituloDetalle}>Detalle</Text>
           <Text style={styles.label}>
@@ -113,13 +115,13 @@ const DetalleEjercicio = ({ ejercicio, setModalEjercicio, rutinaSeleccionada }) 
                 <Pressable style={styles.iconButton} onPress={()=>{
                   setModalEjercicio(false);
                 }}>
-                  <Icon name="arrow-back-circle" size={35} color="#eefa07" />
+                  <Icon name="arrow-back-circle" size={40} color="#eefa07" />
                   <Text style={{color:'#fff', textAlign:'center'}}>Salir</Text>
                 </Pressable>
                 <Pressable style={[styles.iconButton,{alignItems:'center'}]} onPress={()=>{
                   reiniciarEjercicio();
                 }}>
-                  <Icon name="arrow-back-circle" size={35} color="#43d112" />
+                  <Icon name="refresh-circle-outline" size={40} color="#43d112" />
                   <Text style={{color:'#fff', textAlign:'center'}}>Reiniciar</Text>
                 </Pressable>
               </View>

@@ -104,17 +104,6 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
     paddingTop: 70,
   },
-  titulo: {
-    fontFamily: 'Caprasimo-Regular',
-    textAlign: 'center',
-    color: '#43d112',
-    fontSize: 40,
-    fontWeight: '900',
-    marginBottom: 20,
-  },
-  leyenda: {
-    marginBottom: 40,
-  },
   leyendaTexto: {
     textAlign: 'center',
     color: '#eefa07',
@@ -142,24 +131,12 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '900',
   },
-  btn: {
-    backgroundColor: '#43d112',
-    borderRadius: 30,
-    marginHorizontal: 50,
-    paddingVertical: 12,
-    elevation: 3,
-  },
-  btnTexto: {
-    textAlign: 'center',
-    fontSize: 20,
-    color: '#000',
-    fontWeight: 'bold',
-  },
   image:{
     alignSelf:'center',
     height:100,
     width:100,
-    marginBottom:30
+    marginBottom:30,
+    marginLeft:20,
   },
   btnCircular: {
     justifyContent: 'center',
