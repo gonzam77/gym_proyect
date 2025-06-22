@@ -87,35 +87,33 @@ const DetalleRutina = (
         <Text>
           {rutinaActualizada.nombre}
         </Text>
-        <View style={styles.leyenda}>
+        <View>
             <Text style={styles.titulo}>{rutinaActualizada.nombre}</Text>
         </View>
-        <View style={styles.form}>
-          <View style={styles.listaEjercicios}>
-            {
-              rutinaActualizada?.ejercicios?.map((e, index) => (
-                <Pressable 
-                  key={e.id} 
-                  style={styles.ejercicioItem}
-                  onPress={()=>{
-                    setEjercicio(e);
-                    setModalEjercicio(true)
-                  }} 
-                >
-                  <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
-                  <View style={{maxWidth:280}}>
-                    <Text style={styles.ejercicioNombre}>Ejercicio {index + 1}: {e.nombre}</Text>
-                    <Text style={styles.ejercicioDetalle}>{e.series} series x {e.repeticiones} reps</Text>
-                    {
-                      e.estado === 1 ? <Text style={{color:'#f57c04'}}>FINALIZADO</Text> :null
-                    }       
-                  </View>
-                    <Icon name="chevron-forward-outline" color={'#fff'} size={25}></Icon>
-                  </View>  
-                </Pressable>
-              ))
-            }
-          </View>
+        <View style={styles.listaEjercicios}>
+          {
+            rutinaActualizada?.ejercicios?.map((e, index) => (
+              <Pressable 
+                key={e.id} 
+                style={styles.ejercicioItem}
+                onPress={()=>{
+                  setEjercicio(e);
+                  setModalEjercicio(true)
+                }} 
+              >
+                <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
+                <View style={{maxWidth:280}}>
+                  <Text style={styles.ejercicioNombre}>Ejercicio {index + 1}: {e.nombre}</Text>
+                  <Text style={styles.ejercicioDetalle}>{e.series} series x {e.repeticiones} reps</Text>
+                  {
+                    e.estado === 1 ? <Text style={{color:'#f57c04'}}>FINALIZADO</Text> :null
+                  }       
+                </View>
+                  <Icon name="chevron-forward-outline" color={'#fff'} size={25}></Icon>
+                </View>  
+              </Pressable>
+            ))
+          }
         </View>
       </View>        
 
@@ -159,17 +157,13 @@ const styles = StyleSheet.create({
     height:50
   }, 
   titulo: {
-    fontSize: 32,
-    fontWeight: "900",
+    fontSize: 35,
+    fontWeight: "700",
     color: "#43d112",
     textAlign: "center",
   },
-  form: {
-    marginVertical: 30,
-  },
-  listaEjercicios: {
-    marginTop: 20,
-    marginBottom: 20,
+  listaEjercicios:{
+    marginVertical:30
   },
   ejercicioItem: {
     backgroundColor: "#111111",
@@ -181,9 +175,10 @@ const styles = StyleSheet.create({
     borderBottomColor: '#43d112',
     borderRightWidth: 2,
     borderRightColor: '#43d112',
+    opacity:1
   },
   ejercicioNombre: {
-    color: "#43d112",
+    color: "#fff",
     fontSize: 18,
     fontWeight: "700",
     marginBottom: 5,

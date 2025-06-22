@@ -82,9 +82,7 @@ const MisRutinas = () => {
 
       <Modal
         visible={modalDetalle}
-        // animationType="slide"
-        animationType="fade"
-        transparent={true}
+        animationType="slide"
         onRequestClose={() => setModalDetalle(false)}
       >
         <DetalleRutina

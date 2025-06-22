@@ -71,7 +71,7 @@ const DetalleEjercicio = ({ ejercicio, setModalEjercicio, rutinaSeleccionada }) 
         <Text style={styles.titulo}>{ejercicioActualizado.nombre}</Text>
         {
             ejercicioActualizado.estado === 1 ?
-            <Text style={{color:'#fb7702', textAlign:'center', fontSize:24, fontWeight:'900'}}>FINALIZADO</Text>:null
+            <Text style={{color:'#fb7702', textAlign:'center', fontSize:24, fontWeight:'900', marginVertical:15}}>FINALIZADO</Text>:null
         }
         <View style={{flexDirection:'row', justifyContent:'space-between'}}>
           <Text style={[styles.label, styles.estadistica ]}>Realizadas: {serie}</Text>
@@ -174,7 +174,7 @@ const styles = StyleSheet.create({
     fontSize: 28,
     fontWeight: "900",
     textAlign: "center",
-    marginBottom: 30,
+    marginVertical: 30,
   },
   infoBox: {
     backgroundColor: "#111111",
@@ -189,9 +189,9 @@ const styles = StyleSheet.create({
   },
   tituloDetalle:{
     textAlign:'center',
-    fontSize:20,
+    fontSize:25,
     fontWeight:'700',
-    color:"#eefa07",
+    color:"#43d112",
   },
   label: {
     fontSize: 18,
