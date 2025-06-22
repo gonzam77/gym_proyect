@@ -97,6 +97,11 @@ To learn more about React Native, take a look at the following resources:
 - [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
 
 
+<!-- Reconstruir .APK -->
+
+cd android
+./gradlew assembleRelease
+
 <!-- instalar en dispositivo (sobreescribe la app) -->
 
 adb -s ZN3223Q45V install -r android/app/build/outputs/apk/release/app-release.apk
