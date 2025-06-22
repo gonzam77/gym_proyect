@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { Modal, Pressable, Text, View, StyleSheet, ScrollView, Image } from "react-native";
+import { useEffect, useState, useRef } from "react";
+import { Modal, Pressable, Text, View, StyleSheet, ScrollView, Image, Animated } from "react-native";
 import Descanso from "./descanso";
 import Icon from 'react-native-vector-icons/Ionicons'; // o MaterialIcons si preferís
 import IconPlay from 'react-native-vector-icons/MaterialIcons';// o MaterialIcons si preferís
@@ -11,12 +11,16 @@ const DetalleEjercicio = ({ ejercicio, setModalEjercicio, rutinaSeleccionada }) 
   const [modalDescanso, setModalDescanso] = useState(false);
   const [serie, setSerie] = useState(0);
   const [estado, setEstado] = useState(false);
+  
+  const scaleAnim = useRef(new Animated.Value(1)).current;
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+  
+  const dispatch = useDispatch();
 
   const ejercicioActualizado = useSelector(state=> 
     state.rutinas.rutinas.find(r=>
       r.id===rutinaSeleccionada.id)).ejercicios.find(e=>
         e.id===ejercicio.id); 
-  const dispatch = useDispatch();
 
   useEffect(()=>{
     if(ejercicioActualizado.series === serie ){
@@ -35,7 +39,51 @@ const DetalleEjercicio = ({ ejercicio, setModalEjercicio, rutinaSeleccionada }) 
     if(ejercicioActualizado.estado === 1) {
       setSerie(ejercicioActualizado.series);
     }
-  },[rutinaSeleccionada])
+  },[rutinaSeleccionada]);
+
+  useEffect(() => {
+    let loop;
+
+    if (ejercicioActualizado.estado === 1) {
+      fadeAnim.setValue(0); // arrancar desde cero
+
+      loop = Animated.loop(
+        Animated.sequence([
+          Animated.timing(fadeAnim, {
+            toValue: 1,
+            duration: 700,
+            useNativeDriver: true,
+          }),
+          Animated.timing(fadeAnim, {
+            toValue: 0,
+            duration: 700,
+            useNativeDriver: true,
+          }),
+        ])
+      );
+      loop.start();
+    }
+
+    return () => {
+      if (loop) loop.stop(); // detener si el componente se desmonta o cambia el estado
+    };
+  }, [ejercicioActualizado.estado]);
+
+  const presionarIn = () => {
+    Animated.spring(scaleAnim, {
+      toValue: 0.90,
+      useNativeDriver: true,
+    }).start();
+  };
+
+  const presionarOut = () => {
+    Animated.spring(scaleAnim, {
+      toValue: 1,
+      friction: 3,
+      tension: 40,
+      useNativeDriver: true,
+    }).start();
+  };
 
   const reiniciarEjercicio = ()=>{
     setSerie(0);
@@ -70,9 +118,20 @@ const DetalleEjercicio = ({ ejercicio, setModalEjercicio, rutinaSeleccionada }) 
 
         <Text style={styles.titulo}>{ejercicioActualizado.nombre}</Text>
         {
-            ejercicioActualizado.estado === 1 ?
-            <Text style={{color:'#fb7702', textAlign:'center', fontSize:24, fontWeight:'900', marginVertical:15}}>FINALIZADO</Text>:null
+          ejercicioActualizado.estado === 1 && (
+            <Animated.Text style={{
+              opacity: fadeAnim,
+              color: '#fb7702',
+              textAlign: 'center',
+              fontSize: 24,
+              fontWeight: '900',
+              marginVertical: 10,
+            }}>
+              FINALIZADO
+            </Animated.Text>
+          )
         }
+
         <View style={{flexDirection:'row', justifyContent:'space-between'}}>
           <Text style={[styles.label, styles.estadistica ]}>Realizadas: {serie}</Text>
           <Text style={[styles.label, styles.estadistica ]}>Restantes: {ejercicioActualizado.series - serie}</Text>
@@ -134,10 +193,18 @@ const DetalleEjercicio = ({ ejercicio, setModalEjercicio, rutinaSeleccionada }) 
           ):(
             <View style={styles.botonera}>
               <Pressable
+                onPressIn={presionarIn}
+                onPressOut={presionarOut}
                 style={[styles.iconButton,{alignItems:'center'}]}
                 onPress={() => setEstado(true)}
               >
-                <Image style={{width:70,height:70}} source={require('../assets/img/play.png')}></Image>
+                <Animated.Image style={[
+                  {
+                    width: 70,
+                    height: 70,
+                    transform: [{ scale: scaleAnim }],
+                  }
+                ]} source={require('../assets/img/play.png')} />
                 {/* <IconPlay name="play-circle-outline" size={70} color="#43d112" /> */}
                 {/* <Text style={{color:'#fff',textAlign:'center'}}>Comenzar</Text> */}
               </Pressable>
