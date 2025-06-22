@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { View, Text, StyleSheet, Pressable, ScrollView, Modal, Image, ImageBackground } from "react-native";
+import { useEffect, useRef, useState } from "react";
+import { View, Text, StyleSheet, Pressable, ScrollView, Modal, Image, Animated } from "react-native";
 import FormRutina from "./formRutina";
 import DetalleRutina from "./detalleRutina";
 import Icon from 'react-native-vector-icons/Ionicons'; // o MaterialIcons si preferís
@@ -11,6 +11,24 @@ const MisRutinas = () => {
   const [modalFormRutina, setModalFormRutina] = useState(false);
   const [modalDetalle, setModalDetalle] = useState(false);
   const [rutinaSeleccionada, setRutinaSeleccionada] = useState();
+
+  const scaleAnim = useRef(new Animated.Value(1)).current;
+
+  const presionarIn = () => {
+    Animated.spring(scaleAnim, {
+      toValue: 0.90,
+      useNativeDriver: true,
+    }).start();
+  };
+
+  const presionarOut = () => {
+    Animated.spring(scaleAnim, {
+      toValue: 1,
+      friction: 3,
+      tension: 40,
+      useNativeDriver: true,
+    }).start();
+  };
 
   useEffect(()=>{
   },[rutinas])
@@ -71,12 +89,14 @@ const MisRutinas = () => {
       </ScrollView>
 
       <Pressable
+        onPressIn={presionarIn}
+        onPressOut={presionarOut}
         style={styles.btnCircular}
         onPress={() => {
           setModalFormRutina(true);
         }}
       >
-        <Image style={styles.agregar} source={require('../assets/img/agregar.png')}></Image>
+        <Animated.Image style={[styles.agregar, {transform:[{scale: scaleAnim}]}]} source={require('../assets/img/agregar.png')} />
         {/* <Icon name="add-circle-outline" color={'#43d112'} size={65}></Icon> */}
       </Pressable>
 

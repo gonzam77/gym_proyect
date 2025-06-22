@@ -1,15 +1,18 @@
-import { useEffect, useState } from "react";
-import { Pressable, Text, TextInput, View, StyleSheet, Modal, ScrollView, Alert, Image } from "react-native";
+import { useEffect, useRef, useState } from "react";
+import { Pressable, Text, TextInput, View, StyleSheet, Modal, ScrollView, Alert, Image, Animated } from "react-native";
 import FormEjercicio from "./formEjercicio";
 import Toast from "react-native-toast-message";
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useDispatch, useSelector } from "react-redux";
-import { agregarRutina, modificarEjercicio, eliminarEjercicio, eliminarRutina } from '../store/rutinasSlice';
+import { agregarRutina } from '../store/rutinasSlice';
+import { transform } from "typescript";
 
 const FormRutina = ({setModalFormRutina, rutinaSeleccionada, setRutinaSeleccionada}) => {
     
     const rutinas = useSelector(state=> state.rutinas.rutinas);
     const dispatch = useDispatch();
+
+    const scaleAnim = useRef(new Animated.Value(1)).current;
     
     const [modalFormEjercicio, setModalFormEjercicio] = useState(false);
     const [ejercicioSeleccionado, setEjercicioSeleccionado] = useState();
@@ -33,18 +36,27 @@ const FormRutina = ({setModalFormRutina, rutinaSeleccionada, setRutinaSelecciona
         }
     }, [rutinaSeleccionada]);
 
+    const presionarIn = () => {
+        Animated.spring(scaleAnim, {
+        toValue: 0.90,
+        useNativeDriver: true,
+        }).start();
+    };
+
+    const presionarOut = () => {
+        Animated.spring(scaleAnim, {
+        toValue: 1,
+        friction: 3,
+        tension: 40,
+        useNativeDriver: true,
+        }).start();
+    };
+
     const handleChange =(campo, valor) =>{
         setNuevaRutina({
             ...nuevaRutina,
             [campo]:valor
         });
-    };
-
-    const eliminarEjercicio = (id)=>{
-        setNuevaRutina({
-            ...nuevaRutina,
-            ejercicios: nuevaRutina.ejercicios.filter(e => e.id !== id)
-        })
     };
 
     const editarEjercicio = (id)=>{
@@ -140,12 +152,19 @@ const FormRutina = ({setModalFormRutina, rutinaSeleccionada, setRutinaSelecciona
                     />
                     <View style={[styles.botonera,{flexDirection:'column'}]}>
                         <Pressable 
+                            onPressIn={presionarIn}
+                            onPressOut={presionarOut}
                             onPress={()=>{
                                 setModalFormEjercicio(true)
                             }}
                         >
                             {/* <Icon name="barbell-sharp" size={30} color="#43d112" /> */}
-                            <Image style={{width:80,height:80}} source={require('../assets/img/ejercicio.png')}></Image>
+                            <Animated.Image style={
+                                {
+                                    width:80,
+                                    height:80,
+                                    transform: [{ scale: scaleAnim }]
+                                }} source={require('../assets/img/ejercicio.png')} />
 
 
                         </Pressable>
