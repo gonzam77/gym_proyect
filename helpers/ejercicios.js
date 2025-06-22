@@ -40,12 +40,13 @@ const ejercicios = [
   { idEjercicio: 34, categoria: "hombros", nombre: "Press militar (mancuernas)" },
   { idEjercicio: 35, categoria: "hombros", nombre: "Press Arnold" },
   { idEjercicio: 36, categoria: "hombros", nombre: "Elevaciones laterales con mancuernas" },
+  { idEjercicio: 118, categoria: "hombros", nombre: "Elevaciones laterales con polea" },
   { idEjercicio: 37, categoria: "hombros", nombre: "Elevaciones frontales con mancuernas" },
   { idEjercicio: 38, categoria: "hombros", nombre: "Elevaciones frontales con disco" },
-  { idEjercicio: 39, categoria: "hombros", nombre: "Pájaros en banco inclinado" },
+  { idEjercicio: 39, categoria: "hombros", nombre: "Pájaros con mancuerna" },
   { idEjercicio: 40, categoria: "hombros", nombre: "Face pulls en polea" },
   { idEjercicio: 41, categoria: "hombros", nombre: "Remo al mentón con barra" },
-  { idEjercicio: 42, categoria: "hombros", nombre: "Press en máquina (Smith o convergente)" },
+  { idEjercicio: 42, categoria: "hombros", nombre: "Press militar en Smith" },
 
   // Bíceps
   { idEjercicio: 43, categoria: "biceps", nombre: "Curl con barra recta" },
@@ -53,8 +54,10 @@ const ejercicios = [
   { idEjercicio: 45, categoria: "biceps", nombre: "Curl con mancuernas alternado" },
   { idEjercicio: 46, categoria: "biceps", nombre: "Curl con mancuernas simultáneo" },
   { idEjercicio: 47, categoria: "biceps", nombre: "Curl martillo" },
+  { idEjercicio: 119, categoria: "biceps", nombre: "Curl martillo cruzado" },
   { idEjercicio: 48, categoria: "biceps", nombre: "Curl predicador con barra" },
   { idEjercicio: 49, categoria: "biceps", nombre: "Curl predicador con mancuernas" },
+  { idEjercicio: 120, categoria: "biceps", nombre: "Curl predicador con polea" },
   { idEjercicio: 50, categoria: "biceps", nombre: "Curl bayesiano en polea baja" },
   { idEjercicio: 51, categoria: "biceps", nombre: "Curl doble en polea alta" },
   { idEjercicio: 52, categoria: "biceps", nombre: "Curl concentrado (Scott)" },
@@ -66,7 +69,7 @@ const ejercicios = [
   { idEjercicio: 56, categoria: "triceps", nombre: "Extensión en polea alta unilatera" },
   { idEjercicio: 57, categoria: "triceps", nombre: "Extensión sobre la cabeza con mancuerna" },
   { idEjercicio: 58, categoria: "triceps", nombre: "Extensión sobre la cabeza con cuerda" },
-  { idEjercicio: 59, categoria: "triceps", nombre: "Press francés con barra Z" },
+  { idEjercicio: 59, categoria: "triceps", nombre: "Press francés" },
   { idEjercicio: 60, categoria: "triceps", nombre: "Fondos en banco" },
   { idEjercicio: 61, categoria: "triceps", nombre: "Fondos en paralelas" },
   { idEjercicio: 62, categoria: "triceps", nombre: "Patada de tríceps con mancuerna" },
@@ -93,7 +96,8 @@ const ejercicios = [
 
   // Isquiotibiales
   { idEjercicio: 79, categoria: "isquiotibiales", nombre: "Peso muerto rumano" },
-  { idEjercicio: 80, categoria: "isquiotibiales", nombre: "Peso muerto con piernas rígidEjercicioas" },
+  { idEjercicio: 121, categoria: "isquiotibiales", nombre: "Peso muerto convencional" },
+  { idEjercicio: 80, categoria: "isquiotibiales", nombre: "Peso muerto con piernas rígidas" },
   { idEjercicio: 81, categoria: "isquiotibiales", nombre: "Curl femoral tumbado" },
   { idEjercicio: 82, categoria: "isquiotibiales", nombre: "Curl femoral sentado" },
   { idEjercicio: 83, categoria: "isquiotibiales", nombre: "Curl femoral de pie" },
@@ -144,8 +148,6 @@ const ejercicios = [
   { idEjercicio: 116, categoria: "funcional", nombre: "Farmer’s walk" },
   { idEjercicio: 117, categoria: "funcional", nombre: "Wall balls" }
 ];
-
-
 
 export default ejercicios;
 

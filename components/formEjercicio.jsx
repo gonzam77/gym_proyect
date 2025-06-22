@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Pressable, Text, TextInput, View, StyleSheet, Alert } from "react-native";
+import { Pressable, Text, TextInput, View, StyleSheet, Image, ScrollView, Alert } from "react-native";
 import ejercicios from "../helpers/ejercicios";
 import { Picker } from "@react-native-picker/picker";
 import Icon from 'react-native-vector-icons/Ionicons'; // o MaterialIcons si preferís
@@ -45,10 +45,18 @@ const FormEjercicio = ({nuevaRutina, setNuevaRutina, setModalFormEjercicio, ejer
   }, [selectedCategory]);
 
   const eliminarEjercicio = ()=>{
+    Alert.alert(
+      'Eliminar',
+      'Desea eliminar el ejercicio?',
+      [{text:'Cancelar'}, {text:'Ok, Elimnar', onPress:()=>{
         setNuevaRutina({
             ...nuevaRutina,
             ejercicios: nuevaRutina.ejercicios.filter(e => e.id !== ejercicio.id)
         })
+        setModalFormEjercicio(false);
+      }}]
+    )
+        
   };
 
   const validarFormulario = () => {   
@@ -107,26 +115,30 @@ const FormEjercicio = ({nuevaRutina, setNuevaRutina, setModalFormEjercicio, ejer
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <View style={styles.botonera}>
         <Pressable style={[styles.iconButton,{alignItems:'center'}]} onPress={()=>setModalFormEjercicio(false)}>
-          <Icon name="arrow-back-circle" size={40} color="#eefa07" />
-          <Text style={{color:'#fff',textAlign:'center'}}>Cancelar</Text>
+          <Image style={{width:50,height:50}} source={require('../assets/img/volver.png')}></Image>
+          {/* <Icon name="arrow-back-circle" size={40} color="#eefa07" /> */}
+          {/* <Text style={{color:'#fff',textAlign:'center'}}>Cancelar</Text> */}
         </Pressable>
         {
           ejercicioSeleccionado?
             <Pressable style={[styles.iconButton,{alignItems:'center'}]} onPress={()=>{
               eliminarEjercicio();
-              setModalFormEjercicio(false)
               }}>
-              <Icon name="trash" size={35} color="#ff4c4c" />
-              <Text style={{color:'#fff',textAlign:'center'}}>Eliminar</Text>
+              
+              <Image style={{width:50,height:50}} source={require('../assets/img/eliminar.png')}></Image>
+              {/* <Icon name="trash" size={35} color="#ff4c4c" /> */}
+              {/* <Text style={{color:'#fff',textAlign:'center'}}>Eliminar</Text> */}
             </Pressable>
           :null
         }
         <Pressable style={[styles.iconButton,{alignItems:'center'}]} onPress={handleGuardar}>
-          <Icon name="save-sharp" size={35} color="#43d112" />
-          <Text style={{color:'#fff',textAlign:'center'}}>Guardar</Text>
+                        <Image style={{width:60,height:60}} source={require('../assets/img/guardar.png')}></Image>
+
+          {/* <Icon name="save-sharp" size={35} color="#43d112" /> */}
+          {/* <Text style={{color:'#fff',textAlign:'center'}}>Guardar</Text> */}
         </Pressable>
       </View>
       <Text style={styles.titulo}>Personalizar Ejercicio</Text>
@@ -236,7 +248,7 @@ const FormEjercicio = ({nuevaRutina, setNuevaRutina, setModalFormEjercicio, ejer
         </View>
       </View>
       {errores !== "" && <Text style={styles.error}>{errores}</Text>}
-    </View>
+    </ScrollView>
   );
 };
 
@@ -274,7 +286,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   pickerWrapper: {
-    backgroundColor: "#373737",
+    backgroundColor: "#111111",
     borderRadius: 10,
     marginBottom: 15,
   },
@@ -290,7 +302,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     backgroundColor: "#1a1a1a",
     borderRadius: 50,
-    padding: 10,
     elevation: 5,
   },
   botonera: {

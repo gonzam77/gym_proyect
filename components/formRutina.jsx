@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Pressable, Text, TextInput, View, StyleSheet, Modal, ScrollView, Alert } from "react-native";
+import { Pressable, Text, TextInput, View, StyleSheet, Modal, ScrollView, Alert, Image } from "react-native";
 import FormEjercicio from "./formEjercicio";
 import Toast from "react-native-toast-message";
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -80,12 +80,15 @@ const FormRutina = ({setModalFormRutina, rutinaSeleccionada, setRutinaSelecciona
             estado: 0
         });
 
-        setModalFormRutina(false);
+        
         Toast.show({
             type: 'success',
             text1: '¡Guardado con éxito!',
             text2: 'Tu rutina fue guardada correctamente.',
         });
+        setTimeout(() => {
+            setModalFormRutina(false);
+        }, "2000");
     };
 
   
@@ -104,26 +107,19 @@ const FormRutina = ({setModalFormRutina, rutinaSeleccionada, setRutinaSelecciona
                             setModalFormRutina(false)
                         }}
                     >
-                        <Icon name="arrow-back-circle" size={40} color="#eefa07">
-                        </Icon>
-                            <Text style={{color:'#fff',textAlign:'center'}}>Cancelar</Text>
+                        <Image style={{width:50,height:50}} source={require('../assets/img/volver.png')}></Image>
+                        {/* <Icon name="arrow-back-circle" size={40} color="#eefa07"></Icon> */}
+                        {/* <Text style={{color:'#fff',textAlign:'center'}}>Cancelar</Text> */}
                     </Pressable>
                     <Pressable 
                         style={[styles.iconButton,{alignItems:'center'}]}
                         onPress={()=>{
-                            Toast.show({
-                                type: 'success',
-                                text1: '¡Guardado con éxito!',
-                                text2: 'Tu rutina fue guardada correctamente.',
-                            });
-                            setTimeout(() => {
-                                handleGuardar();
-                            }, "2000");
+                            handleGuardar();
                         }}
                     >
-                        <Icon name="save-sharp" size={35} color="#43d112" >
-                        </Icon>
-                            <Text style={{color:'#fff',textAlign:'center'}}>Guardar</Text>
+                        <Image style={{width:60,height:60}} source={require('../assets/img/guardar.png')}></Image>
+                        {/* <Icon name="save-sharp" size={35} color="#43d112" ></Icon> */}
+                            {/* <Text style={{color:'#fff',textAlign:'center'}}>Guardar</Text> */}
                     </Pressable>
 
 
@@ -139,24 +135,21 @@ const FormRutina = ({setModalFormRutina, rutinaSeleccionada, setRutinaSelecciona
                     style={styles.input}
                     value={nuevaRutina.nombre}
                     onChangeText={(valor)=>{handleChange('nombre',valor)}}
-                    placeholder="Ej: Día de pecho"
+                    placeholder="Ej: Pecho, piernas, fullbody..."
                     placeholderTextColor="#888"
                     />
                     <View style={[styles.botonera,{flexDirection:'column'}]}>
                         <Pressable 
-                            style={[styles.iconButton, {
-                                borderColor:'#43d112',
-                                borderWidth:4,
-                                alignItems:'center'
-                            }]}
                             onPress={()=>{
                                 setModalFormEjercicio(true)
                             }}
                         >
-                            <Icon name="barbell-sharp" size={30} color="#43d112" />
+                            {/* <Icon name="barbell-sharp" size={30} color="#43d112" /> */}
+                            <Image style={{width:80,height:80}} source={require('../assets/img/ejercicio.png')}></Image>
+
 
                         </Pressable>
-                            <Text style={{color:'#fff',textAlign:'center', marginTop:5}}>Agregar</Text>
+                            {/* <Text style={{color:'#fff',textAlign:'center', marginTop:5}}>Agregar</Text> */}
                     </View>
 
                     <View style={styles.listaEjercicios}>
@@ -236,7 +229,7 @@ const styles = StyleSheet.create({
         flexDirection:'row',
         alignItems:'center',
         justifyContent:'space-between',
-        backgroundColor: "#373737",
+        backgroundColor: "#111111",
         borderRadius: 10,
         padding: 15,
         marginVertical: 15,
@@ -261,7 +254,6 @@ const styles = StyleSheet.create({
         marginHorizontal: 10,
         backgroundColor: "#1a1a1a",
         borderRadius: 50,
-        padding: 10,
         elevation: 5,
     },
     botonera: {

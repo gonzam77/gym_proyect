@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { View, Text, StyleSheet, Pressable, ScrollView, Modal, Image } from "react-native";
+import { View, Text, StyleSheet, Pressable, ScrollView, Modal, Image, ImageBackground } from "react-native";
 import FormRutina from "./formRutina";
 import DetalleRutina from "./detalleRutina";
 import Icon from 'react-native-vector-icons/Ionicons'; // o MaterialIcons si preferís
@@ -33,8 +33,42 @@ const MisRutinas = () => {
   );
   
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <Image style={styles.image} source={require('../assets/img/logo1.png')} />
+    
+    <View style={styles.container}>
+      <View style={{flexDirection:'row', justifyContent:'space-between', marginHorizontal:30, paddingTop:30}}>
+        <View>
+          <Text style={{fontSize:40, color:'#fff', fontWeight:'800', }}>
+            A DARLO
+          </Text>
+          <Text style={{fontSize:45, color:'#fff', fontWeight:'800', }}>
+            TODO ! ! ! 
+          </Text>
+        </View>
+        <View>
+          <Image style={styles.image} source={require('../assets/img/logo1.png')} />
+        </View>  
+      </View>
+      
+      <ScrollView contentContainerStyle={styles.scroll}>
+        {
+          rutinas?.length ? null : (
+            <View style={styles.leyenda}>
+              <Text style={styles.leyendaTexto}>Aun no ha programado rutinas</Text>
+            </View>
+          )
+        }
+  
+        {
+          rutinas?.map((e, index) => (
+            <EntrenamientoItem
+            dia={`DIA ${index + 1}`}
+            nombre={e.nombre}
+            id={e.id}
+            key={e.id}
+            />
+          ))
+        }
+      </ScrollView>
 
       <Pressable
         style={styles.btnCircular}
@@ -42,32 +76,15 @@ const MisRutinas = () => {
           setModalFormRutina(true);
         }}
       >
-          <Icon name="add-circle-outline" color={'#43d112'} size={65}></Icon>
+        <Image style={styles.agregar} source={require('../assets/img/agregar.png')}></Image>
+        {/* <Icon name="add-circle-outline" color={'#43d112'} size={65}></Icon> */}
       </Pressable>
 
-      {
-        rutinas?.length ? null : (
-          <View style={styles.leyenda}>
-            <Text style={styles.leyendaTexto}>Aun no ha programado rutinas</Text>
-          </View>
-        )
-      }
-
-      {
-        rutinas?.map((e, index) => (
-          <EntrenamientoItem
-            dia={`DIA ${index + 1}`}
-            nombre={e.nombre}
-            id={e.id}
-            key={e.id}
-          />
-        ))
-      }
-
-      {/* Modales */}
       <Modal
         visible={modalDetalle}
-        animationType="slide"
+        // animationType="slide"
+        animationType="fade"
+        transparent={true}
         onRequestClose={() => setModalDetalle(false)}
       >
         <DetalleRutina
@@ -92,7 +109,7 @@ const MisRutinas = () => {
           setRutinaSeleccionada={setRutinaSeleccionada}
         />
       </Modal>
-    </ScrollView>
+    </View>
   );
 };
 
@@ -101,9 +118,18 @@ export default MisRutinas;
 const styles = StyleSheet.create({
   container: {
     backgroundColor: 'transparent', // importante para que se vea el fondo
-    paddingBottom: 20,
-    paddingTop: 70,
+    flex:1
   },
+  scroll:{
+    backgroundColor:'transparent',
+    paddingVertical:50,
+    flex:1
+
+  },
+  agregar:{
+    width:80,
+    height:80
+  },  
   leyendaTexto: {
     textAlign: 'center',
     color: '#eefa07',
@@ -113,37 +139,36 @@ const styles = StyleSheet.create({
   entrenamiento: {
     marginHorizontal: 15,
     marginVertical: 12,
-    backgroundColor: '#373737',
-    borderRadius: 12,
+    backgroundColor: '#111111',
+    // backgroundColor: '#111111',
+    borderRadius: 20,
     padding: 15,
+    paddingVertical:25,
     elevation: 10,
     borderBottomWidth: 2,
     borderBottomColor: '#43d112',
     borderRightWidth: 2,
     borderRightColor: '#43d112',
+    opacity:0.95
   },
   dia: {
     color: '#43d112',
-    fontSize: 20,
+    fontSize: 26,
     fontWeight: '600',
   },
-  nombre: {
-    fontSize: 18,
-    fontWeight: '900',
+ nombre: {
+    fontSize: 26,
+    fontWeight: '600',
   },
   image:{
-    alignSelf:'center',
     height:100,
     width:100,
-    marginBottom:30,
-    marginLeft:20,
+    borderRadius:50
   },
   btnCircular: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    alignSelf: 'flex-end',
-    marginBottom:40,
-    marginRight: 30,
+    position:'absolute',
+    bottom:50,
+    right:30
   },
 });
  

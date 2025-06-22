@@ -22,9 +22,7 @@ const App = () => {
           resizeMode=""
         >
           <SafeAreaView style={styles.container}>
-            <View>
               <MisRutinas />
-            </View>
           </SafeAreaView>
         </ImageBackground>
       </PersistGate>

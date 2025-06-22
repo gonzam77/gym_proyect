@@ -126,7 +126,6 @@ const Descanso = ({ setModalDescanso, ejercicio }) => {
         </Pressable> 
         :        
         <Pressable
-          style={{backgroundColor:'#43d112'}}  
           onPress={() => {  
             if (alarmaRef.current) {
               alarmaRef.current.stop(() => {
@@ -137,7 +136,8 @@ const Descanso = ({ setModalDescanso, ejercicio }) => {
             setModalDescanso(false);
           }}
         >
-          <Icon name="stop-outline" size={55} color="#000" />
+          <Image style={{width:80,height:80}} source={require('../assets/img/stop.png')}></Image>
+          {/* <Icon name="stop-outline" size={55} color="#000" /> */}
         </Pressable>
 
       }
@@ -184,6 +184,7 @@ const styles = StyleSheet.create({
     height:200,
     width:200,
     padding:20,
+    borderRadius:50
   },
   contenedor: {
     justifyContent: 'center',

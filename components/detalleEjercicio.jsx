@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Modal, Pressable, Text, View, StyleSheet, ScrollView } from "react-native";
+import { Modal, Pressable, Text, View, StyleSheet, ScrollView, Image } from "react-native";
 import Descanso from "./descanso";
 import Icon from 'react-native-vector-icons/Ionicons'; // o MaterialIcons si preferís
 import IconPlay from 'react-native-vector-icons/MaterialIcons';// o MaterialIcons si preferís
@@ -59,8 +59,9 @@ const DetalleEjercicio = ({ ejercicio, setModalEjercicio, rutinaSeleccionada }) 
             <Pressable style={styles.iconButton} onPress={()=>{
               setModalEjercicio(false);
             }}>
-              <Icon name="arrow-back-circle" size={40} color="#eefa07" />
-              <Text style={{color:'#fff',textAlign:'center'}}>Volver</Text>
+              <Image style={{width:50,height:50}} source={require('../assets/img/volver.png')}></Image>
+              {/* <Icon name="arrow-back-circle" size={40} color="#eefa07" /> */}
+              {/* <Text style={{color:'#fff',textAlign:'center'}}>Volver</Text> */}
 
             </Pressable>
           </View>
@@ -115,14 +116,18 @@ const DetalleEjercicio = ({ ejercicio, setModalEjercicio, rutinaSeleccionada }) 
                 <Pressable style={styles.iconButton} onPress={()=>{
                   setModalEjercicio(false);
                 }}>
-                  <Icon name="arrow-back-circle" size={40} color="#eefa07" />
-                  <Text style={{color:'#fff', textAlign:'center'}}>Salir</Text>
+                  <Image style={{width:50,height:50}} source={require('../assets/img/volver.png')}></Image>
+
+                  {/* <Icon name="arrow-back-circle" size={40} color="#eefa07" /> */}
+                  {/* <Text style={{color:'#fff', textAlign:'center'}}>Salir</Text> */}
                 </Pressable>
                 <Pressable style={[styles.iconButton,{alignItems:'center'}]} onPress={()=>{
                   reiniciarEjercicio();
                 }}>
-                  <Icon name="refresh-circle-outline" size={40} color="#43d112" />
-                  <Text style={{color:'#fff', textAlign:'center'}}>Reiniciar</Text>
+                                          <Image style={{width:50,height:50}} source={require('../assets/img/reiniciar.png')}></Image>
+
+                  {/* <Icon name="refresh-circle-outline" size={40} color="#43d112" /> */}
+                  {/* <Text style={{color:'#fff', textAlign:'center'}}>Reiniciar</Text> */}
                 </Pressable>
               </View>
             </View>
@@ -132,8 +137,9 @@ const DetalleEjercicio = ({ ejercicio, setModalEjercicio, rutinaSeleccionada }) 
                 style={[styles.iconButton,{alignItems:'center'}]}
                 onPress={() => setEstado(true)}
               >
-                <IconPlay name="play-circle-outline" size={70} color="#43d112" />
-                <Text style={{color:'#fff',textAlign:'center'}}>Comenzar</Text>
+                <Image style={{width:70,height:70}} source={require('../assets/img/play.png')}></Image>
+                {/* <IconPlay name="play-circle-outline" size={70} color="#43d112" /> */}
+                {/* <Text style={{color:'#fff',textAlign:'center'}}>Comenzar</Text> */}
               </Pressable>
             </View>
           )
@@ -171,7 +177,7 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   infoBox: {
-    backgroundColor: "#373737",
+    backgroundColor: "#111111",
     borderRadius: 15,
     padding: 20,
     marginBottom: 30,
@@ -242,7 +248,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     backgroundColor: "#1a1a1a",
     borderRadius: 50,
-    padding: 10,
     elevation: 5,
   },
   botonera: {

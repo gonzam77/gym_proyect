@@ -1,4 +1,4 @@
-import { Modal, Pressable, StyleSheet, Text, View, Alert, ScrollView } from "react-native";
+import { Modal, Pressable, StyleSheet, Text, View, Alert, ScrollView, Image } from "react-native";
 import { useEffect, useState } from "react";
 import FormRutina from "./formRutina";
 import DetalleEjercicio from "./detalleEjercicio";
@@ -45,8 +45,9 @@ const DetalleRutina = (
               setModalDetalle(false);
             }}
         >
-            <Icon name="arrow-back-circle" size={40} color="#eefa07" />
-            <Text style={{color:'#fff',textAlign:'center'}}>Volver</Text>
+            <Image style={styles.iconos} source={require('../assets/img/volver.png')}></Image>
+            {/* <Icon name="arrow-back-circle" size={40} color="#eefa07" /> */}
+            {/* <Text style={{color:'#fff',textAlign:'center'}}>Volver</Text> */}
         </Pressable>
 
         <Pressable
@@ -55,8 +56,10 @@ const DetalleRutina = (
             setModalFormRutina(true);
           }}
         >
-          <Icon name="create" size={40} color="#43d112" />
-          <Text style={{color:'#fff',textAlign:'center'}}>Editar</Text>
+            <Image style={{ width:55, height:55 }} source={require('../assets/img/editar.png')}></Image>
+
+          {/* <Icon name="create" size={40} color="#43d112" /> */}
+          {/* <Text style={{color:'#fff',textAlign:'center'}}>Editar</Text> */}
         </Pressable>
 
         <Pressable
@@ -75,8 +78,9 @@ const DetalleRutina = (
             ]);
           }}
         >
-          <Icon name="trash" size={35} color="#ff4c4c" />
-          <Text style={{color:'#fff',textAlign:'center'}}>Eliminar</Text>
+          <Image style={styles.iconos} source={require('../assets/img/eliminar.png')}></Image>
+          {/* <Icon name="trash" size={35} color="#ff4c4c" /> */}
+          {/* <Text style={{color:'#fff',textAlign:'center'}}>Eliminar</Text> */}
         </Pressable>
       </View>
       <View>
@@ -150,6 +154,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingTop:30
   },
+  iconos:{
+    width:50,
+    height:50
+  }, 
   titulo: {
     fontSize: 32,
     fontWeight: "900",
@@ -164,7 +172,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   ejercicioItem: {
-    backgroundColor: "#373737",
+    backgroundColor: "#111111",
     borderRadius: 10,
     padding: 15,
     marginBottom: 15,
@@ -189,7 +197,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     backgroundColor: "#1a1a1a",
     borderRadius: 50,
-    padding: 10,
     elevation: 5,
   },
   botonera: {
