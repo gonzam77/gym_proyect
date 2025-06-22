@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
   scroll:{
     backgroundColor:'transparent',
     paddingVertical:50,
-    flex:1
+    flexGrow:1
 
   },
   agregar:{
