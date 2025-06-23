@@ -4,6 +4,7 @@ import FormRutina from "./formRutina";
 import DetalleEjercicio from "./detalleEjercicio";
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useDispatch, useSelector } from "react-redux";
+import ejercicios from "../helpers/ejercicios";
 
 
 const DetalleRutina = (
@@ -13,14 +14,16 @@ const DetalleRutina = (
     modalFormRutina, 
     setModalFormRutina, 
     setModalDetalle
-  })=>{
-      
-
+  })=>{  
+    
+  const rutinas = useSelector(state => state.rutinas.rutinas);
   const rutinaActualizada = useSelector(state =>
     state.rutinas.rutinas.find(r => r.id === rutinaSeleccionada.id)
   );
-
+  
   const dispatch = useDispatch();
+
+
 
   const [ejercicio, setEjercicio] = useState({});
   const [modalEjercicio, setModalEjercicio] = useState(false);
@@ -31,115 +34,156 @@ const DetalleRutina = (
       payload: id
     });
   }
+  const ejerciciosFinalizados = rutinaActualizada.ejercicios.filter(e=>e.estado===1);
+  
+  const reiniciarRutina = ()=>{
+    const rutinaReiniciada = 
+    {...rutinaActualizada,
+      ejercicios: rutinaActualizada.ejercicios.map(e=>{
+            return(
+              { ...e,
+                estado:0
+              }
+            )
+          })
+    }
 
+    const rutinasActualizadas = rutinas.map(r =>{
+      return r.id === rutinaReiniciada.id ? rutinaReiniciada : r
+    })
+    
+
+    dispatch({
+      type:'rutinas/setRutinas',
+      payload: rutinasActualizadas
+    })
+  }
+  
   useEffect(()=>{
   },[rutinaActualizada])
     
   return (
-    <ScrollView style={styles.container}>
-      <View style={styles.botonera}>
-        <Pressable
+    <View style={styles.container}>
+      <ScrollView style={styles.scroll}>
+        <View style={styles.botonera}>
+          <Pressable
+              style={[styles.iconButton,{alignItems:'center'}]}
+              onPress={() => {
+                setRutinaSeleccionada({});
+                setModalDetalle(false);
+              }}
+          >
+              <Image style={styles.iconos} source={require('../assets/img/volver.png')}></Image>
+              {/* <Icon name="arrow-back-circle" size={40} color="#eefa07" /> */}
+              {/* <Text style={{color:'#fff',textAlign:'center'}}>Volver</Text> */}
+          </Pressable>
+
+          <Pressable
             style={[styles.iconButton,{alignItems:'center'}]}
             onPress={() => {
-              setRutinaSeleccionada({});
-              setModalDetalle(false);
+              setModalFormRutina(true);
             }}
-        >
-            <Image style={styles.iconos} source={require('../assets/img/volver.png')}></Image>
-            {/* <Icon name="arrow-back-circle" size={40} color="#eefa07" /> */}
-            {/* <Text style={{color:'#fff',textAlign:'center'}}>Volver</Text> */}
-        </Pressable>
+          >
+              <Image style={{ width:55, height:55 }} source={require('../assets/img/editar.png')}></Image>
 
-        <Pressable
-          style={[styles.iconButton,{alignItems:'center'}]}
-          onPress={() => {
-            setModalFormRutina(true);
-          }}
-        >
-            <Image style={{ width:55, height:55 }} source={require('../assets/img/editar.png')}></Image>
+            {/* <Icon name="create" size={40} color="#43d112" /> */}
+            {/* <Text style={{color:'#fff',textAlign:'center'}}>Editar</Text> */}
+          </Pressable>
 
-          {/* <Icon name="create" size={40} color="#43d112" /> */}
-          {/* <Text style={{color:'#fff',textAlign:'center'}}>Editar</Text> */}
-        </Pressable>
-
-        <Pressable
-          style={[styles.iconButton,{alignItems:'center'}]}
-          onPress={() => {
-            Alert.alert("Eliminar", "Desea eliminar la rutina?", [
-              { text: "Cancelar" },
-              {
-                text: "Ok, Eliminar",
-                onPress: () => {
-                  eliminarRutina(rutinaActualizada.id);
-                  setRutinaSeleccionada({});
-                  setModalDetalle(false);
+          <Pressable
+            style={[styles.iconButton,{alignItems:'center'}]}
+            onPress={() => {
+              Alert.alert("Eliminar", "Desea eliminar la rutina?", [
+                { text: "Cancelar" },
+                {
+                  text: "Ok, Eliminar",
+                  onPress: () => {
+                    eliminarRutina(rutinaActualizada.id);
+                    setRutinaSeleccionada({});
+                    setModalDetalle(false);
+                  },
                 },
-              },
-            ]);
+              ]);
+            }}
+          >
+            <Image style={styles.iconos} source={require('../assets/img/eliminar.png')}></Image>
+            {/* <Icon name="trash" size={35} color="#ff4c4c" /> */}
+            {/* <Text style={{color:'#fff',textAlign:'center'}}>Eliminar</Text> */}
+          </Pressable>
+        </View>
+        <View>
+          <Text>
+            {rutinaActualizada.nombre}
+          </Text>
+            
+          <View>
+              <Text style={styles.titulo}>{rutinaActualizada.nombre}</Text>
+          </View>
+          <View style={styles.listaEjercicios}>
+            {
+              rutinaActualizada?.ejercicios?.map((e, index) => (
+                <Pressable 
+                  key={e.id} 
+                  style={styles.ejercicioItem}
+                  onPress={()=>{
+                    setEjercicio(e);
+                    setModalEjercicio(true)
+                  }} 
+                >
+                  <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
+                  <View style={{maxWidth:280}}>
+                    <Text style={styles.ejercicioNombre}>{e.nombre}</Text>
+                    <Text style={styles.ejercicioDetalle}>{e.series} series x {e.repeticiones} reps</Text>
+                    {
+                      e.estado === 1 ? <Text style={{color:'#f57c04'}}>FINALIZADO</Text> :null
+                    }       
+                  </View>
+                    <Icon name="chevron-forward-outline" color={'#fff'} size={25}></Icon>
+                  </View>  
+                </Pressable>
+              ))
+            }
+          </View>
+        </View>        
+
+        <Modal
+          visible={modalFormRutina}
+          animationType="slide"
+          onRequestClose={() => setModalFormRutina(false)}
+        >
+          <FormRutina 
+            rutinaSeleccionada={rutinaActualizada}
+            setModalFormRutina={setModalFormRutina}
+          />
+        </Modal>
+
+        <Modal
+          visible={modalEjercicio}
+          animationType="slide"
+          onRequestClose={()=>{setModalEjercicio(false)}}
+        >
+          <DetalleEjercicio
+            ejercicio={ejercicio}
+            setModalEjercicio={setModalEjercicio}
+            rutinaSeleccionada={rutinaActualizada}
+          />
+        </Modal>
+      </ScrollView>
+      {
+        ejerciciosFinalizados.length ?
+        <Pressable 
+          onPress={reiniciarRutina}
+          style={{
+            position:'absolute',
+            right:30,
+            bottom:15,
           }}
         >
-          <Image style={styles.iconos} source={require('../assets/img/eliminar.png')}></Image>
-          {/* <Icon name="trash" size={35} color="#ff4c4c" /> */}
-          {/* <Text style={{color:'#fff',textAlign:'center'}}>Eliminar</Text> */}
-        </Pressable>
-      </View>
-      <View>
-        <Text>
-          {rutinaActualizada.nombre}
-        </Text>
-        <View>
-            <Text style={styles.titulo}>{rutinaActualizada.nombre}</Text>
-        </View>
-        <View style={styles.listaEjercicios}>
-          {
-            rutinaActualizada?.ejercicios?.map((e, index) => (
-              <Pressable 
-                key={e.id} 
-                style={styles.ejercicioItem}
-                onPress={()=>{
-                  setEjercicio(e);
-                  setModalEjercicio(true)
-                }} 
-              >
-                <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
-                <View style={{maxWidth:280}}>
-                  <Text style={styles.ejercicioNombre}>{e.nombre}</Text>
-                  <Text style={styles.ejercicioDetalle}>{e.series} series x {e.repeticiones} reps</Text>
-                  {
-                    e.estado === 1 ? <Text style={{color:'#f57c04'}}>FINALIZADO</Text> :null
-                  }       
-                </View>
-                  <Icon name="chevron-forward-outline" color={'#fff'} size={25}></Icon>
-                </View>  
-              </Pressable>
-            ))
-          }
-        </View>
-      </View>        
+          <Image style={{width:50,height:50, alignSelf:'center', marginBottom:10}} source={require('../assets/img/reiniciar.png')}></Image>
+        </Pressable>:null
+      }
+    </View>
 
-      <Modal
-        visible={modalFormRutina}
-        animationType="slide"
-        onRequestClose={() => setModalFormRutina(false)}
-      >
-        <FormRutina 
-          rutinaSeleccionada={rutinaActualizada}
-          setModalFormRutina={setModalFormRutina}
-        />
-      </Modal>
-
-      <Modal
-        visible={modalEjercicio}
-        animationType="slide"
-        onRequestClose={()=>{setModalEjercicio(false)}}
-      >
-        <DetalleEjercicio
-          ejercicio={ejercicio}
-          setModalEjercicio={setModalEjercicio}
-          rutinaSeleccionada={rutinaActualizada}
-        />
-      </Modal>
-    </ScrollView>
   )
 }
 
@@ -150,7 +194,10 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor:'#000',
     paddingHorizontal: 20,
-    paddingTop:30
+    paddingTop:30,
+  },
+  scroll:{
+    marginBottom:50
   },
   iconos:{
     width:50,

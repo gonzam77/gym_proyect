@@ -185,8 +185,8 @@ const styles = StyleSheet.create({
   },
   btnCircular: {
     position:'absolute',
-    bottom:50,
-    right:30
+    right:30,
+    bottom:30,
   },
 });
  
