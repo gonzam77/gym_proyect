@@ -93,6 +93,7 @@ const MisRutinas = () => {
         onPressOut={presionarOut}
         style={styles.btnCircular}
         onPress={() => {
+          setRutinaSeleccionada({});
           setModalFormRutina(true);
         }}
       >
