@@ -1,8 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import { Modal, Pressable, Text, View, StyleSheet, ScrollView, Image, Animated } from "react-native";
 import Descanso from "./descanso";
-import Icon from 'react-native-vector-icons/Ionicons'; // o MaterialIcons si preferís
-import IconPlay from 'react-native-vector-icons/MaterialIcons';// o MaterialIcons si preferís
 import { useDispatch, useSelector } from "react-redux";
 
 
@@ -44,7 +42,6 @@ const DetalleEjercicio = ({ ejercicio, setModalEjercicio, rutinaSeleccionada }) 
   useEffect(() => {
     let loop;
 
-    if (ejercicioActualizado.estado === 1) {
       fadeAnim.setValue(0); // arrancar desde cero
 
       loop = Animated.loop(
@@ -62,7 +59,7 @@ const DetalleEjercicio = ({ ejercicio, setModalEjercicio, rutinaSeleccionada }) 
         ])
       );
       loop.start();
-    }
+    
 
     return () => {
       if (loop) loop.stop(); // detener si el componente se desmonta o cambia el estado
@@ -156,7 +153,7 @@ const DetalleEjercicio = ({ ejercicio, setModalEjercicio, rutinaSeleccionada }) 
         {
           estado ? (
             <View>
-              <Text style={styles.titulo}>Serie {serie + 1}</Text>
+              <Animated.Text style={[styles.titulo,{opacity:fadeAnim}]}>Serie {serie + 1} en curso</Animated.Text>
               <Pressable
                 style={styles.btnDescanso}
                 onPress={() => {

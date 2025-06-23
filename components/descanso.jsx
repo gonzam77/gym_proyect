@@ -14,67 +14,64 @@ const Descanso = ({ setModalDescanso, ejercicio }) => {
   const [activo, setActivo] = useState(true);
   const intervaloRef = useRef(null);
 
- useEffect(() => {
-
-  if (intervaloRef.current !== null) {
-    BackgroundTimer.clearInterval(intervaloRef.current);
-    intervaloRef.current = null;
-  }
-
-  if (activo && segundos > 0) {
-    intervaloRef.current = BackgroundTimer.setInterval(() => {
-      setSegundos(prev => {
-        if (prev <= 1) {
-          BackgroundTimer.clearInterval(intervaloRef.current);
-          intervaloRef.current = null;
-
-          // Reproducir sonido de alarma
-          reproducirAlarma();
-
-          return 0;
-        }
-
-        return prev - 1;
-      });
-    }, 1000);
-  }
-
-  const reproducirAlarma = () => {
-    const alarma = new Sound(require('../assets/sounds/alarm2.mp3'), (error) => {
-      if (error) {
-        console.log('Error al cargar el sonido:', error);
-        return;
-      }
-
-      alarma.setNumberOfLoops(-1); // Repetir infinitamente
-      alarma.play((success) => {
-        if (!success) {
-          console.log('Error al reproducir el sonido');
-        }
-      });
-
-      alarmaRef.current = alarma;
-    });
-  };
-
-  return () => {
-    // 🧹 Detener intervalo
+  useEffect(() => {
     if (intervaloRef.current !== null) {
       BackgroundTimer.clearInterval(intervaloRef.current);
       intervaloRef.current = null;
     }
 
-    // 🧹 Detener alarma si sigue sonando
-    if (alarmaRef.current) {
-      alarmaRef.current.stop(() => {
-        alarmaRef.current?.release?.();
-        alarmaRef.current = null;
-      });
+    if (activo && segundos > 0) {
+      intervaloRef.current = BackgroundTimer.setInterval(() => {
+        setSegundos(prev => {
+          if (prev <= 1) {
+            BackgroundTimer.clearInterval(intervaloRef.current);
+            intervaloRef.current = null;
+
+            // Reproducir sonido de alarma
+            reproducirAlarma();
+
+            return 0;
+          }
+
+          return prev - 1;
+        });
+      }, 1000);
     }
-  };
-}, [activo, segundos]);
 
+    const reproducirAlarma = () => {
+      const alarma = new Sound(require('../assets/sounds/alarm2.mp3'), (error) => {
+        if (error) {
+          console.log('Error al cargar el sonido:', error);
+          return;
+        }
 
+        alarma.setNumberOfLoops(-1); // Repetir infinitamente
+        alarma.play((success) => {
+          if (!success) {
+            console.log('Error al reproducir el sonido');
+          }
+        });
+
+        alarmaRef.current = alarma;
+      });
+    };
+
+    return () => {
+      // 🧹 Detener intervalo
+      if (intervaloRef.current !== null) {
+        BackgroundTimer.clearInterval(intervaloRef.current);
+        intervaloRef.current = null;
+      }
+
+      // 🧹 Detener alarma si sigue sonando
+      if (alarmaRef.current) {
+        alarmaRef.current.stop(() => {
+          alarmaRef.current?.release?.();
+          alarmaRef.current = null;
+        });
+      }
+    };
+  }, [activo, segundos]);
 
   const reiniciar = () => {
     if (intervaloRef.current !== null) {
@@ -98,7 +95,7 @@ const Descanso = ({ setModalDescanso, ejercicio }) => {
 
       <View style={styles.contenedor}>
         <Text style={styles.titulo2}>Tiempo Restante</Text>
-        <Text style={styles.tiempo}>{formatoTiempo(segundos)} s</Text>
+        <Text style={styles.tiempo}>{formatoTiempo(segundos)}</Text>
 
         <View style={styles.botones}>
           <Pressable
