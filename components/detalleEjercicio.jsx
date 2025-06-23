@@ -64,7 +64,7 @@ const DetalleEjercicio = ({ ejercicio, setModalEjercicio, rutinaSeleccionada }) 
     return () => {
       if (loop) loop.stop(); // detener si el componente se desmonta o cambia el estado
     };
-  }, [ejercicioActualizado.estado]);
+  }, [ejercicioActualizado.estado, estado]);
 
   const presionarIn = () => {
     Animated.spring(scaleAnim, {
@@ -180,8 +180,7 @@ const DetalleEjercicio = ({ ejercicio, setModalEjercicio, rutinaSeleccionada }) 
                 <Pressable style={[styles.iconButton,{alignItems:'center'}]} onPress={()=>{
                   reiniciarEjercicio();
                 }}>
-                                          <Image style={{width:50,height:50}} source={require('../assets/img/reiniciar.png')}></Image>
-
+                  <Image style={{width:50,height:50}} source={require('../assets/img/reiniciar.png')}></Image>
                   {/* <Icon name="refresh-circle-outline" size={40} color="#43d112" /> */}
                   {/* <Text style={{color:'#fff', textAlign:'center'}}>Reiniciar</Text> */}
                 </Pressable>
