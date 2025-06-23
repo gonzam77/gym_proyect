@@ -103,7 +103,7 @@ const DetalleRutina = (
               >
                 <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
                 <View style={{maxWidth:280}}>
-                  <Text style={styles.ejercicioNombre}>Ejercicio {index + 1}: {e.nombre}</Text>
+                  <Text style={styles.ejercicioNombre}>{e.nombre}</Text>
                   <Text style={styles.ejercicioDetalle}>{e.series} series x {e.repeticiones} reps</Text>
                   {
                     e.estado === 1 ? <Text style={{color:'#f57c04'}}>FINALIZADO</Text> :null

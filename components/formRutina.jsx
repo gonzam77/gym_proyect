@@ -176,7 +176,7 @@ const FormRutina = ({setModalFormRutina, rutinaSeleccionada, setRutinaSelecciona
                             nuevaRutina?.ejercicios?.map((e, index) => (
                                 <Pressable key={e.id} style={styles.ejercicioItem} onPress={()=>{editarEjercicio(e.id)}}>
                                         <View style={{maxWidth:300}}>
-                                            <Text style={styles.ejercicioNombre}>Ejercicio {index + 1}: {e.nombre}</Text>
+                                            <Text style={styles.ejercicioNombre}>{e.nombre}</Text>
                                             <Text style={styles.ejercicioDetalle}>{e.series} series x {e.repeticiones} reps</Text>
                                         </View>
                                         <View>
@@ -259,7 +259,7 @@ const styles = StyleSheet.create({
         borderRightColor: '#43d112',
     },
     ejercicioNombre: {
-        color: "#43d112",
+        color: "#fff",
         fontSize: 18,
         fontWeight: "700",
         marginBottom: 5,
