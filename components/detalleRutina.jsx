@@ -172,7 +172,17 @@ const DetalleRutina = (
       {
         ejerciciosFinalizados.length ?
         <Pressable 
-          onPress={reiniciarRutina}
+          onPress={()=>{
+             Alert.alert("Reiniciar", "Desea reiniciar los ejercicios?", [
+                { text: "Cancelar" },
+                {
+                  text: "Ok, Reiciciar ejercicios",
+                  onPress: () => {
+                    reiniciarRutina();
+                  },
+                },
+              ]);
+          }}
           style={{
             position:'absolute',
             right:30,

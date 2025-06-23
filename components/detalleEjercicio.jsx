@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from "react";
-import { Modal, Pressable, Text, View, StyleSheet, ScrollView, Image, Animated } from "react-native";
+import { Modal, Pressable, Text, View, StyleSheet, ScrollView, Image, Animated, Alert } from "react-native";
 import Descanso from "./descanso";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -178,7 +178,18 @@ const DetalleEjercicio = ({ ejercicio, setModalEjercicio, rutinaSeleccionada }) 
                   {/* <Text style={{color:'#fff', textAlign:'center'}}>Salir</Text> */}
                 </Pressable>
                 <Pressable style={[styles.iconButton,{alignItems:'center'}]} onPress={()=>{
-                  reiniciarEjercicio();
+                  Alert.alert(
+                    "Reiniciar", 
+                    "Desea reiniciar el ejercicio?", 
+                    [
+                      { text: "Cancelar" },
+                      {
+                        text: "Ok, Reiciciar ejercicio",
+                        onPress: () => {
+                          reiniciarEjercicio();
+                        },
+                      },
+                    ]);
                 }}>
                   <Image style={{width:50,height:50}} source={require('../assets/img/reiniciar.png')}></Image>
                   {/* <Icon name="refresh-circle-outline" size={40} color="#43d112" /> */}
