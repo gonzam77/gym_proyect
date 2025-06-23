@@ -93,7 +93,7 @@ const Descanso = ({ setModalDescanso, ejercicio }) => {
 
   return (
     <View style={styles.container}>
-      <Image style={styles.image} source={require('../assets/img/logo1.png')} />
+      <Image style={styles.image} source={require('../assets/img/descanso.png')} />
       <Text style={styles.titulo}>DESCANSO</Text>
 
       <View style={styles.contenedor}>
@@ -181,8 +181,8 @@ const styles = StyleSheet.create({
   },
   image:{
     alignSelf:'center',
-    height:200,
-    width:200,
+    height:150,
+    width:150,
     padding:20,
     borderRadius:50
   },
