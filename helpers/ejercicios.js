@@ -123,15 +123,15 @@ const ejercicios = [
   { idEjercicio: 97, categoria: "gemelos", nombre: "Elevaciones unilaterales en escalón" },
 
   // Abdominales
-  { idEjercicio: 98, categoria: "core", nombre: "Crunch abdominal" },
-  { idEjercicio: 99, categoria: "core", nombre: "Crunch en máquina" },
-  { idEjercicio: 100, categoria: "core", nombre: "Crunch en polea alta" },
-  { idEjercicio: 101, categoria: "core", nombre: "Elevaciones de piernas colgado" },
-  { idEjercicio: 102, categoria: "core", nombre: "Elevaciones de piernas en banco" },
-  { idEjercicio: 103, categoria: "core", nombre: "Plancha" },
-  { idEjercicio: 104, categoria: "core", nombre: "Plancha lateral" },
-  { idEjercicio: 105, categoria: "core", nombre: "Rueda abdominal (ab wheel)" },
-  { idEjercicio: 106, categoria: "core", nombre: "V-ups" },
+  { idEjercicio: 98, categoria: "abdominales", nombre: "Crunch abdominal" },
+  { idEjercicio: 99, categoria: "abdominales", nombre: "Crunch en máquina" },
+  { idEjercicio: 100, categoria: "abdominales", nombre: "Crunch en polea alta" },
+  { idEjercicio: 101, categoria: "abdominales", nombre: "Elevaciones de piernas colgado" },
+  { idEjercicio: 102, categoria: "abdominales", nombre: "Elevaciones de piernas en banco" },
+  { idEjercicio: 103, categoria: "abdominales", nombre: "Plancha" },
+  { idEjercicio: 104, categoria: "abdominales", nombre: "Plancha lateral" },
+  { idEjercicio: 105, categoria: "abdominales", nombre: "Rueda abdominal (ab wheel)" },
+  { idEjercicio: 106, categoria: "abdominales", nombre: "V-ups" },
 
   // Lumbares
   { idEjercicio: 107, categoria: "lumbares", nombre: "Extensiones lumbares en banco romano" },
@@ -139,14 +139,14 @@ const ejercicios = [
   { idEjercicio: 109, categoria: "lumbares", nombre: "Buenos días (Good mornings)" },
 
   // Funcionales / Fullbody
-  { idEjercicio: 110, categoria: "funcional", nombre: "Clean & press" },
-  { idEjercicio: 111, categoria: "funcional", nombre: "Snatch" },
-  { idEjercicio: 112, categoria: "funcional", nombre: "Thrusters" },
-  { idEjercicio: 113, categoria: "funcional", nombre: "Kettlebell swings" },
-  { idEjercicio: 114, categoria: "funcional", nombre: "Burpees" },
-  { idEjercicio: 115, categoria: "funcional", nombre: "Battle ropes" },
-  { idEjercicio: 116, categoria: "funcional", nombre: "Farmer’s walk" },
-  { idEjercicio: 117, categoria: "funcional", nombre: "Wall balls" }
+  { idEjercicio: 110, categoria: "funcionales", nombre: "Clean & press" },
+  { idEjercicio: 111, categoria: "funcionales", nombre: "Snatch" },
+  { idEjercicio: 112, categoria: "funcionales", nombre: "Thrusters" },
+  { idEjercicio: 113, categoria: "funcionales", nombre: "Kettlebell swings" },
+  { idEjercicio: 114, categoria: "funcionales", nombre: "Burpees" },
+  { idEjercicio: 115, categoria: "funcionales", nombre: "Battle ropes" },
+  { idEjercicio: 116, categoria: "funcionales", nombre: "Farmer’s walk" },
+  { idEjercicio: 117, categoria: "funcionales", nombre: "Wall balls" }
 ];
 
 export default ejercicios;
