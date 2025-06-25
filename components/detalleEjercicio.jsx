@@ -18,52 +18,53 @@ const DetalleEjercicio = ({ ejercicio, setModalEjercicio, rutinaSeleccionada }) 
   const ejercicioActualizado = useSelector(state=> 
     state.rutinas.rutinas.find(r=>
       r.id===rutinaSeleccionada.id)).ejercicios.find(e=>
-        e.id===ejercicio.id); 
+        e.id===ejercicio.id);
+
 
   useEffect(()=>{
-    if(ejercicioActualizado.series === serie ){
-      dispatch({
-        type: 'rutinas/modificarEjercicio',
-        payload:{
-          idEjercicio: ejercicioActualizado.id,
-          idRutina: rutinaSeleccionada.id,
-          cambios:{estado:1}
-        }
-      });
-    }
+    setSerie(ejercicioActualizado?.seriesRealizadas ?? 0);
+  },[]);
+
+  useEffect(()=>{
+
+    dispatch({
+      type: 'rutinas/modificarEjercicio',
+      payload:{
+        idEjercicio: ejercicioActualizado.id,
+        idRutina: rutinaSeleccionada.id,
+        cambios:{seriesRealizadas: serie}
+      }
+    });
+    
   },[serie, estado]);
-
-  useEffect(()=>{
-    if(ejercicioActualizado.estado === 1) {
-      setSerie(ejercicioActualizado.series);
-    }
-  },[rutinaSeleccionada]);
-
+        
   useEffect(() => {
+    
     let loop;
 
-      fadeAnim.setValue(0); // arrancar desde cero
+    fadeAnim.setValue(0); // arrancar desde cero
 
-      loop = Animated.loop(
-        Animated.sequence([
-          Animated.timing(fadeAnim, {
-            toValue: 1,
-            duration: 700,
-            useNativeDriver: true,
-          }),
-          Animated.timing(fadeAnim, {
-            toValue: 0,
-            duration: 700,
-            useNativeDriver: true,
-          }),
-        ])
-      );
-      loop.start();
+    loop = Animated.loop(
+      Animated.sequence([
+        Animated.timing(fadeAnim, {
+          toValue: 1,
+          duration: 700,
+          useNativeDriver: true,
+        }),
+        Animated.timing(fadeAnim, {
+          toValue: 0,
+          duration: 700,
+          useNativeDriver: true,
+        }),
+      ])
+    );
+    loop.start();
     
 
     return () => {
       if (loop) loop.stop(); // detener si el componente se desmonta o cambia el estado
     };
+
   }, [ejercicioActualizado.estado, estado]);
 
   const presionarIn = () => {
@@ -83,14 +84,14 @@ const DetalleEjercicio = ({ ejercicio, setModalEjercicio, rutinaSeleccionada }) 
   };
 
   const reiniciarEjercicio = ()=>{
-    setSerie(0);
     setEstado(false);
+    setSerie(0);
     dispatch({
       type: 'rutinas/modificarEjercicio',
       payload:{
         idEjercicio: ejercicioActualizado.id,
         idRutina: rutinaSeleccionada.id,
-        cambios:{estado:0}
+        cambios:{estado:0, seriesRealizadas:0}
       }
     });
   } 
@@ -115,7 +116,7 @@ const DetalleEjercicio = ({ ejercicio, setModalEjercicio, rutinaSeleccionada }) 
 
         <Text style={styles.titulo}>{ejercicioActualizado.nombre}</Text>
         {
-          ejercicioActualizado.estado === 1 && (
+          ejercicioActualizado?.series === serie && (
             <Animated.Text style={{
               opacity: fadeAnim,
               color: '#fb7702',
@@ -165,7 +166,7 @@ const DetalleEjercicio = ({ ejercicio, setModalEjercicio, rutinaSeleccionada }) 
                 <Text style={styles.btnTexto}>Descanzar</Text>
               </Pressable>
             </View>
-          ) : serie===ejercicioActualizado.series ? ( 
+          ) : serie === ejercicioActualizado.series ? ( 
             <View>
               <Text style={[styles.titulo, {color:'#fff'}]}>Felicitaciones, has terminado el ejercicio!</Text>  
               <View style={styles.botonera}>

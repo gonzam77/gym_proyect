@@ -34,7 +34,7 @@ const DetalleRutina = (
       payload: id
     });
   }
-  const ejerciciosFinalizados = rutinaActualizada.ejercicios.filter(e=>e.estado===1);
+  const ejerciciosFinalizados = rutinaActualizada.ejercicios.filter(e=> e.series === e.seriesRealizadas);
   
   const reiniciarRutina = ()=>{
     const rutinaReiniciada = 
@@ -42,7 +42,7 @@ const DetalleRutina = (
       ejercicios: rutinaActualizada.ejercicios.map(e=>{
             return(
               { ...e,
-                estado:0
+                seriesRealizadas: 0
               }
             )
           })
@@ -121,7 +121,8 @@ const DetalleRutina = (
           </View>
           <View style={styles.listaEjercicios}>
             {
-              rutinaActualizada?.ejercicios?.map((e, index) => (
+              rutinaActualizada?.ejercicios?.map((e, index) => {
+                return(
                 <Pressable 
                   key={e.id} 
                   style={styles.ejercicioItem}
@@ -135,13 +136,13 @@ const DetalleRutina = (
                     <Text style={styles.ejercicioNombre}>{e.nombre}</Text>
                     <Text style={styles.ejercicioDetalle}>{e.series} series x {e.repeticiones} reps</Text>
                     {
-                      e.estado === 1 ? <Text style={{color:'#f57c04'}}>FINALIZADO</Text> :null
+                      e.seriesRealizadas === e.series ? <Text style={{color:'#f57c04'}}>FINALIZADO</Text> :null
                     }       
                   </View>
                     <Icon name="chevron-forward-outline" color={'#fff'} size={25}></Icon>
                   </View>  
                 </Pressable>
-              ))
+              )})
             }
           </View>
         </View>        

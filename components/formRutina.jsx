@@ -22,6 +22,9 @@ const FormRutina = ({setModalFormRutina, rutinaSeleccionada, setRutinaSelecciona
         ejercicios:[],
         estado: 0
     })
+
+    console.log('ejercicioSeleccionado', ejercicioSeleccionado);
+    
     
      useEffect(() => {
         if (rutinaSeleccionada?.id) {
@@ -191,12 +194,16 @@ const FormRutina = ({setModalFormRutina, rutinaSeleccionada, setRutinaSelecciona
                 <Modal
                     visible={modalFormEjercicio}
                     animationType="slide"
-                    onRequestClose={() => setModalFormEjercicio(false)}
+                    onRequestClose={() =>{
+                        setEjercicioSeleccionado(null);
+                        setModalFormEjercicio(false);
+                    }}
                 >
                     <FormEjercicio 
                         nuevaRutina={nuevaRutina}
                         setNuevaRutina={setNuevaRutina}
                         ejercicioSeleccionado={ejercicioSeleccionado}
+                        setEjercicioSeleccionado={setEjercicioSeleccionado}
                         modalFormEjercicio={modalFormEjercicio}
                         setModalFormEjercicio={setModalFormEjercicio}
                     /> 

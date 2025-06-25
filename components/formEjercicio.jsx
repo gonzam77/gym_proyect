@@ -4,7 +4,7 @@ import ejercicios from "../helpers/ejercicios";
 import { Picker } from "@react-native-picker/picker";
 import Icon from 'react-native-vector-icons/Ionicons'; // o MaterialIcons si preferís
  
-const FormEjercicio = ({nuevaRutina, setNuevaRutina, setModalFormEjercicio, ejercicioSeleccionado}) => {
+const FormEjercicio = ({nuevaRutina, setNuevaRutina, setModalFormEjercicio, ejercicioSeleccionado, setEjercicioSeleccionado}) => {
   const listadoEjercicios = ejercicios;
   const [ejerciciosFiltrados, setEjerciciosFiltrados] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -16,7 +16,8 @@ const FormEjercicio = ({nuevaRutina, setNuevaRutina, setModalFormEjercicio, ejer
     repeticiones: "",
     peso: "",
     descanso: "",
-    idEjercicio:""
+    idEjercicio:"",
+    seriesRealizadas:0
   });
 
   useEffect(() => {
@@ -109,6 +110,7 @@ const FormEjercicio = ({nuevaRutina, setNuevaRutina, setModalFormEjercicio, ejer
           });
       }   
       setModalFormEjercicio(false);
+      setEjercicioSeleccionado(null)
     } else {
       alert(errores)
     }
@@ -117,13 +119,19 @@ const FormEjercicio = ({nuevaRutina, setNuevaRutina, setModalFormEjercicio, ejer
   return (
     <ScrollView style={styles.container}>
       <View style={styles.botonera}>
-        <Pressable style={[styles.iconButton,{alignItems:'center'}]} onPress={()=>setModalFormEjercicio(false)}>
+        <Pressable 
+          style={[styles.iconButton,{alignItems:'center'}]} 
+          onPress={()=>{
+            setEjercicioSeleccionado(null);
+            setModalFormEjercicio(false);
+          }}
+        >
           <Image style={{width:50,height:50}} source={require('../assets/img/volver.png')}></Image>
           {/* <Icon name="arrow-back-circle" size={40} color="#eefa07" /> */}
           {/* <Text style={{color:'#fff',textAlign:'center'}}>Cancelar</Text> */}
         </Pressable>
         {
-          ejercicioSeleccionado?
+          ejercicioSeleccionado ?
             <Pressable style={[styles.iconButton,{alignItems:'center'}]} onPress={()=>{
               eliminarEjercicio();
               }}>
