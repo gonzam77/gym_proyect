@@ -143,7 +143,6 @@ const styles = StyleSheet.create({
     backgroundColor:'transparent',
     paddingVertical:50,
     flexGrow:1
-
   },
   agregar:{
     width:80,

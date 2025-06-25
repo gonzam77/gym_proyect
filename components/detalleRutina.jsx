@@ -4,8 +4,6 @@ import FormRutina from "./formRutina";
 import DetalleEjercicio from "./detalleEjercicio";
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useDispatch, useSelector } from "react-redux";
-import ejercicios from "../helpers/ejercicios";
-
 
 const DetalleRutina = (
   {
@@ -22,9 +20,6 @@ const DetalleRutina = (
   );
   
   const dispatch = useDispatch();
-
-
-
   const [ejercicio, setEjercicio] = useState({});
   const [modalEjercicio, setModalEjercicio] = useState(false);
 
@@ -52,7 +47,6 @@ const DetalleRutina = (
       return r.id === rutinaReiniciada.id ? rutinaReiniciada : r
     })
     
-
     dispatch({
       type:'rutinas/setRutinas',
       payload: rutinasActualizadas
@@ -64,61 +58,62 @@ const DetalleRutina = (
     
   return (
     <View style={styles.container}>
-      <ScrollView style={styles.scroll}>
-        <View style={styles.botonera}>
-          <Pressable
-              style={[styles.iconButton,{alignItems:'center'}]}
-              onPress={() => {
-                setRutinaSeleccionada({});
-                setModalDetalle(false);
-              }}
-          >
-              <Image style={styles.iconos} source={require('../assets/img/volver.png')}></Image>
-              {/* <Icon name="arrow-back-circle" size={40} color="#eefa07" /> */}
-              {/* <Text style={{color:'#fff',textAlign:'center'}}>Volver</Text> */}
-          </Pressable>
-
-          <Pressable
+      <View style={styles.botonera}>
+        <Pressable
             style={[styles.iconButton,{alignItems:'center'}]}
             onPress={() => {
-              setModalFormRutina(true);
+              setRutinaSeleccionada({});
+              setModalDetalle(false);
             }}
-          >
-              <Image style={{ width:55, height:55 }} source={require('../assets/img/editar.png')}></Image>
+        >
+            <Image style={styles.iconos} source={require('../assets/img/volver.png')}></Image>
+            {/* <Icon name="arrow-back-circle" size={40} color="#eefa07" /> */}
+            {/* <Text style={{color:'#fff',textAlign:'center'}}>Volver</Text> */}
+        </Pressable>
 
-            {/* <Icon name="create" size={40} color="#43d112" /> */}
-            {/* <Text style={{color:'#fff',textAlign:'center'}}>Editar</Text> */}
-          </Pressable>
+        <Pressable
+          style={[styles.iconButton,{alignItems:'center'}]}
+          onPress={() => {
+            setModalFormRutina(true);
+          }}
+        >
+            <Image style={{ width:55, height:55 }} source={require('../assets/img/editar.png')}></Image>
 
-          <Pressable
-            style={[styles.iconButton,{alignItems:'center'}]}
-            onPress={() => {
-              Alert.alert("Eliminar", "Desea eliminar la rutina?", [
-                { text: "Cancelar" },
-                {
-                  text: "Ok, Eliminar",
-                  onPress: () => {
-                    eliminarRutina(rutinaActualizada.id);
-                    setRutinaSeleccionada({});
-                    setModalDetalle(false);
-                  },
+          {/* <Icon name="create" size={40} color="#43d112" /> */}
+          {/* <Text style={{color:'#fff',textAlign:'center'}}>Editar</Text> */}
+        </Pressable>
+
+        <Pressable
+          style={[styles.iconButton,{alignItems:'center'}]}
+          onPress={() => {
+            Alert.alert("Eliminar", "Desea eliminar la rutina?", [
+              { text: "Cancelar" },
+              {
+                text: "Ok, Eliminar",
+                onPress: () => {
+                  eliminarRutina(rutinaActualizada.id);
+                  setRutinaSeleccionada({});
+                  setModalDetalle(false);
                 },
-              ]);
-            }}
-          >
-            <Image style={styles.iconos} source={require('../assets/img/eliminar.png')}></Image>
-            {/* <Icon name="trash" size={35} color="#ff4c4c" /> */}
-            {/* <Text style={{color:'#fff',textAlign:'center'}}>Eliminar</Text> */}
-          </Pressable>
-        </View>
+              },
+            ]);
+          }}
+        >
+          <Image style={styles.iconos} source={require('../assets/img/eliminar.png')}></Image>
+          {/* <Icon name="trash" size={35} color="#ff4c4c" /> */}
+          {/* <Text style={{color:'#fff',textAlign:'center'}}>Eliminar</Text> */}
+        </Pressable>
+      </View>
+      <View>
+        <Text style={styles.titulo}>{rutinaActualizada.nombre}</Text>
+      </View>
+        
+      <ScrollView style={styles.scroll}>
+
         <View>
-          <Text>
-            {rutinaActualizada.nombre}
-          </Text>
+          
             
-          <View>
-              <Text style={styles.titulo}>{rutinaActualizada.nombre}</Text>
-          </View>
+          
           <View style={styles.listaEjercicios}>
             {
               rutinaActualizada?.ejercicios?.map((e, index) => {
@@ -256,6 +251,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-evenly",
     alignItems: "center",
-    marginVertical: 20,
+    marginVertical: 10,
   },
 })

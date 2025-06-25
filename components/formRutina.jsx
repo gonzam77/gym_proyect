@@ -108,109 +108,112 @@ const FormRutina = ({setModalFormRutina, rutinaSeleccionada, setRutinaSelecciona
 
   
     return (
-        <ScrollView style={styles.container}>
-            <View >
-                <View style={styles.botonera}>
-                    <Pressable 
-                    style={[styles.iconButton,{alignItems:'center'}]}
-                        onPress={()=>{
-                            setNuevaRutina({
-                                id: '',
-                                nombre:'',
-                                ejercicios:[]
-                            });
-                            setModalFormRutina(false)
-                        }}
-                    >
-                        <Image style={{width:50,height:50}} source={require('../assets/img/volver.png')}></Image>
-                        {/* <Icon name="arrow-back-circle" size={40} color="#eefa07"></Icon> */}
-                        {/* <Text style={{color:'#fff',textAlign:'center'}}>Cancelar</Text> */}
-                    </Pressable>
-                    <Pressable 
-                        style={[styles.iconButton,{alignItems:'center'}]}
-                        onPress={()=>{
-                            handleGuardar();
-                        }}
-                    >
-                        <Image style={{width:60,height:60}} source={require('../assets/img/guardar.png')}></Image>
-                        {/* <Icon name="save-sharp" size={35} color="#43d112" ></Icon> */}
-                            {/* <Text style={{color:'#fff',textAlign:'center'}}>Guardar</Text> */}
-                    </Pressable>
-
-
-                </View>
-                
-                <Text style={styles.titulo}>
-                    {rutinaSeleccionada?.id ? 'Editar Rutina' : 'Nueva Rutina'}
-                </Text>
-                
-                <View style={styles.form}>
-                    <Text style={styles.label}>Nombre de la rutina</Text>
-                    <TextInput
-                    style={styles.input}
-                    value={nuevaRutina.nombre}
-                    onChangeText={(valor)=>{handleChange('nombre',valor)}}
-                    placeholder="Ej: Pecho, piernas, fullbody..."
-                    placeholderTextColor="#888"
-                    />
-                    <View style={[styles.botonera,{flexDirection:'column'}]}>
+        <View style={styles.container}>
+                <View >
+                    <View style={styles.botonera}>
                         <Pressable 
-                            onPressIn={presionarIn}
-                            onPressOut={presionarOut}
+                        style={[styles.iconButton,{alignItems:'center'}]}
                             onPress={()=>{
-                                setModalFormEjercicio(true)
+                                setNuevaRutina({
+                                    id: '',
+                                    nombre:'',
+                                    ejercicios:[]
+                                });
+                                setModalFormRutina(false)
                             }}
                         >
-                            {/* <Icon name="barbell-sharp" size={30} color="#43d112" /> */}
-                            <Animated.Image style={
-                                {
-                                    width:80,
-                                    height:80,
-                                    transform: [{ scale: scaleAnim }]
-                                }} source={require('../assets/img/ejercicio.png')} />
-
-
+                            <Image style={{width:50,height:50}} source={require('../assets/img/volver.png')}></Image>
+                            {/* <Icon name="arrow-back-circle" size={40} color="#eefa07"></Icon> */}
+                            {/* <Text style={{color:'#fff',textAlign:'center'}}>Cancelar</Text> */}
                         </Pressable>
-                            {/* <Text style={{color:'#fff',textAlign:'center', marginTop:5}}>Agregar</Text> */}
+                        <Pressable 
+                            style={[styles.iconButton,{alignItems:'center'}]}
+                            onPress={()=>{
+                                handleGuardar();
+                            }}
+                        >
+                            <Image style={{width:60,height:60}} source={require('../assets/img/guardar.png')}></Image>
+                            {/* <Icon name="save-sharp" size={35} color="#43d112" ></Icon> */}
+                                {/* <Text style={{color:'#fff',textAlign:'center'}}>Guardar</Text> */}
+                        </Pressable>
+
+
+                    </View>
+                    
+                    <Text style={styles.titulo}>
+                        {rutinaSeleccionada?.id ? 'Editar Rutina' : 'Nueva Rutina'}
+                    </Text>
+                    
+                    <View style={styles.form}>
+                        <Text style={styles.label}>Nombre de la rutina</Text>
+                        <TextInput
+                        style={styles.input}
+                        value={nuevaRutina.nombre}
+                        onChangeText={(valor)=>{handleChange('nombre',valor)}}
+                        placeholder="Ej: Pecho, piernas, fullbody..."
+                        placeholderTextColor="#888"
+                        />
+                        <View style={[styles.botonera,{flexDirection:'column'}]}>
+                            <Pressable 
+                                onPressIn={presionarIn}
+                                onPressOut={presionarOut}
+                                onPress={()=>{
+                                    setModalFormEjercicio(true)
+                                }}
+                            >
+                                {/* <Icon name="barbell-sharp" size={30} color="#43d112" /> */}
+                                <Animated.Image style={
+                                    {
+                                        width:80,
+                                        height:80,
+                                        transform: [{ scale: scaleAnim }]
+                                    }} source={require('../assets/img/ejercicio.png')} />
+
+
+                            </Pressable>
+                                {/* <Text style={{color:'#fff',textAlign:'center', marginTop:5}}>Agregar</Text> */}
+                        </View>
                     </View>
 
-                    <View style={styles.listaEjercicios}>
-                        {
-                            nuevaRutina?.ejercicios?.map((e, index) => (
-                                <Pressable key={e.id} style={styles.ejercicioItem} onPress={()=>{editarEjercicio(e.id)}}>
-                                        <View style={{maxWidth:300}}>
-                                            <Text style={styles.ejercicioNombre}>{e.nombre}</Text>
-                                            <Text style={styles.ejercicioDetalle}>{e.series} series x {e.repeticiones} reps</Text>
-                                        </View>
-                                        <View>
-                                            <Icon  name="chevron-forward-outline" size={30} color="#fff" />
-                                        </View>
-                                </Pressable>
-                            ))
-                        }
-                    </View>
-                </View>
+                        <ScrollView style={styles.scroll}>
+                            <View style={styles.listaEjercicios}>
+                                {
+                                    nuevaRutina?.ejercicios?.map((e, index) => (
+                                        <Pressable key={e.id} style={styles.ejercicioItem} onPress={()=>{editarEjercicio(e.id)}}>
+                                                <View style={{maxWidth:300}}>
+                                                    <Text style={styles.ejercicioNombre}>{e.nombre}</Text>
+                                                    <Text style={styles.ejercicioDetalle}>{e.series} series x {e.repeticiones} reps</Text>
+                                                </View>
+                                                <View>
+                                                    <Icon  name="chevron-forward-outline" size={30} color="#fff" />
+                                                </View>
+                                        </Pressable>
+                                    ))
+                                }
+                            </View>
+                        </ScrollView>
 
-                <Modal
-                    visible={modalFormEjercicio}
-                    animationType="slide"
-                    onRequestClose={() =>{
-                        setEjercicioSeleccionado(null);
-                        setModalFormEjercicio(false);
-                    }}
-                >
-                    <FormEjercicio 
-                        nuevaRutina={nuevaRutina}
-                        setNuevaRutina={setNuevaRutina}
-                        ejercicioSeleccionado={ejercicioSeleccionado}
-                        setEjercicioSeleccionado={setEjercicioSeleccionado}
-                        modalFormEjercicio={modalFormEjercicio}
-                        setModalFormEjercicio={setModalFormEjercicio}
-                    /> 
-                </Modal>
-            </View>
-            <Toast />
-        </ScrollView>
+                    </View>
+
+                    <Modal
+                        visible={modalFormEjercicio}
+                        animationType="slide"
+                        onRequestClose={() =>{
+                            setEjercicioSeleccionado(null);
+                            setModalFormEjercicio(false);
+                        }}
+                    >
+                        <FormEjercicio 
+                            nuevaRutina={nuevaRutina}
+                            setNuevaRutina={setNuevaRutina}
+                            ejercicioSeleccionado={ejercicioSeleccionado}
+                            setEjercicioSeleccionado={setEjercicioSeleccionado}
+                            modalFormEjercicio={modalFormEjercicio}
+                            setModalFormEjercicio={setModalFormEjercicio}
+                        /> 
+                    </Modal>
+                <Toast />
+        </View>
     );
 };
 
@@ -222,6 +225,11 @@ const styles = StyleSheet.create({
         backgroundColor: '#000',
         padding: 20,
     },
+    scroll:{
+        backgroundColor:'transparent',
+        paddingVertical:50,
+        flexGrow:1
+    },  
     titulo: {
         fontSize: 30,
         fontWeight: "900",
