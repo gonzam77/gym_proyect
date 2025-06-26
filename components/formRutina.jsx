@@ -103,7 +103,7 @@ const FormRutina = ({setModalFormRutina, rutinaSeleccionada, setRutinaSelecciona
         });
         setTimeout(() => {
             setModalFormRutina(false);
-        }, "2000");
+        }, 2000);
     };
 
   
