@@ -80,9 +80,9 @@ const MisRutinas = () => {
           rutinas?.map((e, index) => (
             <EntrenamientoItem
             dia={`DIA ${index + 1}`}
-            nombre={e.nombre}
-            id={e.id}
-            key={e.id}
+            nombre={e?.nombre}
+            id={e?.id}
+            key={e?.id}
             />
           ))
         }

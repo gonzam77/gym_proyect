@@ -16,7 +16,7 @@ const DetalleRutina = (
     
   const rutinas = useSelector(state => state.rutinas.rutinas);
   const rutinaActualizada = useSelector(state =>
-    state.rutinas.rutinas.find(r => r.id === rutinaSeleccionada.id)
+    state.rutinas.rutinas.find(r => r.id === rutinaSeleccionada?.id)
   );
   
   const dispatch = useDispatch();
@@ -28,6 +28,8 @@ const DetalleRutina = (
       type: 'rutinas/eliminarRutina',
       payload: id
     });
+    setRutinaSeleccionada({});
+    setModalDetalle(false);
   }
 
   const ejerciciosFinalizados = rutinaActualizada?.ejercicios?.filter(e=> e.series === e.seriesRealizadas);
@@ -93,8 +95,6 @@ const DetalleRutina = (
                 text: "Ok, Eliminar",
                 onPress: () => {
                   eliminarRutina(rutinaActualizada.id);
-                  setRutinaSeleccionada({});
-                  setModalDetalle(false);
                 },
               },
             ]);
@@ -106,7 +106,7 @@ const DetalleRutina = (
         </Pressable>
       </View>
       <View>
-        <Text style={styles.titulo}>{rutinaActualizada.nombre}</Text>
+        <Text style={styles.titulo}>{rutinaActualizada?.nombre}</Text>
       </View>
         
       <ScrollView style={styles.scroll}>
@@ -167,7 +167,7 @@ const DetalleRutina = (
         </Modal>
       </ScrollView>
       {
-        ejerciciosFinalizados.length ?
+        ejerciciosFinalizados?.length ?
         <Pressable 
           onPress={()=>{
              Alert.alert("Reiniciar", "Desea reiniciar los ejercicios?", [
