@@ -29,12 +29,13 @@ const DetalleRutina = (
       payload: id
     });
   }
-  const ejerciciosFinalizados = rutinaActualizada.ejercicios.filter(e=> e.series === e.seriesRealizadas);
+
+  const ejerciciosFinalizados = rutinaActualizada?.ejercicios?.filter(e=> e.series === e.seriesRealizadas);
   
   const reiniciarRutina = ()=>{
     const rutinaReiniciada = 
     {...rutinaActualizada,
-      ejercicios: rutinaActualizada.ejercicios.map(e=>{
+      ejercicios: rutinaActualizada?.ejercicios?.map(e=>{
             return(
               { ...e,
                 seriesRealizadas: 0
@@ -43,7 +44,7 @@ const DetalleRutina = (
           })
     }
 
-    const rutinasActualizadas = rutinas.map(r =>{
+    const rutinasActualizadas = rutinas?.map(r =>{
       return r.id === rutinaReiniciada.id ? rutinaReiniciada : r
     })
     
