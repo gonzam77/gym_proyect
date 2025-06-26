@@ -110,62 +110,57 @@ const DetalleRutina = (
       </View>
         
       <ScrollView style={styles.scroll}>
-
-        <View>
-          
-            
-          
-          <View style={styles.listaEjercicios}>
-            {
-              rutinaActualizada?.ejercicios?.map((e, index) => {
-                return(
-                <Pressable 
-                  key={e.id} 
-                  style={styles.ejercicioItem}
-                  onPress={()=>{
-                    setEjercicio(e);
-                    setModalEjercicio(true)
-                  }} 
-                >
-                  <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
-                  <View style={{maxWidth:280}}>
-                    <Text style={styles.ejercicioNombre}>{e.nombre}</Text>
-                    <Text style={styles.ejercicioDetalle}>{e.series} series x {e.repeticiones} reps</Text>
-                    {
-                      e.seriesRealizadas === e.series ? <Text style={{color:'#f57c04'}}>FINALIZADO</Text> :null
-                    }       
-                  </View>
-                    <Icon name="chevron-forward-outline" color={'#fff'} size={25}></Icon>
-                  </View>  
-                </Pressable>
-              )})
-            }
-          </View>
-        </View>        
-
-        <Modal
-          visible={modalFormRutina}
-          animationType="slide"
-          onRequestClose={() => setModalFormRutina(false)}
-        >
-          <FormRutina 
-            rutinaSeleccionada={rutinaActualizada}
-            setModalFormRutina={setModalFormRutina}
-          />
-        </Modal>
-
-        <Modal
-          visible={modalEjercicio}
-          animationType="slide"
-          onRequestClose={()=>{setModalEjercicio(false)}}
-        >
-          <DetalleEjercicio
-            ejercicio={ejercicio}
-            setModalEjercicio={setModalEjercicio}
-            rutinaSeleccionada={rutinaActualizada}
-          />
-        </Modal>
+        <View style={styles.listaEjercicios}>
+          {
+            rutinaActualizada?.ejercicios?.map((e, index) => {
+              return(
+              <Pressable 
+                key={e.id} 
+                style={styles.ejercicioItem}
+                onPress={()=>{
+                  setEjercicio(e);
+                  setModalEjercicio(true)
+                }} 
+              >
+                <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
+                <View style={{maxWidth:280}}>
+                  <Text style={styles.ejercicioNombre}>{e.nombre}</Text>
+                  <Text style={styles.ejercicioDetalle}>{e.series} series x {e.repeticiones} reps</Text>
+                  {
+                    e.seriesRealizadas === e.series ? <Text style={{color:'#f57c04'}}>FINALIZADO</Text> :null
+                  }       
+                </View>
+                  <Icon name="chevron-forward-outline" color={'#fff'} size={25}></Icon>
+                </View>  
+              </Pressable>
+            )})
+          }
+        </View>
       </ScrollView>
+
+      <Modal
+        visible={modalFormRutina}
+        animationType="slide"
+        onRequestClose={() => setModalFormRutina(false)}
+      >
+        <FormRutina 
+          rutinaSeleccionada={rutinaActualizada}
+          setModalFormRutina={setModalFormRutina}
+        />
+      </Modal>
+
+      <Modal
+        visible={modalEjercicio}
+        animationType="slide"
+        onRequestClose={()=>{setModalEjercicio(false)}}
+      >
+        <DetalleEjercicio
+          ejercicio={ejercicio}
+          setModalEjercicio={setModalEjercicio}
+          rutinaSeleccionada={rutinaActualizada}
+        />
+      </Modal>
+
       {
         ejerciciosFinalizados?.length ?
         <Pressable 
@@ -190,7 +185,6 @@ const DetalleRutina = (
         </Pressable>:null
       }
     </View>
-
   )
 }
 
