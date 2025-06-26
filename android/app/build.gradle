@@ -5,6 +5,7 @@ apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
 
 def enableProguardInReleaseBuilds = false
 def jscFlavor = 'io.github.react-native-community:jsc-android:2026004.+'
+def enableHermes = rootProject.ext.hermesEnabled
 
 react {
     autolinkLibrariesWithApp()
@@ -57,7 +58,8 @@ android {
 dependencies {
     implementation("com.facebook.react:react-android")
 
-    if (hermesEnabled.toBoolean()) {
+    if (enableHermes.toBoolean()) {
+
         implementation("com.facebook.react:hermes-android")
     } else {
         implementation jscFlavor
