@@ -5,7 +5,6 @@ import Toast from "react-native-toast-message";
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useDispatch, useSelector } from "react-redux";
 import { agregarRutina } from '../store/rutinasSlice';
-import { transform } from "typescript";
 
 const FormRutina = ({setModalFormRutina, rutinaSeleccionada, setRutinaSeleccionada}) => {
     
@@ -109,10 +108,11 @@ const FormRutina = ({setModalFormRutina, rutinaSeleccionada, setRutinaSelecciona
   
     return (
         <View style={styles.container}>
-                <View >
+            <ScrollView style={styles.scroll}>
+
                     <View style={styles.botonera}>
                         <Pressable 
-                        style={[styles.iconButton,{alignItems:'center'}]}
+                            style={[styles.iconButton,{alignItems:'center'}]}
                             onPress={()=>{
                                 setNuevaRutina({
                                     id: '',
@@ -136,8 +136,6 @@ const FormRutina = ({setModalFormRutina, rutinaSeleccionada, setRutinaSelecciona
                             {/* <Icon name="save-sharp" size={35} color="#43d112" ></Icon> */}
                                 {/* <Text style={{color:'#fff',textAlign:'center'}}>Guardar</Text> */}
                         </Pressable>
-
-
                     </View>
                     
                     <Text style={styles.titulo}>
@@ -174,46 +172,43 @@ const FormRutina = ({setModalFormRutina, rutinaSeleccionada, setRutinaSelecciona
                                 {/* <Text style={{color:'#fff',textAlign:'center', marginTop:5}}>Agregar</Text> */}
                         </View>
                     </View>
-
-                        <ScrollView style={styles.scroll}>
-                            <View style={styles.listaEjercicios}>
-                                {
-                                    nuevaRutina?.ejercicios?.map((e, index) => (
-                                        <Pressable key={e.id} style={styles.ejercicioItem} onPress={()=>{editarEjercicio(e.id)}}>
-                                                <View style={{maxWidth:300}}>
-                                                    <Text style={styles.ejercicioNombre}>{e.nombre}</Text>
-                                                    <Text style={styles.ejercicioDetalle}>{e.series} series x {e.repeticiones} reps</Text>
-                                                </View>
-                                                <View>
-                                                    <Icon  name="chevron-forward-outline" size={30} color="#fff" />
-                                                </View>
-                                        </Pressable>
-                                    ))
-                                }
-                            </View>
-                        </ScrollView>
-
+                    <View style={styles.listaEjercicios}>
+                        {
+                            nuevaRutina?.ejercicios?.map((e, index) => (
+                                <Pressable key={e.id} style={styles.ejercicioItem} onPress={()=>{editarEjercicio(e.id)}}>
+                                        <View style={{maxWidth:300}}>
+                                            <Text style={styles.ejercicioNombre}>{e.nombre}</Text>
+                                            <Text style={styles.ejercicioDetalle}>{e.series} series x {e.repeticiones} reps</Text>
+                                        </View>
+                                        <View>
+                                            <Icon  name="chevron-forward-outline" size={30} color="#fff" />
+                                        </View>
+                                </Pressable>
+                            ))
+                        }
                     </View>
+        </ScrollView>
 
-                    <Modal
-                        visible={modalFormEjercicio}
-                        animationType="slide"
-                        onRequestClose={() =>{
-                            setEjercicioSeleccionado(null);
-                            setModalFormEjercicio(false);
-                        }}
-                    >
-                        <FormEjercicio 
-                            nuevaRutina={nuevaRutina}
-                            setNuevaRutina={setNuevaRutina}
-                            ejercicioSeleccionado={ejercicioSeleccionado}
-                            setEjercicioSeleccionado={setEjercicioSeleccionado}
-                            modalFormEjercicio={modalFormEjercicio}
-                            setModalFormEjercicio={setModalFormEjercicio}
-                        /> 
-                    </Modal>
+                <Modal
+                    visible={modalFormEjercicio}
+                    animationType="slide"
+                    onRequestClose={() =>{
+                        setEjercicioSeleccionado(null);
+                        setModalFormEjercicio(false);
+                    }}
+                >
+                    <FormEjercicio 
+                        nuevaRutina={nuevaRutina}
+                        setNuevaRutina={setNuevaRutina}
+                        ejercicioSeleccionado={ejercicioSeleccionado}
+                        setEjercicioSeleccionado={setEjercicioSeleccionado}
+                        modalFormEjercicio={modalFormEjercicio}
+                        setModalFormEjercicio={setModalFormEjercicio}
+                    /> 
+                </Modal>
                 <Toast />
-        </View>
+            </View>
+
     );
 };
 
