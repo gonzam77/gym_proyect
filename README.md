@@ -101,6 +101,7 @@ To learn more about React Native, take a look at the following resources:
 
 cd android
 ./gradlew assembleRelease
+./gradlew bundleRelease
 
 <!-- instalar en dispositivo (sobreescribe la app) -->
 
