@@ -12,13 +12,13 @@ react {
 }
 
 android {
-    namespace "com.miapp"
+    namespace "com.rutina360"
     ndkVersion rootProject.ext.ndkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
     defaultConfig {
-        applicationId "com.miapp" // Cambialo si tu package name es otro
+        applicationId "com.rutina360" // Cambialo si tu package name es otro
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
