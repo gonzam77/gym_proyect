@@ -1,4 +1,4 @@
-package com.miapp
+package com.rutina360
 
 import android.app.Application
 import com.facebook.react.PackageList
