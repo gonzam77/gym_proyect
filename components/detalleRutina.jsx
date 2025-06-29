@@ -57,6 +57,8 @@ const DetalleRutina = (
   }
   
   useEffect(()=>{
+    console.log('rutinaActualizada',rutinaActualizada.ejercicios.length);
+    
   },[rutinaActualizada])
     
   return (
@@ -108,35 +110,36 @@ const DetalleRutina = (
       <View>
         <Text style={styles.titulo}>{rutinaActualizada?.nombre}</Text>
       </View>
-        
-      <ScrollView style={styles.scroll}>
-        <View style={styles.listaEjercicios}>
-          {
-            rutinaActualizada?.ejercicios?.map((e, index) => {
-              return(
-              <Pressable 
-                key={e.id} 
-                style={styles.ejercicioItem}
-                onPress={()=>{
-                  setEjercicio(e);
-                  setModalEjercicio(true)
-                }} 
-              >
-                <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
-                <View style={{maxWidth:280}}>
-                  <Text style={styles.ejercicioNombre}>{e.nombre}</Text>
-                  <Text style={styles.ejercicioDetalle}>{e.series} series x {e.repeticiones} reps</Text>
-                  {
-                    e.seriesRealizadas === e.series ? <Text style={{color:'#f57c04'}}>FINALIZADO</Text> :null
-                  }       
-                </View>
-                  <Icon name="chevron-forward-outline" color={'#fff'} size={25}></Icon>
-                </View>  
-              </Pressable>
-            )})
-          }
-        </View>
-      </ScrollView>
+      
+        <ScrollView 
+  style={styles.scroll}
+  contentContainerStyle={{ paddingBottom: 100, flexGrow: 1, minHeight: '100%' }}
+  showsVerticalScrollIndicator={false}
+>
+  <View style={styles.listaEjercicios}>
+    {
+      rutinaActualizada?.ejercicios?.map((e, index) => (
+        <Pressable 
+          key={e.id} 
+          style={styles.ejercicioItem}
+          onPress={() => {
+            setEjercicio(e);
+            setModalEjercicio(true)
+          }} 
+        >
+          <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
+            <View style={{maxWidth:280}}>
+              <Text style={styles.ejercicioNombre}>{e.nombre}</Text>
+              <Text style={styles.ejercicioDetalle}>{e.series} series x {e.repeticiones} reps</Text>
+              {e.seriesRealizadas === e.series ? <Text style={{color:'#f57c04'}}>FINALIZADO</Text> : null}
+            </View>
+            <Icon name="chevron-forward-outline" color={'#fff'} size={25} />
+          </View>  
+        </Pressable>
+      ))
+    }
+  </View>
+</ScrollView>
 
       <Modal
         visible={modalFormRutina}
@@ -161,7 +164,8 @@ const DetalleRutina = (
         />
       </Modal>
 
-      {
+      
+      {/* {
         ejerciciosFinalizados?.length ?
         <Pressable 
           onPress={()=>{
@@ -182,8 +186,8 @@ const DetalleRutina = (
           }}
         >
           <Image style={{width:50,height:50, alignSelf:'center', marginBottom:10}} source={require('../assets/img/reiniciar.png')}></Image>
-        </Pressable>:null
-      }
+      </Pressable>:null
+      } */}
     </View>
   )
 }
@@ -192,14 +196,14 @@ export default DetalleRutina;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor:'#000',
-    paddingHorizontal: 20,
-    paddingTop:30,
-  },
-  scroll:{
-    marginBottom:50
-  },
+  flex: 1,
+  backgroundColor:'#000',
+  paddingHorizontal: 20,
+  paddingTop:30,
+},
+scroll: {
+  flex: 1,
+},
   iconos:{
     width:50,
     height:50
