@@ -56,9 +56,7 @@ const DetalleRutina = (
     })
   }
   
-  useEffect(()=>{
-    console.log('rutinaActualizada',rutinaActualizada.ejercicios.length);
-    
+  useEffect(()=>{    
   },[rutinaActualizada])
     
   return (
