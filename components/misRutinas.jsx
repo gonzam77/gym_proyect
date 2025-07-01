@@ -148,10 +148,15 @@ const styles = StyleSheet.create({
     width:80,
     height:80
   },  
+  leyenda:{
+    position:'absolute',
+    bottom:150,
+    left:40  
+  },  
   leyendaTexto: {
     textAlign: 'center',
     color: '#eefa07',
-    fontSize: 20,
+    fontSize: 24,
     fontWeight: '900',
   },
   entrenamiento: {
