@@ -165,7 +165,7 @@ const DetalleRutina = (
       </Modal>
 
       
-      {/* {
+      {
         ejerciciosFinalizados?.length ?
         <Pressable 
           onPress={()=>{
@@ -187,7 +187,7 @@ const DetalleRutina = (
         >
           <Image style={{width:50,height:50, alignSelf:'center', marginBottom:10}} source={require('../assets/img/reiniciar.png')}></Image>
       </Pressable>:null
-      } */}
+      }
     </View>
   )
 }
