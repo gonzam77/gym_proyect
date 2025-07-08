@@ -92,16 +92,17 @@ const FormRutina = ({setModalFormRutina, rutinaSeleccionada, setRutinaSelecciona
             text1: '¡Guardado con éxito!',
             text2: 'Tu rutina fue guardada correctamente.',
         });
+        
         setTimeout(() => {
+            setNuevaRutina({
+                id: '',
+                nombre: '',
+                ejercicios: [],
+                estado: 0
+            });
             setModalFormRutina(false);
         }, 2000);
         
-        setNuevaRutina({
-            id: '',
-            nombre: '',
-            ejercicios: [],
-            estado: 0
-        });
     };
 
   
