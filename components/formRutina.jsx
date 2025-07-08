@@ -87,14 +87,6 @@ const FormRutina = ({setModalFormRutina, rutinaSeleccionada, setRutinaSelecciona
             dispatch(agregarRutina({ ...nuevaRutina, id: Date.now() }));
         }
 
-        setNuevaRutina({
-            id: '',
-            nombre: '',
-            ejercicios: [],
-            estado: 0
-        });
-
-        
         Toast.show({
             type: 'success',
             text1: '¡Guardado con éxito!',
@@ -103,6 +95,13 @@ const FormRutina = ({setModalFormRutina, rutinaSeleccionada, setRutinaSelecciona
         setTimeout(() => {
             setModalFormRutina(false);
         }, 2000);
+        
+        setNuevaRutina({
+            id: '',
+            nombre: '',
+            ejercicios: [],
+            estado: 0
+        });
     };
 
   
