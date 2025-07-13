@@ -166,7 +166,7 @@ const DetalleEjercicio = ({ ejercicio, setModalEjercicio, rutinaSeleccionada }) 
                 <Text style={styles.btnTexto}>Descanzar</Text>
               </Pressable>
             </View>
-          ) : serie === ejercicioActualizado.series ? ( 
+          ) : serie >= ejercicioActualizado.series ? ( 
             <View>
               <Text style={[styles.titulo, {color:'#fff'}]}>Felicitaciones, has terminado el ejercicio!</Text>  
               <View style={styles.botonera}>
