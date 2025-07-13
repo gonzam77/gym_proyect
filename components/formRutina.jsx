@@ -22,9 +22,6 @@ const FormRutina = ({setModalFormRutina, rutinaSeleccionada, setRutinaSelecciona
         estado: 0
     })
 
-    console.log('ejercicioSeleccionado', ejercicioSeleccionado);
-    
-    
      useEffect(() => {
         if (rutinaSeleccionada?.id) {
             setNuevaRutina(rutinaSeleccionada);
