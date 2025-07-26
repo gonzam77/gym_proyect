@@ -7,8 +7,9 @@ import Icon from 'react-native-vector-icons/Ionicons'; // o MaterialIcons si pre
 // Habilitar reproducción en Android (opcional, pero recomendado)
 Sound.setCategory('Playback');
 
-const Descanso = ({ setModalDescanso, ejercicio }) => {
+const Descanso = ({ setModalDescanso, ejercicio, serie }) => {
   const segundosTotales = ejercicio.descanso * 60;
+  const seriesRealizadas = ejercicio.serie
   const alarmaRef = useRef(null);
   const [segundos, setSegundos] = useState(segundosTotales);
   const [activo, setActivo] = useState(true);
@@ -92,6 +93,7 @@ const Descanso = ({ setModalDescanso, ejercicio }) => {
     <View style={styles.container}>
       <Image style={styles.image} source={require('../assets/img/descanso.png')} />
       <Text style={styles.titulo}>DESCANSO</Text>
+      <Text style={styles.titulo2}>Series realizadas {serie} de {ejercicio.series}</Text>
 
       <View style={styles.contenedor}>
         <Text style={styles.titulo2}>Tiempo Restante</Text>

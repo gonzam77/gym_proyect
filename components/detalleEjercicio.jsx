@@ -227,6 +227,7 @@ const DetalleEjercicio = ({ ejercicio, setModalEjercicio, rutinaSeleccionada }) 
           <Descanso
             ejercicio={ejercicioActualizado}
             setModalDescanso={setModalDescanso}
+            serie={serie}
           />
         </Modal>
       </ScrollView>
