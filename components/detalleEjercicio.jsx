@@ -223,7 +223,6 @@ const DetalleEjercicio = ({ ejercicio, setModalEjercicio, rutinaSeleccionada }) 
         <Modal 
           visible={modalDescanso} 
           animationType="slide"
-          onRequestClose={() => setModalDescanso(false)}
         >
           <Descanso
             ejercicio={ejercicioActualizado}
