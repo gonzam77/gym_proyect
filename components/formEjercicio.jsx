@@ -162,7 +162,7 @@ const FormEjercicio = ({nuevaRutina, setNuevaRutina, setModalFormEjercicio, ejer
             <Picker.Item label="--Seleccione Categoria--" value="" />
            {[
                 "Pecho", "Espalda", "Hombros", "Bíceps", "Tríceps", "Antebrazos", "Cuádriceps",
-                "Isquiotibiales", "Glúteos", "Aductores", "Gemelos", "Abdominales", "Lumbares", "Funcionales"
+                "Isquiotibiales", "Glúteos", "Aductores", "Gemelos", "Abdominales", "Lumbares"
             ].map(c => {
                 const valorSinAcentos = c
                 .toLowerCase()
