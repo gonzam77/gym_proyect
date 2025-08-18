@@ -1,10 +1,10 @@
 const ejercicios = [
   // Pecho
-  { idEjercicio: 1, categoria: "pecho", nombre: "Press de banca plano (barra)", tiempoEjecucion: 45 },
+  { idEjercicio: 1, categoria: "pecho", nombre: "Press de banca plano (barra/smith)", tiempoEjecucion: 45 },
   { idEjercicio: 2, categoria: "pecho", nombre: "Press de banca plano (mancuernas)", tiempoEjecucion: 45 },
-  { idEjercicio: 3, categoria: "pecho", nombre: "Press inclinado (barra)", tiempoEjecucion: 45 },
+  { idEjercicio: 3, categoria: "pecho", nombre: "Press inclinado (barra/smith)", tiempoEjecucion: 45 },
   { idEjercicio: 4, categoria: "pecho", nombre: "Press inclinado (mancuernas)", tiempoEjecucion: 45 },
-  { idEjercicio: 5, categoria: "pecho", nombre: "Press declinado (barra)", tiempoEjecucion: 45 },
+  { idEjercicio: 5, categoria: "pecho", nombre: "Press declinado (barra/smith)", tiempoEjecucion: 45 },
   { idEjercicio: 6, categoria: "pecho", nombre: "Press declinado (mancuernas)", tiempoEjecucion: 45 },
   { idEjercicio: 7, categoria: "pecho", nombre: "Aperturas con mancuernas (plano)", tiempoEjecucion: 30 },
   { idEjercicio: 8, categoria: "pecho", nombre: "Aperturas con mancuernas (inclinado)", tiempoEjecucion: 30 },
@@ -52,9 +52,9 @@ const ejercicios = [
   // Bíceps
   { idEjercicio: 43, categoria: "biceps", nombre: "Curl con barra recta", tiempoEjecucion: 30 },
   { idEjercicio: 44, categoria: "biceps", nombre: "Curl con barra Z", tiempoEjecucion: 30 },
-  { idEjercicio: 45, categoria: "biceps", nombre: "Curl con mancuernas alternado", tiempoEjecucion: 30 },
-  { idEjercicio: 46, categoria: "biceps", nombre: "Curl con mancuernas simultáneo", tiempoEjecucion: 30 },
-  { idEjercicio: 47, categoria: "biceps", nombre: "Curl martillo", tiempoEjecucion: 30 },
+  { idEjercicio: 45, categoria: "biceps", nombre: "Curl con mancuernas", tiempoEjecucion: 30 },
+  { idEjercicio: 46, categoria: "biceps", nombre: "Curl martillo con polea", tiempoEjecucion: 30 },
+  { idEjercicio: 47, categoria: "biceps", nombre: "Curl martillo con mancuernas", tiempoEjecucion: 30 },
   { idEjercicio: 119, categoria: "biceps", nombre: "Curl martillo cruzado", tiempoEjecucion: 30 },
   { idEjercicio: 48, categoria: "biceps", nombre: "Curl predicador con barra", tiempoEjecucion: 30 },
   { idEjercicio: 49, categoria: "biceps", nombre: "Curl predicador con mancuernas", tiempoEjecucion: 30 },
@@ -65,8 +65,7 @@ const ejercicios = [
   { idEjercicio: 53, categoria: "biceps", nombre: "Curl en máquina", tiempoEjecucion: 30 },
 
   // Tríceps
-  { idEjercicio: 54, categoria: "triceps", nombre: "Extensión en polea alta con cuerda", tiempoEjecucion: 30 },
-  { idEjercicio: 55, categoria: "triceps", nombre: "Extensión en polea alta con barra recta", tiempoEjecucion: 30 },
+  { idEjercicio: 54, categoria: "triceps", nombre: "Extensión en polea alta", tiempoEjecucion: 30 },
   { idEjercicio: 56, categoria: "triceps", nombre: "Extensión en polea alta unilatera", tiempoEjecucion: 30 },
   { idEjercicio: 57, categoria: "triceps", nombre: "Extensión sobre la cabeza con mancuerna", tiempoEjecucion: 30 },
   { idEjercicio: 58, categoria: "triceps", nombre: "Extensión sobre la cabeza en polea", tiempoEjecucion: 30 },
