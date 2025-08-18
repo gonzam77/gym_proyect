@@ -32,7 +32,7 @@ const DetalleRutina = (
     setModalDetalle(false);
   }
 
-  const ejerciciosFinalizados = rutinaActualizada?.ejercicios?.filter(e=> e.seriesRealizadas > 0);
+  const ejerciciosFinalizados = rutinaActualizada?.ejercicios?.filter(e => e.seriesRealizadas > 0);
   
   const reiniciarRutina = ()=>{
     const rutinaReiniciada = 
@@ -57,7 +57,7 @@ const DetalleRutina = (
   }
   
   useEffect(()=>{
-  },[rutinaActualizada])
+  },[rutinaActualizada, ejerciciosFinalizados])
     
   return (
     <View style={styles.container}>
