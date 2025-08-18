@@ -1,13 +1,9 @@
 const ejercicios = [
   // Pecho
-  { idEjercicio: 1, categoria: "pecho", nombre: "Press de banca plano (barra/smith)", tiempoEjecucion: 45 },
-  { idEjercicio: 2, categoria: "pecho", nombre: "Press de banca plano (mancuernas)", tiempoEjecucion: 45 },
-  { idEjercicio: 3, categoria: "pecho", nombre: "Press inclinado (barra/smith)", tiempoEjecucion: 45 },
-  { idEjercicio: 4, categoria: "pecho", nombre: "Press inclinado (mancuernas)", tiempoEjecucion: 45 },
-  { idEjercicio: 5, categoria: "pecho", nombre: "Press declinado (barra/smith)", tiempoEjecucion: 45 },
-  { idEjercicio: 6, categoria: "pecho", nombre: "Press declinado (mancuernas)", tiempoEjecucion: 45 },
-  { idEjercicio: 7, categoria: "pecho", nombre: "Aperturas con mancuernas (plano)", tiempoEjecucion: 30 },
-  { idEjercicio: 8, categoria: "pecho", nombre: "Aperturas con mancuernas (inclinado)", tiempoEjecucion: 30 },
+  { idEjercicio: 1, categoria: "pecho", nombre: "Press de banca plano", tiempoEjecucion: 45 },
+  { idEjercicio: 3, categoria: "pecho", nombre: "Press inclinado", tiempoEjecucion: 45 },
+  { idEjercicio: 5, categoria: "pecho", nombre: "Press declinado", tiempoEjecucion: 45 },
+  { idEjercicio: 7, categoria: "pecho", nombre: "Aperturas con mancuernas", tiempoEjecucion: 30 },
   { idEjercicio: 9, categoria: "pecho", nombre: "Pec Deck (contractor)", tiempoEjecucion: 30 },
   { idEjercicio: 10, categoria: "pecho", nombre: "Fondos en paralelas (para pecho)", tiempoEjecucion: 35 },
   { idEjercicio: 11, categoria: "pecho", nombre: "Push-ups (flexiones de pecho)", tiempoEjecucion: 30 },
@@ -28,37 +24,29 @@ const ejercicios = [
   { idEjercicio: 24, categoria: "espalda", nombre: "Remo en máquina Hammer", tiempoEjecucion: 40 },
   { idEjercicio: 25, categoria: "espalda", nombre: "Remo en polea baja", tiempoEjecucion: 40 },
   { idEjercicio: 26, categoria: "espalda", nombre: "Remo con T-bar", tiempoEjecucion: 45 },
-  { idEjercicio: 27, categoria: "espalda", nombre: "Peso muerto convencional", tiempoEjecucion: 50 },
   { idEjercicio: 28, categoria: "espalda", nombre: "Pull-over con mancuerna", tiempoEjecucion: 30 },
-  { idEjercicio: 29, categoria: "espalda", nombre: "Pull-over en máquina", tiempoEjecucion: 30 },
+  { idEjercicio: 29, categoria: "espalda", nombre: "Pull-over en polea", tiempoEjecucion: 30 },
   { idEjercicio: 30, categoria: "espalda", nombre: "Dominadas (supinas)", tiempoEjecucion: 30 },
   { idEjercicio: 31, categoria: "espalda", nombre: "Dominadas (pronas)", tiempoEjecucion: 30 },
   { idEjercicio: 32, categoria: "espalda", nombre: "Dominadas (neutras)", tiempoEjecucion: 30 },
 
   // Hombros
-  { idEjercicio: 33, categoria: "hombros", nombre: "Press militar (barra)", tiempoEjecucion: 45 },
-  { idEjercicio: 34, categoria: "hombros", nombre: "Press militar (mancuernas)", tiempoEjecucion: 45 },
+  { idEjercicio: 33, categoria: "hombros", nombre: "Press militar", tiempoEjecucion: 45 },
   { idEjercicio: 35, categoria: "hombros", nombre: "Press Arnold", tiempoEjecucion: 45 },
-  { idEjercicio: 36, categoria: "hombros", nombre: "Elevaciones laterales con mancuernas", tiempoEjecucion: 30 },
-  { idEjercicio: 118, categoria: "hombros", nombre: "Elevaciones laterales con polea", tiempoEjecucion: 30 },
-  { idEjercicio: 37, categoria: "hombros", nombre: "Elevaciones frontales con mancuernas", tiempoEjecucion: 30 },
-  { idEjercicio: 38, categoria: "hombros", nombre: "Elevaciones frontales con disco", tiempoEjecucion: 30 },
-  { idEjercicio: 123, categoria: "hombros", nombre: "Elevaciones frontales con polea", tiempoEjecucion: 30 },
+  { idEjercicio: 36, categoria: "hombros", nombre: "Elevaciones laterales", tiempoEjecucion: 30 },
+  { idEjercicio: 37, categoria: "hombros", nombre: "Elevaciones frontales", tiempoEjecucion: 30 },
+  { idEjercicio: 123, categoria: "hombros", nombre: "Elevaciones frontales", tiempoEjecucion: 30 },
   { idEjercicio: 39, categoria: "hombros", nombre: "Pájaros con mancuerna", tiempoEjecucion: 30 },
   { idEjercicio: 40, categoria: "hombros", nombre: "Face pulls en polea", tiempoEjecucion: 30 },
   { idEjercicio: 41, categoria: "hombros", nombre: "Remo al mentón con barra", tiempoEjecucion: 45 },
-  { idEjercicio: 42, categoria: "hombros", nombre: "Press militar en Smith", tiempoEjecucion: 45 },
 
   // Bíceps
   { idEjercicio: 43, categoria: "biceps", nombre: "Curl con barra recta", tiempoEjecucion: 30 },
   { idEjercicio: 44, categoria: "biceps", nombre: "Curl con barra Z", tiempoEjecucion: 30 },
   { idEjercicio: 45, categoria: "biceps", nombre: "Curl con mancuernas", tiempoEjecucion: 30 },
-  { idEjercicio: 46, categoria: "biceps", nombre: "Curl martillo con polea", tiempoEjecucion: 30 },
-  { idEjercicio: 47, categoria: "biceps", nombre: "Curl martillo con mancuernas", tiempoEjecucion: 30 },
+  { idEjercicio: 46, categoria: "biceps", nombre: "Curl martillo", tiempoEjecucion: 30 },
   { idEjercicio: 119, categoria: "biceps", nombre: "Curl martillo cruzado", tiempoEjecucion: 30 },
-  { idEjercicio: 48, categoria: "biceps", nombre: "Curl predicador con barra", tiempoEjecucion: 30 },
-  { idEjercicio: 49, categoria: "biceps", nombre: "Curl predicador con mancuernas", tiempoEjecucion: 30 },
-  { idEjercicio: 120, categoria: "biceps", nombre: "Curl predicador con polea", tiempoEjecucion: 30 },
+  { idEjercicio: 48, categoria: "biceps", nombre: "Curl predicador", tiempoEjecucion: 30 },
   { idEjercicio: 50, categoria: "biceps", nombre: "Curl bayesiano en polea baja", tiempoEjecucion: 30 },
   { idEjercicio: 51, categoria: "biceps", nombre: "Curl doble en polea alta", tiempoEjecucion: 30 },
   { idEjercicio: 52, categoria: "biceps", nombre: "Curl concentrado (Scott)", tiempoEjecucion: 30 },
@@ -106,9 +94,8 @@ const ejercicios = [
   { idEjercicio: 86, categoria: "isquiotibiales", nombre: "Good mornings", tiempoEjecucion: 40 },
 
   // Glúteos
-  { idEjercicio: 87, categoria: "gluteos", nombre: "Hip thrust con barra", tiempoEjecucion: 45 },
-  { idEjercicio: 88, categoria: "gluteos", nombre: "Hip thrust en máquina", tiempoEjecucion: 40 },
-  { idEjercicio: 89, categoria: "gluteos", nombre: "Patada de glúteo en polea", tiempoEjecucion: 30 },
+  { idEjercicio: 87, categoria: "gluteos", nombre: "Hip thrust", tiempoEjecucion: 45 },
+  { idEjercicio: 89, categoria: "gluteos", nombre: "Patada de glúteo", tiempoEjecucion: 30 },
   { idEjercicio: 90, categoria: "gluteos", nombre: "Abducción en máquina", tiempoEjecucion: 30 },
   { idEjercicio: 91, categoria: "gluteos", nombre: "Zancadas profundas", tiempoEjecucion: 45 },
 
@@ -138,15 +125,6 @@ const ejercicios = [
   { idEjercicio: 108, categoria: "lumbares", nombre: "Supermans", tiempoEjecucion: 30 },
   { idEjercicio: 109, categoria: "lumbares", nombre: "Buenos días (Good mornings)", tiempoEjecucion: 40 },
 
-  // Funcionales / Fullbody
-  { idEjercicio: 110, categoria: "funcionales", nombre: "Clean & press", tiempoEjecucion: 45 },
-  { idEjercicio: 111, categoria: "funcionales", nombre: "Snatch", tiempoEjecucion: 45 },
-  { idEjercicio: 112, categoria: "funcionales", nombre: "Thrusters", tiempoEjecucion: 40 },
-  { idEjercicio: 113, categoria: "funcionales", nombre: "Kettlebell swings", tiempoEjecucion: 30 },
-  { idEjercicio: 114, categoria: "funcionales", nombre: "Burpees", tiempoEjecucion: 30 },
-  { idEjercicio: 115, categoria: "funcionales", nombre: "Battle ropes", tiempoEjecucion: 30 },
-  { idEjercicio: 116, categoria: "funcionales", nombre: "Farmer’s walk", tiempoEjecucion: 45 },
-  { idEjercicio: 117, categoria: "funcionales", nombre: "Wall balls", tiempoEjecucion: 30 }
 ];
 
 export default ejercicios;
