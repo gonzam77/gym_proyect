@@ -22,7 +22,7 @@ const DetalleRutina = (
   const dispatch = useDispatch();
   const [ejercicio, setEjercicio] = useState({});
   const [modalEjercicio, setModalEjercicio] = useState(false);
-  const [ejerciciosIniciados, setEjerciciosIniciados] = useState();
+  // const [ejerciciosIniciados, setEjerciciosIniciados] = useState();
 
   const eliminarRutina = (id)=>{
     dispatch({
@@ -32,10 +32,8 @@ const DetalleRutina = (
     setRutinaSeleccionada({});
     setModalDetalle(false);
   }
-  console.log('ejerciciosFinalizados',ejerciciosFinalizados);
-  console.log('rutinaActualizada',rutinaActualizada);
+
   
-  setEjerciciosIniciados(rutinaActualizada?.ejercicios?.filter(e => e.seriesRealizadas > 0));
 
   const reiniciarRutina = ()=>{
     const rutinaReiniciada = 
@@ -59,10 +57,17 @@ const DetalleRutina = (
     })
   }
   
-  useEffect(()=>{
-    const ejerciciosFinalizados = rutinaActualizada?.ejercicios?.filter(e => e.seriesRealizadas
-       > 0);
-  },[rutinaActualizada, ejerciciosFinalizados])
+  useEffect(()=>{  
+  },[rutinaActualizada])
+  
+  // useEffect(()=>{
+  //   if(ejerciciosIniciados?.length < 1){
+  //     const iniciados = rutinaActualizada?.ejercicios?.filter(e=>e.seriesRealizadas > 0)
+  //     console.log('iniciados',iniciados);
+      
+  //     setEjerciciosIniciados(iniciados);
+  //   }
+  // },[])
     
   return (
     <View style={styles.container}>
@@ -114,35 +119,35 @@ const DetalleRutina = (
         <Text style={styles.titulo}>{rutinaActualizada?.nombre}</Text>
       </View>
       
-        <ScrollView 
-  style={styles.scroll}
-  contentContainerStyle={{ paddingBottom: 100, flexGrow: 1, minHeight: '100%' }}
-  showsVerticalScrollIndicator={false}
->
-  <View style={styles.listaEjercicios}>
-    {
-      rutinaActualizada?.ejercicios?.map((e, index) => (
-        <Pressable 
-          key={e.id} 
-          style={styles.ejercicioItem}
-          onPress={() => {
-            setEjercicio(e);
-            setModalEjercicio(true)
-          }} 
-        >
-          <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
-            <View style={{maxWidth:280}}>
-              <Text style={styles.ejercicioNombre}>{e.nombre}</Text>
-              <Text style={styles.ejercicioDetalle}>{e.series} series x {e.repeticiones} reps</Text>
-              {e.seriesRealizadas >= e.series ? <Text style={{color:'#f57c04'}}>FINALIZADO</Text> : null}
-            </View>
-            <Icon name="chevron-forward-outline" color={'#fff'} size={25} />
-          </View>  
-        </Pressable>
-      ))
-    }
-  </View>
-</ScrollView>
+      <ScrollView 
+        style={styles.scroll}
+        contentContainerStyle={{ paddingBottom: 100, flexGrow: 1, minHeight: '100%' }}
+        showsVerticalScrollIndicator={false}
+      >
+        <View style={styles.listaEjercicios}>
+          {
+            rutinaActualizada?.ejercicios?.map((e, index) => (
+              <Pressable 
+                key={e.id} 
+                style={styles.ejercicioItem}
+                onPress={() => {
+                  setEjercicio(e);
+                  setModalEjercicio(true)
+                }} 
+              >
+                <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
+                  <View style={{maxWidth:280}}>
+                    <Text style={styles.ejercicioNombre}>{e.nombre}</Text>
+                    <Text style={styles.ejercicioDetalle}>{e.series} series x {e.repeticiones} reps</Text>
+                    {e.seriesRealizadas >= e.series ? <Text style={{color:'#f57c04'}}>FINALIZADO</Text> : null}
+                  </View>
+                  <Icon name="chevron-forward-outline" color={'#fff'} size={25} />
+                </View>  
+              </Pressable>
+            ))
+          }
+        </View>
+      </ScrollView>
 
       <Modal
         visible={modalFormRutina}
@@ -166,31 +171,28 @@ const DetalleRutina = (
           rutinaSeleccionada={rutinaActualizada}
         />
       </Modal>
-
       
-      {
-        ejerciciosIniciados?.length ?
-        <Pressable 
-          onPress={()=>{
-             Alert.alert("Reiniciar", "Desea reiniciar los ejercicios?", [
-                { text: "Cancelar" },
-                {
-                  text: "Ok, Reiciciar ejercicios",
-                  onPress: () => {
-                    reiniciarRutina();
-                  },
+      <Pressable 
+        onPress={()=>{
+            Alert.alert("Reiniciar", "Desea reiniciar los ejercicios?", [
+              { text: "Cancelar" },
+              {
+                text: "Ok, Reiciciar ejercicios",
+                onPress: () => {
+                  reiniciarRutina();
                 },
-              ]);
-          }}
-          style={{
-            position:'absolute',
-            right:30,
-            bottom:15,
-          }}
-        >
-          <Image style={{width:50,height:50, alignSelf:'center', marginBottom:10}} source={require('../assets/img/reiniciar.png')}></Image>
-      </Pressable>:null
-      }
+              },
+            ]);
+        }}
+        style={{
+          position:'absolute',
+          right:30,
+          bottom:15,
+        }}
+      >
+        <Image style={{width:50,height:50, alignSelf:'center', marginBottom:10}} source={require('../assets/img/reiniciar.png')}></Image>
+      </Pressable>
+
     </View>
   )
 }
