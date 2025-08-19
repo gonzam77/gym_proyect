@@ -98,7 +98,6 @@ const MisRutinas = () => {
         }}
       >
         <Animated.Image style={[styles.agregar, {transform:[{scale: scaleAnim}]}]} source={require('../assets/img/agregar.png')} />
-        {/* <Icon name="add-circle-outline" color={'#43d112'} size={65}></Icon> */}
       </Pressable>
 
       <Modal

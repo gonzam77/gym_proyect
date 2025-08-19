@@ -60,14 +60,6 @@ const DetalleRutina = (
   useEffect(()=>{  
   },[rutinaActualizada])
   
-  // useEffect(()=>{
-  //   if(ejerciciosIniciados?.length < 1){
-  //     const iniciados = rutinaActualizada?.ejercicios?.filter(e=>e.seriesRealizadas > 0)
-  //     console.log('iniciados',iniciados);
-      
-  //     setEjerciciosIniciados(iniciados);
-  //   }
-  // },[])
     
   return (
     <View style={styles.container}>
@@ -94,6 +86,26 @@ const DetalleRutina = (
 
           {/* <Icon name="create" size={40} color="#43d112" /> */}
           {/* <Text style={{color:'#fff',textAlign:'center'}}>Editar</Text> */}
+        </Pressable>
+        <Pressable 
+          onPress={()=>{
+              Alert.alert("Reiniciar", "Desea reiniciar los ejercicios?", [
+                { text: "Cancelar" },
+                {
+                  text: "Ok, Reiciciar ejercicios",
+                  onPress: () => {
+                    reiniciarRutina();
+                  },
+                },
+              ]);
+          }}
+          // style={{
+          //   position:'absolute',
+          //   right:30,
+          //   bottom:30,
+          // }}
+        >
+          <Image style={{width:45,height:45, alignSelf:'center'}} source={require('../assets/img/reiniciar.png')}></Image>
         </Pressable>
 
         <Pressable
@@ -147,7 +159,10 @@ const DetalleRutina = (
             ))
           }
         </View>
+        
       </ScrollView>
+      
+      
 
       <Modal
         visible={modalFormRutina}
@@ -172,26 +187,7 @@ const DetalleRutina = (
         />
       </Modal>
       
-      <Pressable 
-        onPress={()=>{
-            Alert.alert("Reiniciar", "Desea reiniciar los ejercicios?", [
-              { text: "Cancelar" },
-              {
-                text: "Ok, Reiciciar ejercicios",
-                onPress: () => {
-                  reiniciarRutina();
-                },
-              },
-            ]);
-        }}
-        style={{
-          position:'absolute',
-          right:30,
-          bottom:15,
-        }}
-      >
-        <Image style={{width:50,height:50, alignSelf:'center', marginBottom:10}} source={require('../assets/img/reiniciar.png')}></Image>
-      </Pressable>
+      
 
     </View>
   )
