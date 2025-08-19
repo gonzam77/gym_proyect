@@ -22,6 +22,7 @@ const DetalleRutina = (
   const dispatch = useDispatch();
   const [ejercicio, setEjercicio] = useState({});
   const [modalEjercicio, setModalEjercicio] = useState(false);
+  const [ejerciciosIniciados, setEjerciciosIniciados] = useState();
 
   const eliminarRutina = (id)=>{
     dispatch({
@@ -31,9 +32,11 @@ const DetalleRutina = (
     setRutinaSeleccionada({});
     setModalDetalle(false);
   }
-
-  const ejerciciosFinalizados = rutinaActualizada?.ejercicios?.filter(e => e.seriesRealizadas > 0);
+  console.log('ejerciciosFinalizados',ejerciciosFinalizados);
+  console.log('rutinaActualizada',rutinaActualizada);
   
+  setEjerciciosIniciados(rutinaActualizada?.ejercicios?.filter(e => e.seriesRealizadas > 0));
+
   const reiniciarRutina = ()=>{
     const rutinaReiniciada = 
     {...rutinaActualizada,
@@ -57,6 +60,8 @@ const DetalleRutina = (
   }
   
   useEffect(()=>{
+    const ejerciciosFinalizados = rutinaActualizada?.ejercicios?.filter(e => e.seriesRealizadas
+       > 0);
   },[rutinaActualizada, ejerciciosFinalizados])
     
   return (
@@ -164,7 +169,7 @@ const DetalleRutina = (
 
       
       {
-        ejerciciosFinalizados?.length ?
+        ejerciciosIniciados?.length ?
         <Pressable 
           onPress={()=>{
              Alert.alert("Reiniciar", "Desea reiniciar los ejercicios?", [
