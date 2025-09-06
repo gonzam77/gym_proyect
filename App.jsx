@@ -6,11 +6,32 @@ import {
   ImageBackground
 } from 'react-native';
 
+import PushNotification from "react-native-push-notification";
+import { Platform } from "react-native";
+
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { store, persistor } from './store/store';
 
 import MisRutinas from './components/misRutinas';
+
+PushNotification.configure({
+  onNotification: function (notification) {
+    console.log("Notificación recibida:", notification);
+  },
+  requestPermissions: Platform.OS === 'ios', // en Android lo pedimos manualmente
+});
+
+PushNotification.createChannel(
+  {
+    channelId: "descanso-channel",
+    channelName: "Notificaciones de Descanso",
+    importance: 4,
+    vibrate: true,
+    soundName: "default", // usa el sonido por defecto del sistema
+  },
+  (created) => console.log(`Canal creado: ${created}`)
+);
 
 const App = () => {
   return (

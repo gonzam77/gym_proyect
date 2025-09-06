@@ -3,6 +3,8 @@ import { useState, useRef, useEffect } from "react";
 import BackgroundTimer from 'react-native-background-timer';
 import Sound from 'react-native-sound';
 import Icon from 'react-native-vector-icons/Ionicons'; // o MaterialIcons si preferís
+import PushNotification from "react-native-push-notification";
+
 
 // Habilitar reproducción en Android (opcional, pero recomendado)
 Sound.setCategory('Playback');
@@ -29,7 +31,18 @@ const Descanso = ({ setModalDescanso, ejercicio, serie }) => {
             intervaloRef.current = null;
 
             // Reproducir sonido de alarma
-            reproducirAlarma();
+            //reproducirAlarma();
+            PushNotification.localNotification({
+              channelId: "descanso-channel",
+              title: "¡Descanso terminado!",
+              message: "Volvé al entrenamiento 💪",
+              playSound: true,
+              soundName: "default",
+              importance: "high",
+              vibrate: true,
+              ongoing: true,   
+              autoCancel: false
+            });
 
             return 0;
           }

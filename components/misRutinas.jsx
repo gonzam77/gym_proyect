@@ -4,6 +4,22 @@ import FormRutina from "./formRutina";
 import DetalleRutina from "./detalleRutina";
 import Icon from 'react-native-vector-icons/Ionicons'; // o MaterialIcons si preferís
 import { useSelector } from "react-redux";
+import { PermissionsAndroid, Platform } from "react-native";
+
+async function requestNotificationPermission() {
+  if (Platform.OS === "android" && Platform.Version >= 33) {
+    const granted = await PermissionsAndroid.request(
+      PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
+      {
+        title: "Permiso de notificaciones",
+        message: "La app necesita notificarte cuando termine el descanso.",
+        buttonPositive: "Aceptar",
+      }
+    );
+    return granted === PermissionsAndroid.RESULTS.GRANTED;
+  }
+  return true;
+}
 
 const MisRutinas = () => {
 
@@ -31,6 +47,7 @@ const MisRutinas = () => {
   };
 
   useEffect(()=>{
+    requestNotificationPermission();
   },[rutinas])
  
   const EntrenamientoItem = ({ dia, nombre, id }) => (
