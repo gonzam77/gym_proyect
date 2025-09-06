@@ -28,10 +28,13 @@ PushNotification.createChannel(
     channelName: "Notificaciones de Descanso",
     importance: 4,
     vibrate: true,
-    soundName: "default", // usa el sonido por defecto del sistema
+    soundName: 'default', // usa el sonido por defecto del sistema
+    playSound: true,
   },
   (created) => console.log(`Canal creado: ${created}`)
 );
+
+//require('../assets/sounds/alarm2.mp3')
 
 const App = () => {
   return (

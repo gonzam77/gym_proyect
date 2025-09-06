@@ -37,7 +37,7 @@ const Descanso = ({ setModalDescanso, ejercicio, serie }) => {
               title: "¡Descanso terminado!",
               message: "Volvé al entrenamiento 💪",
               playSound: true,
-              soundName: "default",
+              soundName: 'default',
               importance: "high",
               vibrate: true,
               ongoing: true,   
