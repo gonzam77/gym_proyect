@@ -133,7 +133,7 @@ const DetalleRutina = (
       
       <ScrollView 
         style={styles.scroll}
-        contentContainerStyle={{ paddingBottom: 200, flexGrow: 1, minHeight: '150%' }}
+        contentContainerStyle={{ paddingBottom: 120, flexGrow: 1, minHeight: '120%' }}
         showsVerticalScrollIndicator={false}
       >
         <View style={styles.listaEjercicios}>

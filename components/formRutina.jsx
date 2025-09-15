@@ -105,7 +105,10 @@ const FormRutina = ({setModalFormRutina, rutinaSeleccionada, setRutinaSelecciona
   
     return (
         <View style={styles.container}>
-            <ScrollView style={styles.scroll}>
+            <ScrollView 
+                style={styles.scroll}
+                contentContainerStyle={{ paddingBottom: 120, flexGrow: 1, minHeight: '120%' }}
+            >
 
                     <View style={styles.botonera}>
                         <Pressable 
