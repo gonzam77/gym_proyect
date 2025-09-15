@@ -32,6 +32,7 @@ const Descanso = ({ setModalDescanso, ejercicio, serie }) => {
 
             // Reproducir sonido de alarma
             //reproducirAlarma();
+
             PushNotification.localNotification({
               channelId: "descanso-channel",
               title: "¡Descanso terminado!",
@@ -52,23 +53,23 @@ const Descanso = ({ setModalDescanso, ejercicio, serie }) => {
       }, 1000);
     }
 
-    const reproducirAlarma = () => {
-      const alarma = new Sound(require('../assets/sounds/alarm2.mp3'), (error) => {
-        if (error) {
-          console.log('Error al cargar el sonido:', error);
-          return;
-        }
+    // const reproducirAlarma = () => {
+    //   const alarma = new Sound(require('../assets/sounds/alarm2.mp3'), (error) => {
+    //     if (error) {
+    //       console.log('Error al cargar el sonido:', error);
+    //       return;
+    //     }
 
-        alarma.setNumberOfLoops(-1); // Repetir infinitamente
-        alarma.play((success) => {
-          if (!success) {
-            console.log('Error al reproducir el sonido');
-          }
-        });
+    //     alarma.setNumberOfLoops(-1); // Repetir infinitamente
+    //     alarma.play((success) => {
+    //       if (!success) {
+    //         console.log('Error al reproducir el sonido');
+    //       }
+    //     });
 
-        alarmaRef.current = alarma;
-      });
-    };
+    //     alarmaRef.current = alarma;
+    //   });
+    // };
 
     return () => {
       // 🧹 Detener intervalo

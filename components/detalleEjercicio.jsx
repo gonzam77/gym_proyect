@@ -26,7 +26,6 @@ const DetalleEjercicio = ({ ejercicio, setModalEjercicio, rutinaSeleccionada }) 
   },[]);
 
   useEffect(()=>{
-
     dispatch({
       type: 'rutinas/modificarEjercicio',
       payload:{
@@ -35,7 +34,6 @@ const DetalleEjercicio = ({ ejercicio, setModalEjercicio, rutinaSeleccionada }) 
         cambios:{seriesRealizadas: serie}
       }
     });
-    
   },[serie, estado]);
         
   useEffect(() => {
@@ -58,8 +56,8 @@ const DetalleEjercicio = ({ ejercicio, setModalEjercicio, rutinaSeleccionada }) 
         }),
       ])
     );
-    loop.start();
     
+    loop.start();
 
     return () => {
       if (loop) loop.stop(); // detener si el componente se desmonta o cambia el estado
